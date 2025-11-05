@@ -1,38 +1,3 @@
-.sg-cards-wrap {
-  max-width: 900px; /* larghezza massima della sezione */
-  margin: 0 auto;   /* centra orizzontalmente */
-  padding: 20px;    /* padding generale */
-}
-
-.sg-section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 16px 0 24px 0;
-  text-align: center;
-  letter-spacing: 0.5px;
-  position: relative;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInUp 0.8s forwards 0.2s;
-}
-
-.sg-section-title::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: #1e88e5;
-  margin: 8px auto 0 auto;
-  border-radius: 2px;
-}
-
-.sg-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
 .sg-info-card {
   background: #fff;
   border-radius: 24px;
@@ -98,56 +63,8 @@
   box-shadow: 0 6px 15px rgba(21, 101, 214, 0.3);
 }
 
-.sg-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.07);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 300px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s forwards;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .sg-cards-wrap {
-    max-width: 1000px;
-  }
-  .sg-card-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-}
-
+/* Responsive per componenti Info Card */
 @media (max-width: 768px) {
-  .sg-section-title {
-    font-size: 1.3rem;
-  }
-  .sg-card-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .sg-card-grid .sg-assistant-card {
-    grid-column: span 1;
-  }
-  .sg-card {
-    height: auto;
-  }
-  /* Rimuovi zoom immagini in responsive - stesso comportamento di Sgamy */
-  .sg-card-grid .sg-card:nth-child(1) .sg-guide-card__img,
-  .sg-card-grid .sg-card:nth-child(3) .sg-guide-card__img {
-    transform: scale(1);
-    object-fit: contain;
-  }
-  .sg-card-grid .sg-card:nth-child(1):hover .sg-guide-card__img,
-  .sg-card-grid .sg-card:nth-child(3):hover .sg-guide-card__img {
-    transform: scale(1.02);
-  }
   .sg-guide-card__body {
     height: 120px;
     min-height: 120px;
@@ -175,19 +92,6 @@
 }
 
 @media (max-width: 480px) {
-  .sg-cards-wrap {
-    padding: 12px;
-  }
-  /* Rimuovi zoom immagini in responsive mobile - stesso comportamento di Sgamy */
-  .sg-card-grid .sg-card:nth-child(1) .sg-guide-card__img,
-  .sg-card-grid .sg-card:nth-child(3) .sg-guide-card__img {
-    transform: scale(1);
-    object-fit: contain;
-  }
-  .sg-card-grid .sg-card:nth-child(1):hover .sg-guide-card__img,
-  .sg-card-grid .sg-card:nth-child(3):hover .sg-guide-card__img {
-    transform: scale(1.02);
-  }
   .sg-guide-card__body {
     height: 110px;
     min-height: 110px;
@@ -210,26 +114,6 @@
   }
 }
 
-.sg-card:nth-child(1) { animation-delay: 0.2s; }
-.sg-card:nth-child(2) { animation-delay: 0.4s; }
-.sg-card:nth-child(3) { animation-delay: 0.6s; }
-.sg-card:nth-child(4) { animation-delay: 0.8s; }
-
-@media (max-width: 1200px) {
-  .sg-card-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sg-card-grid .sg-assistant-card {
-    grid-column: span 2;
-  }
-}
-
-
-.sg-card:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
-}
-
 .sg-guide-card {
   display: flex;
   flex-direction: column;
@@ -247,23 +131,6 @@
   object-fit: contain;
   display: block;
   transition: transform 0.3s ease;
-}
-
-/* Zoom immagini per Servizio Anti-Frode e Glossario Antifrode */
-.sg-card-grid .sg-card:nth-child(1) .sg-guide-card__img,
-.sg-card-grid .sg-card:nth-child(3) .sg-guide-card__img {
-  transform: scale(1.3);
-  object-fit: cover;
-}
-
-.sg-card:hover .sg-guide-card__img {
-  transform: scale(1.02);
-}
-
-/* Mantieni lo zoom anche su hover per Servizio Anti-Frode e Glossario */
-.sg-card-grid .sg-card:nth-child(1):hover .sg-guide-card__img,
-.sg-card-grid .sg-card:nth-child(3):hover .sg-guide-card__img {
-  transform: scale(1.35);
 }
 
 .sg-guide-card__body {
@@ -344,16 +211,4 @@
 .sg-assistant-card:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 18px rgba(0,0,0,0.1);
-}
-
-/* Animazione fade-in dal basso */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

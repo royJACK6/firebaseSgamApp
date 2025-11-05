@@ -60,20 +60,30 @@
 @media (max-width: 768px) {
   .hero-section {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: stretch;
     text-align: center;
     height: auto;
-    padding: 24px 16px;
+    padding: 0;
+    margin: 0;
   }
   .hero-image-container {
     width: 100%;
     height: auto;
+    margin: 0;
+    padding: 0;
   }
   .hero-image {
     width: 100%;
     height: auto;
+    margin: 0;
+    padding: 0;
+    display: block;
     -webkit-mask-image: none;
     mask-image: none;
+  }
+  .hero-content {
+    padding: 24px 16px;
   }
   .hero-content h1 {
     font-size: 1.8rem;

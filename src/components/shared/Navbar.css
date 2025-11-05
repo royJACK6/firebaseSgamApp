@@ -222,9 +222,9 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #fff;
+  background: #1565D6;
   border-radius: 8px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 10px 0;
   z-index: 100;
   min-width: 150px;
@@ -235,19 +235,20 @@
 }
 
 .dropdown-item {
-  padding: 8px 15px;
+  padding: 10px 20px;
   font-weight: 400;
-  color: #1565D6;
+  color: white;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: background 0.2s ease, color 0.2s ease;
+  gap: 12px;
+  transition: all 0.2s ease;
 }
 
 .dropdown-item:hover {
-  background: #e6f0ff;
-  color: #0d47a1;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #bbdefb;
+  transform: translateX(4px);
 }
 
 /* Import del CSS del modale di accessibilità */

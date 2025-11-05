@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useChatbot } from '../../contexts/ChatbotContext';
-import { analyzeText } from '../../apiServices/apiService';
+import { analyzeText, checkServerStatus } from '../../apiServices/apiService';
 import './ChatbotModal.css';
 import sgamyLogo from '../../assets/sgamy-logo.png';
 
@@ -22,6 +22,7 @@ const ChatbotModal: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [serverStatus, setServerStatus] = useState<'checking' | 'online' | 'offline'>('checking');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,6 +36,18 @@ const ChatbotModal: React.FC = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Controlla lo stato del server quando il chatbot si apre
+  useEffect(() => {
+    if (isOpen) {
+      const checkServer = async () => {
+        setServerStatus('checking');
+        const isOnline = await checkServerStatus();
+        setServerStatus(isOnline ? 'online' : 'offline');
+      };
+      checkServer();
+    }
+  }, [isOpen]);
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -175,14 +188,24 @@ const ChatbotModal: React.FC = () => {
               <p className="chatbot-subtitle">Il tuo assistente digitale</p>
             </div>
           </div>
-          <button
-            type="button"
-            className="chatbot-close-btn"
-            onClick={closeChatbot}
-            aria-label="Chiudi chatbot"
-          >
-            ×
-          </button>
+          <div className="chatbot-header-actions">
+            <div className={`server-status server-status-${serverStatus}`}>
+              <span className="status-indicator"></span>
+              <span className="status-text">
+                {serverStatus === 'checking' && 'Controllo...'}
+                {serverStatus === 'online' && 'Sgamy è sveglio!'}
+                {serverStatus === 'offline' && 'Sgamy sta dormendo...'}
+              </span>
+            </div>
+            <button
+              type="button"
+              className="chatbot-close-btn"
+              onClick={closeChatbot}
+              aria-label="Chiudi chatbot"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         <div className="chatbot-messages" role="log" aria-live="polite">

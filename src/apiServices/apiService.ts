@@ -17,6 +17,42 @@ export interface AnalyzeResult {
 }
 
 /**
+ * Controlla se il server API è disponibile
+ */
+export async function checkServerStatus(): Promise<boolean> {
+  try {
+    // Prova con una richiesta veloce
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 secondi di timeout
+    
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message_text: 'ping' }), // Messaggio di test minimo
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    
+    // Se è 404, il server/tunnel non è attivo o l'endpoint non esiste
+    if (response.status === 404) {
+      console.log('⚠️ Server risponde 404 - endpoint non trovato o tunnel non attivo');
+      return false;
+    }
+    
+    // Qualsiasi altra risposta (200, 400, 500, etc.) significa che il server è raggiungibile
+    console.log('✅ Server disponibile, status:', response.status);
+    return true;
+  } catch (error) {
+    // Errore di rete o timeout - server non disponibile
+    console.log('❌ Server API non disponibile:', error);
+    return false;
+  }
+}
+
+/**
  * Invia un messaggio all'API e riceve la risposta dal chatbot
  */
 export async function analyzeText(text: string, image?: File | null): Promise<AnalyzeResult | null> {

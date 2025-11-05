@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChatbot } from '../../contexts/ChatbotContext';
 import './Card.css';
+import './HomeServices.css';
 import antifrodeImage from '../../assets/SGAMY_SCUDO.png';
 import glossarioImage from '../../assets/SGAMY_NONNINA.png';
 import sgamyImage from '../../assets/SGAMY_OCCHIOLINO.png';
@@ -121,10 +122,12 @@ const HomeServices: React.FC = () => {
       <InfoCard />
       <section className="sg-cards-wrap">
         <h2 className="sg-section-title">Servizi Principali</h2>
-        <div className="sg-card-grid">
-          <ServiceCard {...services[0]} />
-          <SgamyAssistantCard onOpenChatbot={handleOpenChatbot} />
-          <ServiceCard {...services[1]} />
+        <div className="sg-card-grid-wrapper">
+          <div className="sg-card-grid">
+            <ServiceCard {...services[0]} />
+            <SgamyAssistantCard onOpenChatbot={handleOpenChatbot} />
+            <ServiceCard {...services[1]} />
+          </div>
         </div>
       </section>
     </>

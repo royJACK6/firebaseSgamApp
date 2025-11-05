@@ -84,6 +84,63 @@ export const glossaryApi = {
     }
   },
 
+  getSuggestions: async (query: string, limit: number = 5): Promise<string[]> => {
+    try {
+      if (!query.trim() || query.length < 2) {
+        return [];
+      }
+      
+      const url = `${API_BASE_URL}/Glossary/GetByWord/${encodeURIComponent(query)}`;
+      console.log('🔍 Chiamata API getSuggestions (Glossario):', url);
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('📊 Risposta getSuggestions status:', response.status);
+      
+      if (!response.ok) {
+        // Se è 404 o 400, non ci sono suggerimenti (non è un errore)
+        if (response.status === 404 || response.status === 400) {
+          console.log('ℹ️ Nessun suggerimento trovato per:', query);
+          return [];
+        }
+        console.warn('⚠️ Errore HTTP nei suggerimenti:', response.status);
+        return [];
+      }
+      
+      const data = await response.json();
+      console.log('📦 Dati ricevuti per suggerimenti:', data);
+      
+      const terms = Array.isArray(data) ? data : [];
+      console.log('📦 Numero di termini trovati:', terms.length);
+      
+      // Mappa i dati come nel componente Glossario per gestire formati diversi
+      const mappedTerms = terms.map((item: any) => ({
+        term: item.term || item.boomerWord || item.name || '',
+      }));
+      
+      // Estrai solo i termini unici e limitati, filtrando quelli vuoti
+      const suggestions = Array.from(
+        new Set(
+          mappedTerms
+            .map((term) => term.term)
+            .filter((term) => term && term.trim().length > 0)
+        )
+      ).slice(0, limit);
+      
+      console.log('✅ Suggerimenti estratti:', suggestions);
+      return suggestions;
+    } catch (error) {
+      console.error('❌ Errore nel recupero dei suggerimenti:', error);
+      return [];
+    }
+  },
+
   add: async (glossary: GlossaryModel): Promise<GlossaryTerm> => {
     try {
       const response = await fetch(`${API_BASE_URL}/Glossary/Add`, {
@@ -259,6 +316,39 @@ export const translatorApi = {
     }
   },
 
+  getSuggestions: async (query: string, allTranslations: TranslationResult[] = [], limit: number = 5): Promise<string[]> => {
+    try {
+      if (!query.trim() || query.length < 2) {
+        return [];
+      }
+      
+      const queryLower = query.toLowerCase().trim();
+      
+      // Se abbiamo già i dati caricati, usali; altrimenti carica dal backend
+      let translations = allTranslations;
+      if (translations.length === 0) {
+        translations = await translatorApi.getAll();
+      }
+      
+      // Estrai tutti i termini (boomer e slang) che corrispondono
+      const suggestions = new Set<string>();
+      
+      translations.forEach(translation => {
+        if (translation.boomerWord.toLowerCase().includes(queryLower)) {
+          suggestions.add(translation.boomerWord);
+        }
+        if (translation.slangWord.toLowerCase().includes(queryLower)) {
+          suggestions.add(translation.slangWord);
+        }
+      });
+      
+      return Array.from(suggestions).slice(0, limit);
+    } catch (error) {
+      console.error('Errore nel recupero dei suggerimenti:', error);
+      return [];
+    }
+  },
+
   getByWord: async (word: string): Promise<TranslationResult | null> => {
     try {
       const url = `${API_BASE_URL}/Translator/GetByWord/${encodeURIComponent(word)}`;
@@ -386,9 +476,163 @@ export const translatorApi = {
   }
 };
 
+// Database locale con tutte le pagine del sito
+const localSearchPages: SearchPage[] = [
+  {
+    id: 1,
+    title: 'Home',
+    keywords: ['home', 'principale', 'inizio', 'sgam', 'servizi', 'digitali'],
+    route: '/',
+    category: 'Pagine Principali'
+  },
+  {
+    id: 2,
+    title: 'Servizio Anti-Frode',
+    keywords: ['antifrode', 'frode', 'truffa', 'sicurezza', 'protezione', 'segnalazione', 'truffe online'],
+    route: '/servizio-antifrode',
+    category: 'Sicurezza'
+  },
+  {
+    id: 3,
+    title: 'Guide',
+    keywords: ['guide', 'tutorial', 'aiuto', 'istruzioni', 'come fare'],
+    route: '/guide',
+    category: 'Guide'
+  },
+  {
+    id: 4,
+    title: 'Guida SPID',
+    keywords: ['spid', 'identità digitale', 'accesso', 'login', 'registrazione', 'come ottenere spid', 'identità'],
+    route: '/guide/spid',
+    category: 'Guide'
+  },
+  {
+    id: 5,
+    title: 'Guida PEC',
+    keywords: ['pec', 'posta elettronica certificata', 'email', 'casella pec', 'attivazione pec'],
+    route: '/guide/pec',
+    category: 'Guide'
+  },
+  {
+    id: 6,
+    title: 'Guida CIE',
+    keywords: ['cie', 'carta identità elettronica', 'documento', 'identità', 'carta'],
+    route: '/guide/cie',
+    category: 'Guide'
+  },
+  {
+    id: 7,
+    title: 'Guida Sicurezza',
+    keywords: ['sicurezza', 'password', 'protezione', 'privacy', 'dati', 'truffe', 'phishing'],
+    route: '/guide/sicurezza',
+    category: 'Guide'
+  },
+  {
+    id: 8,
+    title: 'Guida Primo Accesso',
+    keywords: ['primo accesso', 'registrazione', 'iscrizione', 'nuovo utente', 'iniziare'],
+    route: '/guide/primo-accesso',
+    category: 'Guide'
+  },
+  {
+    id: 9,
+    title: 'Guida Recupero Password',
+    keywords: ['recupero password', 'password dimenticata', 'reset password', 'cambio password', 'reimpostare'],
+    route: '/guide/recupero-password',
+    category: 'Guide'
+  },
+  {
+    id: 10,
+    title: 'Guida Certificati Online',
+    keywords: ['certificati', 'certificato anagrafico', 'documenti', 'online', 'richiedere certificato'],
+    route: '/guide/certificati-online',
+    category: 'Guide'
+  },
+  {
+    id: 11,
+    title: 'Guida Pagamenti DM Sanitari',
+    keywords: ['pagamenti', 'dm sanitari', 'dispositivi medici', 'ticket', 'sanità', 'salute'],
+    route: '/guide/pagamenti-dm-sanitari',
+    category: 'Guide'
+  },
+  {
+    id: 12,
+    title: 'Guida Anagrafe Digitale',
+    keywords: ['anagrafe', 'anagrafe digitale', 'dati anagrafici', 'residenza', 'cambio residenza'],
+    route: '/guide/anagrafe-digitale',
+    category: 'Guide'
+  },
+  {
+    id: 13,
+    title: 'Glossario',
+    keywords: ['glossario', 'termini', 'definizioni', 'dizionario', 'significato', 'parole'],
+    route: '/glossario',
+    category: 'Strumenti'
+  },
+  {
+    id: 14,
+    title: 'Traduttore Generazionale',
+    keywords: ['traduttore', 'generazionale', 'slang', 'linguaggio', 'giovani', 'boomer', 'traduzione'],
+    route: '/traduttore-generazionale',
+    category: 'Strumenti'
+  },
+  {
+    id: 15,
+    title: 'Info',
+    keywords: ['info', 'informazioni', 'contatti', 'chi siamo', 'about'],
+    route: '/info',
+    category: 'Informazioni'
+  },
+  {
+    id: 16,
+    title: 'Mission',
+    keywords: ['mission', 'missione', 'obiettivi', 'scopo', 'valori', 'chi siamo'],
+    route: '/mission',
+    category: 'Informazioni'
+  },
+  {
+    id: 17,
+    title: 'Privacy Policy',
+    keywords: ['privacy', 'policy', 'gdpr', 'dati personali', 'trattamento dati', 'cookie'],
+    route: '/privacy',
+    category: 'Informazioni'
+  }
+];
+
 export const searchApi = {
+  // Ricerca locale che funziona sempre (non dipende dal backend)
+  searchLocal: (query: string): SearchPage[] => {
+    if (!query || query.trim().length < 2) {
+      return [];
+    }
+
+    const searchTerm = query.toLowerCase().trim();
+    
+    return localSearchPages.filter(page => {
+      // Cerca nel titolo
+      if (page.title.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+      
+      // Cerca nelle keywords
+      return page.keywords.some(keyword => 
+        keyword.toLowerCase().includes(searchTerm)
+      );
+    }).sort((a, b) => {
+      // Priorità: match nel titolo > match nelle keywords
+      const aTitleMatch = a.title.toLowerCase().includes(searchTerm);
+      const bTitleMatch = b.title.toLowerCase().includes(searchTerm);
+      
+      if (aTitleMatch && !bTitleMatch) return -1;
+      if (!aTitleMatch && bTitleMatch) return 1;
+      return 0;
+    });
+  },
+
+  // Ricerca che prova prima il backend, poi fallback locale
   search: async (query: string): Promise<SearchPage[]> => {
     try {
+      // Prova prima con il backend
       const response = await fetch(`${API_BASE_URL}/Search/Search/${encodeURIComponent(query)}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -396,8 +640,9 @@ export const searchApi = {
       const data = await response.json();
       return Array.isArray(data) ? data : [];
     } catch (error) {
-      console.error('Errore nella ricerca:', error);
-      return [];
+      // Se il backend non è disponibile, usa la ricerca locale
+      console.log('Backend non disponibile, uso ricerca locale');
+      return searchApi.searchLocal(query);
     }
   },
 
@@ -410,8 +655,9 @@ export const searchApi = {
       const data = await response.json();
       return Array.isArray(data) ? data : [];
     } catch (error) {
-      console.error('Errore nel recupero delle pagine:', error);
-      return [];
+      // Fallback locale
+      console.log('Backend non disponibile, restituisco pagine locali');
+      return localSearchPages;
     }
   }
 };

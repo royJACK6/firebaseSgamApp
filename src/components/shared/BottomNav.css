@@ -1,9 +1,9 @@
 .bottom-nav {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 60px; /* più spazio tra le icone */
-    padding: 20px 40px;
+    align-items: stretch;
+    gap: 60px; /* spazio uniforme tra le icone */
+    padding: 25px 50px;
     background: linear-gradient(90deg, #1565D6, #1E88E5, #42A5F5);
     background-size: 300% 300%;
     animation: gradientFlow 8s ease infinite;
@@ -47,32 +47,43 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-decoration: none;
     color: #fff;
     font-weight: 500;
     font-size: 1rem;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    min-width: 80px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    padding: 8px 0;
   }
   
-  .nav-icon {
-    width: 72px;
-    height: 72px;
-    margin-bottom: 8px;
-    transition: transform 0.35s ease, filter 0.35s ease;
-    filter: drop-shadow(0 3px 8px rgba(255, 255, 255, 0.25));
-    border-radius: 12px;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
+.nav-icon {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  filter: drop-shadow(0 3px 8px rgba(255, 255, 255, 0.25));
+  border-radius: 12px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Rende l'icona recupero password quadrata */
+.nav-item:nth-child(5) .nav-icon {
+  object-fit: cover;
+  object-position: center;
+}
 
   .nav-label {
     text-align: center;
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: visible;
+    white-space: normal;
+    width: 100%;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   /* effetto hover più dinamico */
@@ -112,49 +123,67 @@
   @media (max-width: 768px) {
     .bottom-nav {
       flex-wrap: wrap;
-      gap: 24px;
-      padding: 16px 12px;
+      justify-content: center;
+      gap: 28px;
+      padding: 20px 16px;
       border-radius: 0;
     }
     
     .nav-item {
       font-size: 0.85rem;
-      min-width: 70px;
-      gap: 4px;
+      width: 85px;
+      min-width: 85px;
+      max-width: 85px;
+      padding: 6px 0;
     }
   
     .nav-icon {
       width: 54px;
       height: 54px;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .nav-label {
       font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    /* Mantieni icona recupero password quadrata anche su mobile */
+    .nav-item:nth-child(5) .nav-icon {
+      object-fit: cover;
+      object-position: center;
     }
   }
 
   @media (max-width: 480px) {
     .bottom-nav {
-      gap: 16px;
-      padding: 12px 8px;
+      gap: 18px;
+      padding: 16px 12px;
     }
 
     .nav-item {
       font-size: 0.8rem;
-      min-width: 60px;
-      gap: 3px;
+      width: 70px;
+      min-width: 70px;
+      max-width: 70px;
+      padding: 5px 0;
     }
 
     .nav-icon {
       width: 46px;
       height: 46px;
-      margin-bottom: 3px;
+      margin-bottom: 6px;
     }
 
     .nav-label {
       font-size: 0.7rem;
       line-height: 1.2;
+    }
+
+    /* Mantieni icona recupero password quadrata anche su mobile piccolo */
+    .nav-item:nth-child(5) .nav-icon {
+      object-fit: cover;
+      object-position: center;
     }
   }
   

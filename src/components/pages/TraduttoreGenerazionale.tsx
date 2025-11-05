@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './TraduttoreGenerazionale.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLanguage, faSearch, faExchangeAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,12 @@ const TraduttoreGenerazionale: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+  const suggestionsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   // Carica tutte le traduzioni all'avvio (opzionale - serve solo per "Mostra tutto")
   useEffect(() => {
@@ -133,6 +139,99 @@ const TraduttoreGenerazionale: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [searchWord]);
 
+  // Carica suggerimenti con debounce
+  useEffect(() => {
+    const loadSuggestions = async () => {
+      if (!searchWord.trim() || searchWord.length < 2) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+        return;
+      }
+
+      try {
+        const suggestionsList = await translatorApi.getSuggestions(searchWord.trim(), allTranslations, 5);
+        setSuggestions(suggestionsList);
+        setShowSuggestions(suggestionsList.length > 0);
+        setSelectedSuggestionIndex(-1);
+      } catch (error) {
+        console.error('Errore nel caricamento dei suggerimenti:', error);
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    };
+
+    // Cancella il timeout precedente
+    if (suggestionsTimeoutRef.current) {
+      clearTimeout(suggestionsTimeoutRef.current);
+    }
+
+    // Debounce di 300ms per i suggerimenti (più veloce del filtro)
+    suggestionsTimeoutRef.current = setTimeout(() => {
+      loadSuggestions();
+      suggestionsTimeoutRef.current = null;
+    }, 300);
+
+    return () => {
+      if (suggestionsTimeoutRef.current) {
+        clearTimeout(suggestionsTimeoutRef.current);
+        suggestionsTimeoutRef.current = null;
+      }
+    };
+  }, [searchWord, allTranslations]);
+
+  // Gestione click fuori dal dropdown per chiuderlo
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node) &&
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchWord(suggestion);
+    setShowSuggestions(false);
+    setSelectedSuggestionIndex(-1);
+    searchInputRef.current?.focus();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedSuggestionIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : prev
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedSuggestionIndex((prev) => (prev > 0 ? prev - 1 : -1));
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < suggestions.length) {
+          handleSuggestionClick(suggestions[selectedSuggestionIndex]);
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setSelectedSuggestionIndex(-1);
+        break;
+    }
+  };
+
   const handleToggleView = () => {
     setShowAll(!showAll);
   };
@@ -175,15 +274,53 @@ const TraduttoreGenerazionale: React.FC = () => {
           </label>
           <FontAwesomeIcon icon={faSearch} className="search-icon" aria-hidden="true" />
           <input
+            ref={searchInputRef}
             id="traduttore-search-input"
             type="text"
             placeholder={translationDirection === 'boomer-to-slang' 
               ? 'Inserisci una parola "boomer"...' 
               : 'Inserisci una parola slang...'}
             value={searchWord}
-            onChange={(e) => setSearchWord(e.target.value)}
+            onChange={(e) => {
+              setSearchWord(e.target.value);
+              setShowSuggestions(true);
+            }}
+            onFocus={() => {
+              if (suggestions.length > 0) {
+                setShowSuggestions(true);
+              }
+            }}
+            onKeyDown={handleKeyDown}
             className="traduttore__search-input"
+            autoComplete="off"
+            aria-autocomplete="list"
+            aria-expanded={showSuggestions}
+            aria-controls="traduttore-suggestions"
           />
+          {showSuggestions && suggestions.length > 0 && (
+            <div
+              ref={suggestionsRef}
+              id="traduttore-suggestions"
+              className="traduttore__suggestions"
+              role="listbox"
+            >
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={suggestion}
+                  className={`traduttore__suggestion ${
+                    index === selectedSuggestionIndex ? 'traduttore__suggestion--selected' : ''
+                  }`}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  onMouseEnter={() => setSelectedSuggestionIndex(index)}
+                  role="option"
+                  aria-selected={index === selectedSuggestionIndex}
+                >
+                  <FontAwesomeIcon icon={faSearch} className="suggestion-icon" aria-hidden="true" />
+                  <span>{suggestion}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         
         <div className="traduttore__direction">
