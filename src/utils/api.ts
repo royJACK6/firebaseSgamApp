@@ -274,9 +274,10 @@ export const translatorApi = {
       
       if (!response.ok) {
         const errorText = await response.text();
-        if (response.status === 404) {
+        // Il backend può restituire 404 o 400 quando il termine non viene trovato
+        if (response.status === 404 || response.status === 400) {
           // Parola non trovata, non è un errore critico
-          console.log('ℹ️ Parola non trovata:', word);
+          console.log('ℹ️ Parola non trovata:', word, '(status:', response.status + ')');
           return null;
         }
         throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);

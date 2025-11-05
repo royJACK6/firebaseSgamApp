@@ -91,12 +91,33 @@ const TraduttoreGenerazionale: React.FC = () => {
         }
       } catch (err) {
         console.error('Errore nella ricerca:', err);
-        const errorMessage = err instanceof Error ? err.message : 'Errore sconosciuto';
+        console.error('Tipo errore:', err instanceof TypeError ? 'TypeError (rete)' : err instanceof Error ? 'Error' : typeof err);
         
-        if (errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed to fetch')) {
-          setError('Impossibile connettersi al server. Verifica che il backend sia in esecuzione.');
+        // Verifica se è un errore di rete/connessione
+        const isNetworkError = 
+          err instanceof TypeError || // TypeError = errore di rete quando fetch fallisce
+          (err instanceof Error && (
+            err.message.includes('fetch') || 
+            err.message.includes('network') || 
+            err.message.includes('Failed to fetch') ||
+            err.message.includes('ERR_CONNECTION') ||
+            err.message.includes('ERR_NETWORK') ||
+            err.message.includes('NetworkError') ||
+            err.message.includes('Network request failed')
+          ));
+        
+        if (isNetworkError) {
+          setError('Impossibile connettersi al server. Verifica che il backend sia in esecuzione su http://localhost:5147');
         } else {
-          setError('Impossibile cercare la parola. Riprova più tardi.');
+          const errorMessage = err instanceof Error ? err.message : 'Errore sconosciuto';
+          // Se è un errore HTTP, mostra il codice di stato
+          if (errorMessage.includes('HTTP error! status:')) {
+            const statusMatch = errorMessage.match(/status: (\d+)/);
+            const statusCode = statusMatch ? statusMatch[1] : '';
+            setError(`Errore del backend (${statusCode}). Verifica i log del server.`);
+          } else {
+            setError(`Errore nella ricerca: ${errorMessage}`);
+          }
         }
         
         setTranslations([]);
@@ -197,9 +218,11 @@ const TraduttoreGenerazionale: React.FC = () => {
       ) : error ? (
         <div className="traduttore__error" role="alert" aria-live="assertive">
           <p>{error}</p>
-          <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
-            Assicurati che il backend sia in esecuzione su <code>http://localhost:5147</code>
-          </p>
+          {error.includes('connettersi al server') && (
+            <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
+              Assicurati che il backend sia in esecuzione su <code>http://localhost:5147</code>
+            </p>
+          )}
         </div>
       ) : displayTranslations.length === 0 && showAll && allTranslations.length === 0 ? (
         <div className="traduttore__no-results" role="status" aria-live="polite" aria-atomic="true">
@@ -210,9 +233,12 @@ const TraduttoreGenerazionale: React.FC = () => {
         </div>
       ) : displayTranslations.length === 0 && searchWord.trim() ? (
         <div className="traduttore__no-results" role="status" aria-live="polite" aria-atomic="true">
-          <p>Nessuna traduzione trovata per "{searchWord}".</p>
-          <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
-            Il backend ha risposto ma non ha trovato questa parola nel database.
+          <p><strong>Termine non trovato</strong></p>
+          <p style={{ marginTop: '12px', fontSize: '1rem' }}>
+            Non è stata trovata nessuna traduzione per "{searchWord}" nel database.
+          </p>
+          <p style={{ marginTop: '12px', fontSize: '0.9rem', color: '#64748b' }}>
+            Prova con un altro termine o verifica che il database contenga questa parola.
           </p>
         </div>
       ) : !showAll && !searchWord.trim() ? (
