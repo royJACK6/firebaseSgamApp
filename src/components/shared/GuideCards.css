@@ -1,0 +1,141 @@
+.guide-carousel-wrapper {
+  padding: 60px 20px;
+  background: #f8fafc;
+}
+
+.guide-carousel-container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.guide-carousel {
+  overflow: hidden;
+  margin: 0 60px;
+}
+
+.guide-carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.guide-carousel-slide {
+  flex: 0 0 25%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+  color: #1565D6;
+  font-size: 1.2rem;
+}
+
+.carousel-button:hover {
+  background: #1565D6;
+  color: white;
+  box-shadow: 0 6px 20px rgba(21, 101, 214, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-button:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-button.prev {
+  left: 0;
+}
+
+.carousel-button.next {
+  right: 0;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background: #94a3b8;
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background: #1565D6;
+  width: 32px;
+  border-radius: 6px;
+}
+
+/* Responsive - flex containing selected via JS */
+@media (max-width: 1200px) {
+  .guide-carousel-slide {
+    flex: 0 0 33.333%;
+  }
+}
+
+@media (max-width: 768px) {
+  .guide-carousel-slide {
+    flex: 0 0 50%;
+  }
+  
+  .guide-carousel {
+    margin: 0 50px;
+  }
+  
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .guide-carousel-slide {
+    flex: 0 0 100%;
+  }
+  
+  .guide-carousel {
+    margin: 0 45px;
+  }
+  
+  .carousel-button {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+  
+  .guide-carousel-slide .sg-card {
+    height: auto;
+  }
+}
+

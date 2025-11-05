@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --accessibility-font-size: 100%;
+  --accessibility-link-underline: none;
+  --accessibility-high-contrast: 0;
+  --accessibility-reduce-motion: 0;
+  --accessibility-focus-visible: 1;
+}
+
+* { 
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #F4F4FA;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Layout per footer sempre in basso */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Assicura che il contenuto non sovrapponga il footer */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Assicura che tutti gli elementi usino Montserrat */
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label, li, td, th {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Font per icone FontAwesome - mantieni il font delle icone */
+.fas, .far, .fab, .fal, .fad {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+
+/* Classe per accessibilità - nasconde visivamente ma accessibile ai screen reader */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Stili globali per focus visibile e accessibile */
+/* Rimuove outline solo per mouse, mantiene per tastiera */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Focus visibile per navigazione con tastiera */
+*:focus-visible {
+  outline: 3px solid #1565D6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Focus migliorato per bottoni */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #1565D6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(21, 101, 214, 0.2);
+}
+
+/* Focus per input e select */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #1565D6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(21, 101, 214, 0.15);
+}
+
+/* Evita doppio outline su elementi che già hanno box-shadow nel focus */
+button:focus-visible:has(+ *),
+input:focus-visible:has(+ *) {
+  box-shadow: 0 0 0 3px rgba(21, 101, 214, 0.25);
+}
+
+/* Assicura che gli elementi con tabIndex siano navigabili */
+[tabindex]:not([tabindex="-1"]):focus {
+  outline: 3px solid #1565D6;
+  outline-offset: 2px;
+}
+
+/* Responsive general settings */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ===== ACCESSIBILITY SETTINGS ===== */
+/* Font Size */
+body {
+  font-size: var(--accessibility-font-size) !important;
+}
+
+html[data-accessibility-font="large"] {
+  font-size: 120% !important;
+}
+
+html[data-accessibility-font="xlarge"] {
+  font-size: 150% !important;
+}
+
+/* Link Underline */
+html[data-accessibility-links="underline"] a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+}
+
+/* High Contrast */
+html[data-accessibility-contrast="high"] body,
+html[data-accessibility-contrast="high"] #root,
+html[data-accessibility-contrast="high"] .main-content {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+html[data-accessibility-contrast="high"] h1,
+html[data-accessibility-contrast="high"] h2,
+html[data-accessibility-contrast="high"] h3,
+html[data-accessibility-contrast="high"] h4,
+html[data-accessibility-contrast="high"] h5,
+html[data-accessibility-contrast="high"] h6,
+html[data-accessibility-contrast="high"] p,
+html[data-accessibility-contrast="high"] span,
+html[data-accessibility-contrast="high"] div:not([class*="modal"]):not([class*="dropdown"]) {
+  color: #000000 !important;
+}
+
+html[data-accessibility-contrast="high"] a {
+  color: #0000ff !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
+
+html[data-accessibility-contrast="high"] a:visited {
+  color: #551a8b !important;
+}
+
+html[data-accessibility-contrast="high"] button,
+html[data-accessibility-contrast="high"] [role="button"] {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  font-weight: bold !important;
+}
+
+html[data-accessibility-contrast="high"] button:hover,
+html[data-accessibility-contrast="high"] [role="button"]:hover {
+  background: #333333 !important;
+  border-color: #333333 !important;
+}
+
+html[data-accessibility-contrast="high"] input,
+html[data-accessibility-contrast="high"] select,
+html[data-accessibility-contrast="high"] textarea {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+html[data-accessibility-contrast="high"] input:focus,
+html[data-accessibility-contrast="high"] select:focus,
+html[data-accessibility-contrast="high"] textarea:focus {
+  border-color: #0000ff !important;
+  outline: 3px solid #0000ff !important;
+}
+
+html[data-accessibility-contrast="high"] .card,
+html[data-accessibility-contrast="high"] article,
+html[data-accessibility-contrast="high"] section {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+}
+
+html[data-accessibility-contrast="high"] .footer,
+html[data-accessibility-contrast="high"] footer {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+html[data-accessibility-contrast="high"] .footer a,
+html[data-accessibility-contrast="high"] footer a {
+  color: #ffffff !important;
+}
+
+html[data-accessibility-contrast="high"] .header-link,
+html[data-accessibility-contrast="high"] nav a {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+html[data-accessibility-contrast="high"] .blue-bar {
+  background: #000000 !important;
+}
+
+/* Reduce Motion */
+html[data-accessibility-motion="reduce"] *,
+html[data-accessibility-motion="reduce"] *::before,
+html[data-accessibility-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Enhanced Focus - Sovrascrive tutti gli altri stili di focus */
+html[data-accessibility-focus="enhanced"] *:focus-visible {
+  outline: 5px solid #ff0000 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 6px #ff0000, 0 0 0 10px rgba(255, 0, 0, 0.5) !important;
+  border-radius: 4px !important;
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+html[data-accessibility-focus="enhanced"] button:focus-visible,
+html[data-accessibility-focus="enhanced"] a:focus-visible,
+html[data-accessibility-focus="enhanced"] [role="button"]:focus-visible,
+html[data-accessibility-focus="enhanced"] [tabindex]:focus-visible {
+  outline: 5px solid #ff0000 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 6px #ff0000, 0 0 0 10px rgba(255, 0, 0, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+html[data-accessibility-focus="enhanced"] input:focus-visible,
+html[data-accessibility-focus="enhanced"] select:focus-visible,
+html[data-accessibility-focus="enhanced"] textarea:focus-visible {
+  outline: 5px solid #ff0000 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 6px #ff0000, 0 0 0 10px rgba(255, 0, 0, 0.5) !important;
+  border: 2px solid #ff0000 !important;
+  border-radius: 4px !important;
+}
