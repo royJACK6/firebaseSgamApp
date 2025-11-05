@@ -1,0 +1,161 @@
+.info {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 100px 20px 80px 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.info__intro {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.info__intro h1 {
+  font-size: 2.5rem;
+  color: #1565D6;
+  margin-bottom: 16px;
+}
+
+.info__intro p {
+  font-size: 1.2rem;
+  color: #475569;
+  line-height: 1.8;
+}
+
+.info__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-bottom: 50px;
+}
+
+.info-card {
+  background: #F4F4FA;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(66, 165, 245, 0.2);
+}
+
+.info-card__icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #1565D6, #1565D6);
+  color: white;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.info-card__title {
+  font-size: 1.5rem;
+  color: #1565D6;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.info-card__description {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.info__methodology {
+  margin-bottom: 60px;
+}
+
+.info__methodology h2 {
+  font-size: 2rem;
+  color: #1565D6;
+  margin-bottom: 20px;
+}
+
+.info__methodology p {
+  font-size: 1.1rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.info__methodology ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.info__methodology li {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #475569;
+}
+
+.info__footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .info {
+    padding: 80px 16px 60px 16px;
+  }
+
+  .info__intro h1 {
+    font-size: 2rem;
+  }
+
+  .info__intro p {
+    font-size: 1rem;
+  }
+
+  .info__cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+
+  .info-card__title {
+    font-size: 1.3rem;
+  }
+
+  .info__methodology h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info {
+    padding: 60px 12px 40px 12px;
+  }
+
+  .info__intro h1 {
+    font-size: 1.6rem;
+  }
+
+  .info__intro p {
+    font-size: 0.95rem;
+  }
+
+  .info-card__icon {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
