@@ -4,7 +4,6 @@ import './SearchBar.css';
 import { searchApi, type SearchPage } from '../../utils/api';
 
 const SearchBar: React.FC = () => {
-  const [enlarged, setEnlarged] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,11 +15,6 @@ const SearchBar: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100 && !isMobile) setEnlarged(true);
-      else setEnlarged(false);
-    };
-
     const handleResize = () => {
       const mobile = window.innerWidth <= 576;
       setIsMobile(mobile);
@@ -33,13 +27,11 @@ const SearchBar: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     document.addEventListener('mousedown', handleClickOutside);
     handleResize(); 
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -97,7 +89,7 @@ const SearchBar: React.FC = () => {
     }
   };
 
-  const showInput = !isMobile || enlarged || isOpen;
+  const showInput = !isMobile || isOpen;
 
   return (
     <div className="searchbar-wrapper" role="search" aria-label="Ricerca nel sito" ref={searchRef}>
@@ -108,7 +100,7 @@ const SearchBar: React.FC = () => {
           </label>
           <input
             id="search-input"
-            className={`searchbar ${enlarged ? 'enlarged' : ''} ${isOpen && isMobile ? 'open' : ''}`}
+            className={`searchbar ${isOpen && isMobile ? 'open' : ''}`}
             type="text"
             placeholder="Cerca servizi, guide e informazioni..."
             aria-describedby="search-help"

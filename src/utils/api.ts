@@ -5,8 +5,9 @@ const API_BASE_URL = 'http://localhost:5147/api';
 
 export interface GlossaryModel {
   id?: number;
-  boomerWord: string;
-  slangWord: string;
+  term: string;
+  definition: string;
+  category: string;
 }
 
 export interface GlossaryTerm {
@@ -30,7 +31,7 @@ export const glossaryApi = {
   getAll: async (): Promise<GlossaryTerm[]> => {
     try {
       const url = `${API_BASE_URL}/Glossary/GetAll`;
-      console.log('🔍 Chiamata API getAll:', url);
+      console.log('🔍 Chiamata API getAll (Glossario):', url);
       
       const response = await fetch(url, {
         method: 'GET',
@@ -48,9 +49,28 @@ export const glossaryApi = {
         throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
       
-      const data = await response.json();
-      console.log('✅ Dati ricevuti:', data);
-      return Array.isArray(data) ? data : [];
+      const backendData = await response.json();
+      console.log('✅ Dati grezzi dal backend:', backendData);
+      console.log('📦 Primo elemento:', backendData[0]);
+      
+      if (!Array.isArray(backendData)) {
+        return [];
+      }
+      
+      // Mappa i campi del backend al formato del frontend
+      const mappedData: GlossaryTerm[] = backendData.map((item: any) => ({
+        id: item.id,
+        term: item.term || item.Term || '',
+        definition: item.description || item.Description || item.definition || item.Definition || '',
+        category: item.category || item.Category || 'Generale',
+        createdAt: item.createdAt || item.CreatedAt,
+        updatedAt: item.updatedAt || item.UpdatedAt
+      }));
+      
+      console.log('✅ Dati mappati:', mappedData);
+      console.log('📦 Primo elemento mappato:', mappedData[0]);
+      
+      return mappedData;
     } catch (error) {
       console.error('Errore nel caricamento del glossario:', error);
       throw error;
@@ -143,15 +163,30 @@ export const glossaryApi = {
 
   add: async (glossary: GlossaryModel): Promise<GlossaryTerm> => {
     try {
+      // Mappa i campi del frontend a quelli del backend
+      const backendData = {
+        term: glossary.term,
+        description: glossary.definition, // Backend usa 'description', frontend usa 'definition'
+        category: glossary.category
+      };
+      
+      console.log('📤 Glossario Add - Dati inviati al backend:', backendData);
+      
       const response = await fetch(`${API_BASE_URL}/Glossary/Add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(glossary)
+        body: JSON.stringify(backendData)
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      const result = await response.json();
+      
+      // Mappa la risposta del backend al formato frontend
+      return {
+        ...result,
+        definition: result.description || result.Description || result.definition
+      };
     } catch (error) {
       console.error('Errore nell\'aggiunta del termine:', error);
       throw error;
@@ -160,15 +195,30 @@ export const glossaryApi = {
 
   update: async (id: number, glossary: GlossaryModel): Promise<GlossaryTerm> => {
     try {
+      // Mappa i campi del frontend a quelli del backend
+      const backendData = {
+        term: glossary.term,
+        description: glossary.definition, // Backend usa 'description', frontend usa 'definition'
+        category: glossary.category
+      };
+      
+      console.log('📤 Glossario Update - Dati inviati al backend:', backendData);
+      
       const response = await fetch(`${API_BASE_URL}/Glossary/Update/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(glossary)
+        body: JSON.stringify(backendData)
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      const result = await response.json();
+      
+      // Mappa la risposta del backend al formato frontend
+      return {
+        ...result,
+        definition: result.description || result.Description || result.definition
+      };
     } catch (error) {
       console.error('Errore nell\'aggiornamento del termine:', error);
       throw error;
@@ -194,6 +244,7 @@ export interface TranslatorModel {
   id?: number;
   boomerWord: string;
   slangWord: string;
+  description?: string;
 }
 
 // Interfaccia per i dati che arrivano dal backend
@@ -397,12 +448,21 @@ export const translatorApi = {
       const url = `${API_BASE_URL}/Translator/Add`;
       console.log('🔍 Chiamata API add:', url);
       
+      // Mappa i campi del frontend a quelli del backend
+      const backendData = {
+        oldWord: translator.boomerWord,
+        newWord: translator.slangWord,
+        descriptionWord: translator.description || ''
+      };
+      
+      console.log('📤 Dati inviati al backend:', backendData);
+      
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(translator)
+        body: JSON.stringify(backendData)
       });
       
       if (!response.ok) {
@@ -423,12 +483,21 @@ export const translatorApi = {
       const url = `${API_BASE_URL}/Translator/Update/${id}`;
       console.log('🔍 Chiamata API update:', url);
       
+      // Mappa i campi del frontend a quelli del backend
+      const backendData = {
+        oldWord: translator.boomerWord,
+        newWord: translator.slangWord,
+        descriptionWord: translator.description || ''
+      };
+      
+      console.log('📤 Dati inviati al backend:', backendData);
+      
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(translator)
+        body: JSON.stringify(backendData)
       });
       
       if (!response.ok) {

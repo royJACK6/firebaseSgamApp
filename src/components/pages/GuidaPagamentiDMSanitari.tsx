@@ -13,8 +13,6 @@ const GuidaPagamentiDMSanitari: React.FC = () => {
     difficulty: "Media",
     duration: "10 minuti",
     stepsCount: steps.length,
-    cost: "Variabile",
-    validity: "Una tantum",
   };
 
   return (

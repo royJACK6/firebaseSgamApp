@@ -13,8 +13,6 @@ const GuidaRecuperoPassword: React.FC = () => {
     difficulty: "Facile",
     duration: "5 minuti",
     stepsCount: steps.length,
-    cost: "Gratuito",
-    validity: "Una tantum",
   };
 
   return (

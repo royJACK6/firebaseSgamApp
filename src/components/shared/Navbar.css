@@ -17,6 +17,7 @@
   align-items: center;
   width: 100%;
   padding: 0;
+  gap: 20px;
 }
 
 .logo-button {
@@ -67,19 +68,31 @@
   object-position: left;
 }
 
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 15px;
   padding: 8px 20px;
-  margin-left: auto;
 }
 
 /* Navbar responsive styles */
 
 /* Responsive */
 @media (max-width: 768px) {
+  .navbar-simple > nav {
+    gap: 10px;
+  }
+  
   .logo-button {
     padding: 8px 12px;
   }
@@ -93,14 +106,22 @@
     width: 72px;
     height: 72px;
   }
+  
+  .navbar-center {
+    max-width: 300px;
+  }
 
   .navbar-right {
-    gap: 10px;
+    gap: 8px;
     padding: 6px 12px;
   }
 }
 
 @media (max-width: 480px) {
+  .navbar-simple > nav {
+    gap: 5px;
+  }
+  
   .logos-img {
     display: none;
   }
@@ -108,6 +129,19 @@
   .logo-img {
     width: 44px;
     height: 44px;
+  }
+  
+  .logo-button {
+    padding: 6px 8px;
+  }
+  
+  .navbar-center {
+    max-width: 200px;
+  }
+
+  .navbar-right {
+    gap: 5px;
+    padding: 4px 8px;
   }
 }
 
@@ -150,31 +184,41 @@
 }
 
 .sgamy-nav-icon {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 50%;
 }
 
 .accessibility-nav-icon {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 50%;
 }
 
-/* Responsive per icona accessibilità */
+/* Responsive per icone navbar */
 @media (max-width: 768px) {
+  .sgamy-nav-icon {
+    width: 65px;
+    height: 65px;
+  }
+  
   .accessibility-nav-icon {
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
   }
 }
 
 @media (max-width: 480px) {
+  .sgamy-nav-icon {
+    width: 55px;
+    height: 55px;
+  }
+  
   .accessibility-nav-icon {
-    width: 70px;
-    height: 70px;
+    width: 55px;
+    height: 55px;
   }
 }
 

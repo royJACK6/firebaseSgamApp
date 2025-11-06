@@ -1,6 +1,7 @@
 .guide-carousel-wrapper {
   padding: 60px 20px;
   background: #f8fafc;
+  min-height: 100vh;
 }
 
 .guide-carousel-container {
@@ -101,41 +102,164 @@
   .guide-carousel-slide {
     flex: 0 0 33.333%;
   }
+  
+  .guide-carousel-wrapper {
+    padding: 50px 15px;
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .guide-carousel-slide {
-    flex: 0 0 50%;
-  }
-  
-  .guide-carousel {
-    margin: 0 50px;
+    flex: 0 0 33.333%;
   }
   
   .carousel-button {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .guide-carousel-wrapper {
+    padding: 40px 20px;
+  }
+  
+  .sg-section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Nascondi pulsanti e dots su mobile/tablet */
+  .carousel-button {
+    display: none;
+  }
+  
+  .carousel-dots {
+    display: none;
+  }
+  
+  /* Abilita scroll orizzontale nativo con snap */
+  .guide-carousel-container {
+    overflow: visible;
+  }
+  
+  .guide-carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: #1565D6 #f1f1f1;
+  }
+  
+  .guide-carousel::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .guide-carousel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .guide-carousel::-webkit-scrollbar-thumb {
+    background: #1565D6;
+    border-radius: 10px;
+  }
+  
+  .guide-carousel::-webkit-scrollbar-thumb:hover {
+    background: #0d47a1;
+  }
+  
+  .guide-carousel-track {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    width: max-content;
+    min-width: 100%;
+    transform: none !important;
+    transition: none;
+  }
+  
+  .guide-carousel-slide {
+    flex: 0 0 calc(100% - 20px);
+    min-width: calc(100vw - 60px);
+    max-width: calc(100vw - 60px);
+    padding: 0;
+    scroll-snap-align: start;
+  }
+  
+  .guide-carousel-slide .sg-card {
+    height: 380px;
+  }
+  
+  /* Zoom immagini per occupare tutta la card su tablet */
+  .guide-carousel-slide .sg-guide-card__img {
+    transform: scale(1.4);
+    object-fit: cover;
+  }
+  
+  .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
+    transform: scale(1.45);
+  }
+  
+  /* Override specifico per card Recupero Password */
+  .guide-carousel-slide .sg-guide-card--recupero-password .sg-guide-card__img {
+    transform: scale(1.5);
+  }
+  
+  .guide-carousel-slide .sg-guide-card--recupero-password:hover .sg-guide-card__img {
+    transform: scale(1.55);
   }
 }
 
 @media (max-width: 480px) {
-  .guide-carousel-slide {
-    flex: 0 0 100%;
+  .guide-carousel-wrapper {
+    padding: 30px 12px;
+  }
+  
+  .sg-section-title {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    padding: 0 10px;
   }
   
   .guide-carousel {
-    margin: 0 45px;
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
   
-  .carousel-button {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+  .guide-carousel-slide {
+    min-width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
   }
   
   .guide-carousel-slide .sg-card {
-    height: auto;
+    height: 360px;
+  }
+  
+  /* Zoom immagini per occupare tutta la card su mobile */
+  .guide-carousel-slide .sg-guide-card__img {
+    transform: scale(1.5);
+    object-fit: cover;
+  }
+  
+  .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
+    transform: scale(1.55);
+  }
+  
+  /* Override specifico per card Recupero Password */
+  .guide-carousel-slide .sg-guide-card--recupero-password .sg-guide-card__img {
+    transform: scale(1.6);
+  }
+  
+  .guide-carousel-slide .sg-guide-card--recupero-password:hover .sg-guide-card__img {
+    transform: scale(1.65);
   }
 }
 

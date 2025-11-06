@@ -13,8 +13,6 @@ const GuidaAnagrafeDigitale: React.FC = () => {
     difficulty: "Facile",
     duration: "10 minuti",
     stepsCount: steps.length,
-    cost: "Gratuito",
-    validity: "Temporanea",
   };
 
   return (

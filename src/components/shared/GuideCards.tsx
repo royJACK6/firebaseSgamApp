@@ -13,8 +13,10 @@ const Card: React.FC<React.PropsWithChildren<{ className?: string; onClick?: () 
 
 const GuideCard: React.FC<GuideType> = ({ title, description, icon, link }) => {
   const go = () => (window.location.href = link);
+  const isRecuperoPassword = title === "Recupero Password";
+  
   return (
-    <Card className="sg-guide-card" onClick={go}>
+    <Card className={`sg-guide-card ${isRecuperoPassword ? 'sg-guide-card--recupero-password' : ''}`} onClick={go}>
       <div className="sg-guide-card__media">
         <img
           src={icon}

@@ -13,8 +13,6 @@ interface GuidaInfo {
   difficulty: string;
   duration: string;
   stepsCount?: number;
-  cost?: string;
-  validity?: string;
 }
 
 interface GuidaTemplateProps {
@@ -65,8 +63,6 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
               <span className="duration">{info.duration}</span>
               <span className="steps">{info.stepsCount || steps.length} passi</span>
             </div>
-            {info.cost && <div className="info-extra"><strong>Costo:</strong> {info.cost}</div>}
-            {info.validity && <div className="info-extra"><strong>Validità:</strong> {info.validity}</div>}
           </div>
         </div>
       </header>

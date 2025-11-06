@@ -18,8 +18,6 @@ const GuidaSpid: React.FC = () => {
     difficulty: "Facile",
     duration: "15 minuti",
     stepsCount: steps.length,
-    cost: "Gratuito",
-    validity: "Illimitata",
   };
 
   return (

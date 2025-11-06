@@ -30,8 +30,6 @@ const GuidaSicurezza: React.FC = () => {
     difficulty: "Avanzato",
     duration: "45 minuti",
     stepsCount: steps.length,
-    cost: "Variabile",
-    validity: "Continua",
   };
 
   return (

@@ -49,15 +49,31 @@ const AntiFrode: React.FC = () => {
       <section className="antifrode__chatbot">
         <h2>Chatbot Semaforo Dinamico</h2>
         <p>Simula la valutazione di un link sospetto con il nostro semaforo:</p>
-        <div className="semaforo semaforo--animated">
-          <div className={`semaforo__item verde ${semaforoColor === 'verde' ? 'active' : ''}`}>
-            <FontAwesomeIcon icon={faCheckCircle} /> <span>Sicuro</span>
+        <div className="semaforo-container">
+          <div className="semaforo-visual">
+            <div className={`semaforo-light verde ${semaforoColor === 'verde' ? 'active' : ''}`}></div>
+            <div className={`semaforo-light giallo ${semaforoColor === 'giallo' ? 'active' : ''}`}></div>
+            <div className={`semaforo-light rosso ${semaforoColor === 'rosso' ? 'active' : ''}`}></div>
           </div>
-          <div className={`semaforo__item giallo ${semaforoColor === 'giallo' ? 'active' : ''}`}>
-            <FontAwesomeIcon icon={faExclamationTriangle} /> <span>Rischio Moderato</span>
-          </div>
-          <div className={`semaforo__item rosso ${semaforoColor === 'rosso' ? 'active' : ''}`}>
-            <FontAwesomeIcon icon={faShieldAlt} /> <span>Possibile Rischio</span>
+          <div className="semaforo-status">
+            {semaforoColor === 'verde' && (
+              <div className="status-message verde">
+                <FontAwesomeIcon icon={faCheckCircle} />
+                <span>Sicuro - Nessun rischio rilevato</span>
+              </div>
+            )}
+            {semaforoColor === 'giallo' && (
+              <div className="status-message giallo">
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+                <span>Attenzione - Rischio Moderato</span>
+              </div>
+            )}
+            {semaforoColor === 'rosso' && (
+              <div className="status-message rosso">
+                <FontAwesomeIcon icon={faShieldAlt} />
+                <span>Pericolo - Possibile Rischio</span>
+              </div>
+            )}
           </div>
         </div>
 

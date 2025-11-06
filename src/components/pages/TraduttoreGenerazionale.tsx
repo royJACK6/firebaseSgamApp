@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TraduttoreGenerazionale.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLanguage, faSearch, faExchangeAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faLanguage, faSearch, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { translatorApi } from '../../utils/api';
 import type { TranslationResult } from '../../utils/api';
 
 const TraduttoreGenerazionale: React.FC = () => {
   const [searchWord, setSearchWord] = useState('');
-  const [translationDirection, setTranslationDirection] = useState<'boomer-to-slang' | 'slang-to-boomer'>('boomer-to-slang');
   const [translations, setTranslations] = useState<TranslationResult[]>([]);
   const [allTranslations, setAllTranslations] = useState<TranslationResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -277,9 +276,7 @@ const TraduttoreGenerazionale: React.FC = () => {
             ref={searchInputRef}
             id="traduttore-search-input"
             type="text"
-            placeholder={translationDirection === 'boomer-to-slang' 
-              ? 'Inserisci una parola "boomer"...' 
-              : 'Inserisci una parola slang...'}
+            placeholder="Inserisci una parola da tradurre..."
             value={searchWord}
             onChange={(e) => {
               setSearchWord(e.target.value);
@@ -321,22 +318,6 @@ const TraduttoreGenerazionale: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
-        
-        <div className="traduttore__direction">
-          <label htmlFor="traduttore-direction-select" className="sr-only">
-            Scegli la direzione della traduzione
-          </label>
-          <FontAwesomeIcon icon={faExchangeAlt} className="direction-icon" aria-hidden="true" />
-          <select
-            id="traduttore-direction-select"
-            value={translationDirection}
-            onChange={(e) => setTranslationDirection(e.target.value as 'boomer-to-slang' | 'slang-to-boomer')}
-            className="traduttore__direction-select"
-          >
-            <option value="boomer-to-slang">Boomer → Slang</option>
-            <option value="slang-to-boomer">Slang → Boomer</option>
-          </select>
         </div>
 
         <button
@@ -394,8 +375,7 @@ const TraduttoreGenerazionale: React.FC = () => {
           </div>
           <div className="traduttore__lista">
             {displayTranslations.map((translation, index) => {
-              // Quando mostra tutto, sempre boomer → slang. Altrimenti rispetta la direzione scelta
-              const isReversed = !showAll && translationDirection === 'slang-to-boomer';
+              // Sempre visualizza Boomer → Slang
               
               // Debug: mostra cosa c'è nell'oggetto traduzione
               console.log('🎨 Rendering card per traduzione:', translation);
@@ -414,23 +394,15 @@ const TraduttoreGenerazionale: React.FC = () => {
                     </div>
                     <div className="traduttore-card__content">
                       <div className="traduttore-card__from">
-                        <span className="traduttore-card__label">
-                          {isReversed ? 'Slang' : 'Boomer'}
-                        </span>
-                        <h2 className="traduttore-card__word">
-                          {isReversed ? slangText : boomerText}
-                        </h2>
+                        <span className="traduttore-card__label">Boomer</span>
+                        <h2 className="traduttore-card__word">{boomerText}</h2>
                       </div>
                       <div className="traduttore-card__arrow">
                         <FontAwesomeIcon icon={faArrowRight} aria-hidden="true" />
                       </div>
                       <div className="traduttore-card__to">
-                        <span className="traduttore-card__label">
-                          {isReversed ? 'Boomer' : 'Slang'}
-                        </span>
-                        <h2 className="traduttore-card__word">
-                          {isReversed ? boomerText : slangText}
-                        </h2>
+                        <span className="traduttore-card__label">Slang</span>
+                        <h2 className="traduttore-card__word">{slangText}</h2>
                       </div>
                     </div>
                   </div>

@@ -20,8 +20,6 @@ const GuidaCie: React.FC = () => {
     difficulty: "Facile",
     duration: "20 minuti",
     stepsCount: steps.length,
-    cost: "Gratuito",
-    validity: "10 anni",
   };
 
   return (

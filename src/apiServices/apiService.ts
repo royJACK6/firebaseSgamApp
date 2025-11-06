@@ -17,37 +17,47 @@ export interface AnalyzeResult {
 }
 
 /**
- * Controlla se il server API è disponibile
+ * Controlla se il server API è disponibile facendo un ping
  */
 export async function checkServerStatus(): Promise<boolean> {
   try {
-    // Prova con una richiesta veloce
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 secondi di timeout
+    console.log('🏓 PING: Verifico disponibilità server...');
+    const startTime = Date.now();
     
+    // Timeout di 5 secondi per dare tempo al server
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
+    // Prova a fare una richiesta di test minima
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message_text: 'ping' }), // Messaggio di test minimo
+      body: JSON.stringify({ message_text: 'ping' }),
       signal: controller.signal
     });
     
     clearTimeout(timeoutId);
+    const elapsedTime = Date.now() - startTime;
     
-    // Se è 404, il server/tunnel non è attivo o l'endpoint non esiste
-    if (response.status === 404) {
-      console.log('⚠️ Server risponde 404 - endpoint non trovato o tunnel non attivo');
-      return false;
-    }
+    console.log(`✅ PONG! Server risponde in ${elapsedTime}ms con status ${response.status}`);
     
-    // Qualsiasi altra risposta (200, 400, 500, etc.) significa che il server è raggiungibile
-    console.log('✅ Server disponibile, status:', response.status);
+    // Se il server risponde con QUALSIASI status code → è ONLINE
+    // Non importa se è 200, 400, 500... se risponde è attivo!
     return true;
+    
   } catch (error) {
-    // Errore di rete o timeout - server non disponibile
-    console.log('❌ Server API non disponibile:', error);
+    // Solo errori di rete o timeout indicano che il server è offline
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        console.log('💤 TIMEOUT: Server non risponde entro 5 secondi → Sta dormendo');
+      } else {
+        console.log('💤 ERRORE RETE: Server non raggiungibile →', error.message);
+      }
+    } else {
+      console.log('💤 ERRORE: Server non disponibile');
+    }
     return false;
   }
 }

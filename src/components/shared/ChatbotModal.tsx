@@ -41,8 +41,10 @@ const ChatbotModal: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       const checkServer = async () => {
+        console.log('🔍 Chatbot: Verifico se Sgamy è sveglio...');
         setServerStatus('checking');
         const isOnline = await checkServerStatus();
+        console.log(`📡 Chatbot: Server ${isOnline ? 'ONLINE ✅' : 'OFFLINE (dormendo) 💤'}`);
         setServerStatus(isOnline ? 'online' : 'offline');
       };
       checkServer();
@@ -147,6 +149,8 @@ const ChatbotModal: React.FC = () => {
       console.log('📨 Risposta chatbot:', botResponse);
 
       if (botResponse && botResponse.text && botResponse.text.trim().length > 0) {
+        // Server ha risposto correttamente
+        setServerStatus('online');
         setMessages(prev => [...prev, { 
           type: 'bot', 
           text: botResponse.text.trim(),
@@ -160,6 +164,8 @@ const ChatbotModal: React.FC = () => {
       }
     } catch (error) {
       console.error('❌ Errore nella chiamata API:', error);
+      // Solo ora segna il server come offline
+      setServerStatus('offline');
       setMessages(prev => [...prev, {
         type: 'bot',
         text: 'Si è verificato un errore durante la comunicazione con il server. Riprova più tardi.'
@@ -193,8 +199,8 @@ const ChatbotModal: React.FC = () => {
               <span className="status-indicator"></span>
               <span className="status-text">
                 {serverStatus === 'checking' && 'Controllo...'}
-                {serverStatus === 'online' && 'Sgamy è sveglio!'}
-                {serverStatus === 'offline' && 'Sgamy sta dormendo...'}
+                {serverStatus === 'online' && 'Sgamy è operativo!'}
+                {serverStatus === 'offline' && 'Sgamy sta dormendo... zzz...'}
               </span>
             </div>
             <button

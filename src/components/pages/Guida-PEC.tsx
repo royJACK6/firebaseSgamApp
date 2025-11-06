@@ -64,8 +64,6 @@ const GuidaPec: React.FC = () => {
     difficulty: "Medio",
     duration: "30 minuti",
     stepsCount: steps.length,
-    cost: "Variabile",
-    validity: "1 anno"
   };
 
   return (

@@ -1,0 +1,539 @@
+.admin-crud {
+  min-height: 100vh;
+  background: #F4F4FA;
+  padding: 20px;
+}
+
+.admin-crud__header {
+  max-width: 1400px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 24px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.admin-crud__back {
+  display: inline-block;
+  color: #1565D6;
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.admin-crud__back:hover {
+  color: #1e88e5;
+  transform: translateX(-2px);
+}
+
+.admin-crud__header h1 {
+  font-size: 1.75rem;
+  color: #1a202c;
+  margin: 0;
+}
+
+.admin-crud__add-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #1565D6 0%, #1e88e5 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(21, 101, 214, 0.2);
+}
+
+.admin-crud__add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(21, 101, 214, 0.3);
+}
+
+.admin-crud__add-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(21, 101, 214, 0.2);
+}
+
+.admin-crud__success {
+  max-width: 1400px;
+  margin: 0 auto 24px;
+  padding: 16px 24px;
+  background: #c6f6d5;
+  color: #2f855a;
+  border-radius: 8px;
+  border-left: 4px solid #38a169;
+  font-weight: 600;
+}
+
+.admin-crud__error {
+  max-width: 1400px;
+  margin: 0 auto 24px;
+  padding: 16px 24px;
+  background: #fed7d7;
+  color: #c53030;
+  border-radius: 8px;
+  border-left: 4px solid #e53e3e;
+  font-weight: 600;
+}
+
+.admin-crud__form-card {
+  max-width: 1400px;
+  margin: 0 auto 32px;
+  padding: 32px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.admin-crud__form-card:hover {
+  border-color: #1565D6;
+}
+
+.admin-crud__form-card h2 {
+  font-size: 1.5rem;
+  color: #1a202c;
+  margin-bottom: 24px;
+}
+
+.admin-crud__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-crud__field label {
+  display: block;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.admin-crud__field input,
+.admin-crud__field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.admin-crud__field input:focus,
+.admin-crud__field textarea:focus {
+  outline: none;
+  border-color: #1565D6;
+  box-shadow: 0 0 0 3px rgba(21, 101, 214, 0.1);
+}
+
+.admin-crud__form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.admin-crud__btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-crud__btn--save {
+  background: #48bb78;
+  color: white;
+}
+
+.admin-crud__btn--save:hover {
+  background: #38a169;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+.admin-crud__btn--cancel {
+  background: #cbd5e0;
+  color: #2d3748;
+}
+
+.admin-crud__btn--cancel:hover {
+  background: #a0aec0;
+}
+
+.admin-crud__loading {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.admin-crud__table-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.admin-crud__table-container:hover {
+  border-color: rgba(21, 101, 214, 0.3);
+}
+
+.admin-crud__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-crud__table thead {
+  background: linear-gradient(135deg, #1565D6 0%, #1e88e5 100%);
+  color: white;
+}
+
+.admin-crud__table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.admin-crud__table td {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+/* Stile per colonna Definizione del Glossario (3° colonna) */
+.admin-crud__table td:nth-child(3) {
+  max-width: 400px;
+  min-width: 250px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.5;
+  background-color: rgba(21, 101, 214, 0.02);
+  font-size: 0.95rem;
+}
+
+/* Stile per colonna Descrizione del Traduttore (4° colonna) */
+.admin-crud__table td:nth-child(4) {
+  max-width: 350px;
+  min-width: 200px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.5;
+  background-color: rgba(21, 101, 214, 0.02);
+  font-size: 0.95rem;
+}
+
+.admin-crud__table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.admin-crud__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-crud__empty {
+  text-align: center;
+  color: #718096;
+  padding: 48px !important;
+  font-size: 1.1rem;
+}
+
+.admin-crud__category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #e6f2ff;
+  color: #1565D6;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.admin-crud__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-crud__action-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.admin-crud__action-btn--edit {
+  background: #e3f2fd;
+  color: #1565D6;
+}
+
+.admin-crud__action-btn--edit:hover {
+  background: #bbdefb;
+  color: #0d47a1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(21, 101, 214, 0.2);
+}
+
+.admin-crud__action-btn--delete {
+  background: #fed7d7;
+  color: #c53030;
+}
+
+.admin-crud__action-btn--delete:hover {
+  background: #fc8181;
+  color: #7f1d1d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.2);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .admin-crud {
+    padding: 16px;
+  }
+
+  .admin-crud__header {
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .admin-crud__header h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-crud__form-card {
+    padding: 28px;
+  }
+
+  .admin-crud__table {
+    font-size: 0.9rem;
+  }
+
+  .admin-crud__table th,
+  .admin-crud__table td {
+    padding: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .admin-crud {
+    padding: 12px;
+  }
+
+  .admin-crud__header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+
+  .admin-crud__header h1 {
+    font-size: 1.3rem;
+  }
+
+  .admin-crud__back {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .admin-crud__add-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .admin-crud__form-card {
+    padding: 24px 16px;
+    border-radius: 20px;
+  }
+
+  .admin-crud__form-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+
+  .admin-crud__field {
+    margin-bottom: 18px;
+  }
+
+  .admin-crud__field label {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .admin-crud__field input,
+  .admin-crud__field textarea {
+    padding: 12px 14px;
+    font-size: 16px; /* Previene lo zoom su iOS */
+  }
+
+  .admin-crud__form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-crud__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  /* Tabella responsive */
+  .admin-crud__table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 20px;
+  }
+
+  .admin-crud__table {
+    min-width: 700px;
+    font-size: 0.85rem;
+  }
+
+  .admin-crud__table th,
+  .admin-crud__table td {
+    padding: 10px 8px;
+  }
+
+  .admin-crud__table th {
+    font-size: 0.8rem;
+  }
+
+  /* Riduce dimensioni colonne su mobile */
+  .admin-crud__table td:nth-child(3) {
+    max-width: 250px;
+    min-width: 150px;
+    font-size: 0.85rem;
+  }
+
+  .admin-crud__table td:nth-child(4) {
+    max-width: 200px;
+    min-width: 120px;
+    font-size: 0.85rem;
+  }
+
+  .admin-crud__action-btn {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .admin-crud__category-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+
+  .admin-crud__success,
+  .admin-crud__error {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .admin-crud__loading {
+    padding: 32px;
+    font-size: 1rem;
+    border-radius: 20px;
+  }
+
+  .admin-crud__empty {
+    padding: 32px !important;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile small */
+@media (max-width: 480px) {
+  .admin-crud {
+    padding: 10px;
+  }
+
+  .admin-crud__header {
+    padding: 16px 12px;
+  }
+
+  .admin-crud__header h1 {
+    font-size: 1.2rem;
+  }
+
+  .admin-crud__back {
+    font-size: 0.85rem;
+  }
+
+  .admin-crud__add-btn {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .admin-crud__form-card {
+    padding: 20px 12px;
+  }
+
+  .admin-crud__form-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .admin-crud__field input,
+  .admin-crud__field textarea {
+    padding: 10px 12px;
+  }
+
+  .admin-crud__btn {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  /* Tabella ancora più compatta */
+  .admin-crud__table {
+    min-width: 600px;
+    font-size: 0.8rem;
+  }
+
+  .admin-crud__table th,
+  .admin-crud__table td {
+    padding: 8px 6px;
+  }
+
+  .admin-crud__table td:nth-child(3),
+  .admin-crud__table td:nth-child(4) {
+    max-width: 180px;
+    min-width: 100px;
+    font-size: 0.8rem;
+  }
+
+  .admin-crud__action-btn {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .admin-crud__actions {
+    gap: 6px;
+  }
+}
+

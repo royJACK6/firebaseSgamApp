@@ -6,6 +6,7 @@ import sgamyLogo from '../../assets/sgamy-logo.png'
 import { useChatbot } from '../../contexts/ChatbotContext'
 import { AccessibilityButton } from './AccessibilityModal'
 import AccessibilityModal from './AccessibilityModal'
+import SearchBar from './SearchBar'
 
 function Navbar() {
   const navigate = useNavigate()
@@ -33,6 +34,10 @@ function Navbar() {
             <img src="src/assets/logo.svg" alt="Logo SGAMAPP - Sicurezza digitale e identità digitale" className="logo-img me-2" />
             <img src={logosImage} alt="Loghi istituzionali e partner di SGAMAPP" className="logos-img me-2" />
           </button>
+
+          <div className="navbar-center">
+            <SearchBar />
+          </div>
 
           <div className="navbar-right">
             <AccessibilityButton onClick={handleAccessibilityClick} />

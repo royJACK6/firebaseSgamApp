@@ -13,8 +13,6 @@ const GuidaCertificatiOnline: React.FC = () => {
     difficulty: "Media",
     duration: "15 minuti",
     stepsCount: steps.length,
-    cost: "Gratuito",
-    validity: "Temporanea",
   };
 
   return (

@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ChatbotProvider } from './contexts/ChatbotContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 import Navbar from './components/shared/Navbar';
 import HeaderLinks from './components/shared/HeaderLinks';
-import SearchBar from './components/shared/SearchBar';
 import Footer from './components/shared/Footer';
 import ChatbotModal from './components/shared/ChatbotModal';
+import ProtectedRoute from './components/shared/ProtectedRoute';
 
 import Home from './components/pages/Home';
 import Glossario from './components/pages/Glossario';
@@ -27,45 +28,89 @@ import PrivacyPolicy from './components/pages/Privacy';
 import Mission from './components/pages/Mission';
 import Error404 from './components/pages/Error404';
 
+// Admin Pages
+import AdminLogin from './components/pages/AdminLogin';
+import AdminDashboard from './components/pages/AdminDashboard';
+import AdminGlossario from './components/pages/AdminGlossario';
+import AdminTraduttore from './components/pages/AdminTraduttore';
+
 function App() {
   return (
-    <ChatbotProvider>
-      <Router>
-        <SearchBar />
-        <Navbar />
-        <HeaderLinks />
-        <main className="main-content" id="main-content">
+    <AuthProvider>
+      <ChatbotProvider>
+        <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/servizio-antifrode" element={<AntiFrode />} />
+            {/* Admin Routes - Hidden, no navbar/footer */}
+            <Route path="/sgam-admin-login" element={<AdminLogin />} />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/glossario"
+              element={
+                <ProtectedRoute>
+                  <AdminGlossario />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/traduttore"
+              element={
+                <ProtectedRoute>
+                  <AdminTraduttore />
+                </ProtectedRoute>
+              }
+            />
 
-            {/* Mostra i card delle guide */}
-            <Route path="/guide" element={<Guide />} />
+            {/* Public Routes - with navbar/footer */}
+            <Route
+              path="/*"
+              element={
+                <>
+                  <Navbar />
+                  <HeaderLinks />
+                  <main className="main-content" id="main-content">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/servizio-antifrode" element={<AntiFrode />} />
 
-            {/* Guide singole */}
-            <Route path="/guide/spid" element={<GuidaSpid />} />
-            <Route path="/guide/pec" element={<GuidaPec />} />
-            <Route path="/guide/cie" element={<GuidaCie />} />
-            <Route path="/guide/sicurezza" element={<GuidaSicurezza />} />
-            <Route path="/guide/primo-accesso" element={<GuidaPrimoAccesso />} />
-            <Route path="/guide/recupero-password" element={<GuidaRecuperoPassword />} />
-            <Route path="/guide/certificati-online" element={<GuidaCertificatiOnline />} />
-            <Route path="/guide/pagamenti-dm-sanitari" element={<GuidaPagamentiDMSanitari />} />
-            <Route path="/guide/anagrafe-digitale" element={<GuidaAnagrafeDigitale />} />
+                      {/* Mostra i card delle guide */}
+                      <Route path="/guide" element={<Guide />} />
 
-            <Route path="/glossario" element={<Glossario />} />
-            <Route path="/traduttore-generazionale" element={<TraduttoreGenerazionale />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/mission" element={<Mission />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
+                      {/* Guide singole */}
+                      <Route path="/guide/spid" element={<GuidaSpid />} />
+                      <Route path="/guide/pec" element={<GuidaPec />} />
+                      <Route path="/guide/cie" element={<GuidaCie />} />
+                      <Route path="/guide/sicurezza" element={<GuidaSicurezza />} />
+                      <Route path="/guide/primo-accesso" element={<GuidaPrimoAccesso />} />
+                      <Route path="/guide/recupero-password" element={<GuidaRecuperoPassword />} />
+                      <Route path="/guide/certificati-online" element={<GuidaCertificatiOnline />} />
+                      <Route path="/guide/pagamenti-dm-sanitari" element={<GuidaPagamentiDMSanitari />} />
+                      <Route path="/guide/anagrafe-digitale" element={<GuidaAnagrafeDigitale />} />
 
-            <Route path="*" element={<Error404 />} />
+                      <Route path="/glossario" element={<Glossario />} />
+                      <Route path="/traduttore-generazionale" element={<TraduttoreGenerazionale />} />
+                      <Route path="/info" element={<Info />} />
+                      <Route path="/mission" element={<Mission />} />
+                      <Route path="/privacy" element={<PrivacyPolicy />} />
+
+                      <Route path="*" element={<Error404 />} />
+                    </Routes>
+                  </main>
+                  <Footer />
+                  <ChatbotModal />
+                </>
+              }
+            />
           </Routes>
-        </main>
-        <Footer />
-        <ChatbotModal />
-      </Router>
-    </ChatbotProvider>
+        </Router>
+      </ChatbotProvider>
+    </AuthProvider>
   );
 }
 

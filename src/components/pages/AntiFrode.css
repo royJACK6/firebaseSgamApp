@@ -92,43 +92,179 @@
   transform: translateX(4px);
 }
 
-.semaforo {
+.semaforo-container {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin: 40px 0;
   flex-wrap: wrap;
-  gap: 25px;
-  margin: 30px 0;
 }
 
-.semaforo__item {
-  flex: 1 1 260px;
-  padding: 25px 20px;
-  border-radius: 16px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  text-align: center;
-  color: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s;
-  opacity: 0.5;
+.semaforo-visual {
+  width: 120px;
+  height: 320px;
+  background: linear-gradient(180deg, #2c2c2c 0%, #1a1a1a 100%);
+  border-radius: 30px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+              inset 0 2px 8px rgba(255, 255, 255, 0.1);
+  border: 4px solid #0d0d0d;
+  position: relative;
 }
 
-.semaforo__item.active {
+.semaforo-visual::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 40px;
+  background: linear-gradient(180deg, #0d0d0d, #2c2c2c);
+  border-radius: 4px;
+}
+
+.semaforo-light {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.semaforo-light::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.semaforo-light.active::after {
   opacity: 1;
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-.semaforo__item.verde {
+.semaforo-light.verde {
+  background: radial-gradient(circle at 30% 30%, #2d5016, #1a3010);
+  border: 3px solid #1a3010;
+}
+
+.semaforo-light.verde.active {
+  background: radial-gradient(circle at 30% 30%, #66ff66, #33cc33);
+  box-shadow: 0 0 30px rgba(102, 255, 102, 0.9),
+              0 0 60px rgba(102, 255, 102, 0.6),
+              0 0 90px rgba(102, 255, 102, 0.3),
+              inset 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 3px solid #33cc33;
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+.semaforo-light.giallo {
+  background: radial-gradient(circle at 30% 30%, #4d4520, #332e15);
+  border: 3px solid #332e15;
+}
+
+.semaforo-light.giallo.active {
+  background: radial-gradient(circle at 30% 30%, #ffff66, #ffdd33);
+  box-shadow: 0 0 30px rgba(255, 255, 102, 0.9),
+              0 0 60px rgba(255, 255, 102, 0.6),
+              0 0 90px rgba(255, 255, 102, 0.3),
+              inset 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 3px solid #ffdd33;
+  animation: pulse-yellow 2s ease-in-out infinite;
+}
+
+.semaforo-light.rosso {
+  background: radial-gradient(circle at 30% 30%, #4d1a1a, #331010);
+  border: 3px solid #331010;
+}
+
+.semaforo-light.rosso.active {
+  background: radial-gradient(circle at 30% 30%, #ff4444, #cc0000);
+  box-shadow: 0 0 30px rgba(255, 68, 68, 0.9),
+              0 0 60px rgba(255, 68, 68, 0.6),
+              0 0 90px rgba(255, 68, 68, 0.3),
+              inset 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 3px solid #cc0000;
+  animation: pulse-red 2s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 30px rgba(102, 255, 102, 0.9), 0 0 60px rgba(102, 255, 102, 0.6), 0 0 90px rgba(102, 255, 102, 0.3), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(102, 255, 102, 1), 0 0 80px rgba(102, 255, 102, 0.8), 0 0 120px rgba(102, 255, 102, 0.5), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+}
+
+@keyframes pulse-yellow {
+  0%, 100% { box-shadow: 0 0 30px rgba(255, 255, 102, 0.9), 0 0 60px rgba(255, 255, 102, 0.6), 0 0 90px rgba(255, 255, 102, 0.3), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 255, 102, 1), 0 0 80px rgba(255, 255, 102, 0.8), 0 0 120px rgba(255, 255, 102, 0.5), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 30px rgba(255, 68, 68, 0.9), 0 0 60px rgba(255, 68, 68, 0.6), 0 0 90px rgba(255, 68, 68, 0.3), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 68, 68, 1), 0 0 80px rgba(255, 68, 68, 0.8), 0 0 120px rgba(255, 68, 68, 0.5), inset 0 4px 12px rgba(0, 0, 0, 0.3); }
+}
+
+.semaforo-status {
+  flex: 1;
+  max-width: 400px;
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 25px 30px;
+  border-radius: 18px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: left;
+  animation: slideIn 0.6s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.status-message svg {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.status-message.verde {
   background: linear-gradient(135deg, #66bb6a, #43a047);
+  color: white;
+  border: 3px solid #2e7d32;
 }
 
-.semaforo__item.giallo {
+.status-message.giallo {
   background: linear-gradient(135deg, #ffeb3b, #fbc02d);
   color: #1e293b;
+  border: 3px solid #f9a825;
 }
 
-.semaforo__item.rosso {
+.status-message.rosso {
   background: linear-gradient(135deg, #ef5350, #e53935);
+  color: white;
+  border: 3px solid #c62828;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .antifrode__buttons {
@@ -229,9 +365,30 @@
     font-size: 1.6rem;
   }
 
-  .semaforo {
+  .semaforo-container {
     flex-direction: column;
-    gap: 16px;
+    gap: 35px;
+  }
+
+  .semaforo-visual {
+    width: 100px;
+    height: 280px;
+    padding: 20px;
+  }
+
+  .semaforo-light {
+    width: 60px;
+    height: 60px;
+  }
+
+  .status-message {
+    font-size: 1.15rem;
+    padding: 20px 24px;
+    gap: 15px;
+  }
+
+  .status-message svg {
+    font-size: 2rem;
   }
 
   .antifrode__buttons {
@@ -257,6 +414,38 @@
   .antifrode__chatbot,
   .antifrode__collapsibles {
     padding: 20px;
+  }
+
+  .semaforo-container {
+    gap: 25px;
+  }
+
+  .semaforo-visual {
+    width: 85px;
+    height: 240px;
+    padding: 16px;
+    border-radius: 25px;
+  }
+
+  .semaforo-visual::before {
+    width: 16px;
+    height: 35px;
+    top: -35px;
+  }
+
+  .semaforo-light {
+    width: 53px;
+    height: 53px;
+  }
+
+  .status-message {
+    font-size: 1rem;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+
+  .status-message svg {
+    font-size: 1.7rem;
   }
 
   .antifrode__buttons button {
