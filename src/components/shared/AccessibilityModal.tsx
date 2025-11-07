@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faFont, faPalette, faLink, faStop, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { MdAccessibility } from 'react-icons/md';
+import { faTimes, faFont, faPalette, faLink, faStop, faCircle, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 import './AccessibilityModal.css';
 
 interface AccessibilitySettings {
@@ -208,7 +207,7 @@ const AccessibilityModal: React.FC<AccessibilityModalProps> = ({ onClose }) => {
         >
           <div className="accessibility-modal-header">
             <div className="accessibility-modal-title-section">
-              <MdAccessibility className="accessibility-modal-icon" aria-hidden="true" />
+              <FontAwesomeIcon icon={faUniversalAccess} className="accessibility-modal-icon" aria-hidden="true" />
               <h2 id="accessibility-modal-title">Accessibilità</h2>
             </div>
             <button
@@ -390,7 +389,7 @@ export const AccessibilityButton: React.FC<{ onClick: () => void }> = ({ onClick
       aria-label="Visualizza informazioni e opzioni di accessibilità del sito"
       title="Accessibilità"
     >
-      <MdAccessibility />
+      <FontAwesomeIcon icon={faUniversalAccess} />
     </button>
   );
 };

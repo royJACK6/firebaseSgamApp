@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useChatbot } from '../../contexts/ChatbotContext';
 import '../pages/Guida-Spid.css';
+import sgamyLogo from '../../assets/sgamy-logo.png';
 
 interface Step {
   title: string;
@@ -53,7 +54,7 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
       <header className="guida-hero">
         <div className="guida-hero-content">
           <div className="guida-hero-image">
-            <img src={image} alt={`Immagine illustrativa della guida: ${title} - ${subtitle}`} />
+            <img src={image} alt={`Immagine illustrativa della guida: ${title} - ${subtitle}`} loading="lazy" />
           </div>
           <div className="guida-hero-text">
             <h1>{title}</h1>
@@ -99,7 +100,8 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
                 onClick={openChatbot}
                 aria-label="Apri chatbot Sgamy per ricevere aiuto"
               >
-                <i className="fas fa-robot" aria-hidden="true"></i> Parla con Sgamy
+                <img src={sgamyLogo} alt="Sgamy" className="help-button-icon" loading="lazy" />
+                Parla con Sgamy
               </button>
             </div>
           )}

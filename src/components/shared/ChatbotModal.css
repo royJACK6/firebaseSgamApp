@@ -107,13 +107,42 @@
   gap: 0.5rem;
   padding: 0.5rem 0.875rem;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Status Checking (Giallo) */
+.server-status-checking {
+  background: rgba(251, 191, 36, 0.25);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.server-status-checking .status-text {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Status Online (Verde) */
+.server-status-online {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.server-status-online .status-text {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Status Offline (Giallo) */
+.server-status-offline {
+  background: rgba(251, 191, 36, 0.25);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.server-status-offline .status-text {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .status-indicator {
@@ -146,14 +175,125 @@
 }
 
 .server-status-offline .status-indicator {
-  background: #ef4444;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+  background: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
 }
 
 .status-text {
   color: rgba(255, 255, 255, 0.95);
   font-weight: 600;
   letter-spacing: 0.3px;
+}
+
+/* === TTS CONTROLS === */
+.tts-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.voice-selector {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  max-width: 150px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.voice-selector:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.voice-selector:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.voice-selector option {
+  background: #1565D6;
+  color: white;
+}
+
+/* === TTS BUTTONS === */
+.chatbot-tts-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  line-height: 1;
+  padding: 0;
+  backdrop-filter: blur(10px);
+}
+
+.chatbot-tts-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.chatbot-tts-btn.active {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: rgba(76, 175, 80, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+  }
+}
+
+.chatbot-stop-speech-btn {
+  background: rgba(244, 67, 54, 0.3);
+  border: 1px solid rgba(244, 67, 54, 0.5);
+  color: white;
+  font-size: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  line-height: 1;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.chatbot-stop-speech-btn:hover {
+  background: rgba(244, 67, 54, 0.5);
+  transform: scale(1.1);
+}
+
+.chatbot-stop-speech-btn:active {
+  transform: scale(0.95);
 }
 
 /* === CLOSE BUTTON === */
@@ -277,6 +417,57 @@
 .bot-message .message-content p {
   color: #1a1a1a;
   font-weight: 400;
+}
+
+/* === MESSAGE SPEAK BUTTON === */
+.message-speak-btn {
+  background: linear-gradient(135deg, #1565D6 0%, #64B5F6 100%);
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(21, 101, 214, 0.3);
+}
+
+.message-speak-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(21, 101, 214, 0.4);
+}
+
+.message-speak-btn:active {
+  transform: scale(0.98);
+}
+
+.message-speak-btn i {
+  font-size: 0.9rem;
+}
+
+/* Stile quando sta parlando */
+.message-speak-btn.speaking {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  animation: speakingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes speakingPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.message-speak-btn.speaking:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
 }
 
 /* === TYPING INDICATOR === */
@@ -631,6 +822,19 @@
   .status-indicator {
     width: 10px;
     height: 10px;
+  }
+
+  .voice-selector {
+    font-size: 0.75rem;
+    max-width: 120px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .chatbot-tts-btn,
+  .chatbot-stop-speech-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
   }
 
   .chatbot-close-btn {

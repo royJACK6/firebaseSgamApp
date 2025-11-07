@@ -218,10 +218,10 @@
 .help-button {
   width: 100%;
   padding: 15px 20px;
-  background: linear-gradient(135deg, #1565D6, #1565D6);
+  background: linear-gradient(135deg, #1565D6 0%, #64B5F6 100%);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 24px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -230,12 +230,30 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  box-shadow: 0 4px 12px rgba(21, 101, 214, 0.4);
+}
+
+.help-button-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
 }
 
 .help-button:hover {
-  background: linear-gradient(135deg, #1976D2, #1565D6);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(66, 165, 245, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(21, 101, 214, 0.5);
+}
+
+.help-button:hover .help-button-icon {
+  transform: scale(1.1);
+}
+
+.help-button:active {
+  transform: scale(0.98);
 }
 
 .guida-navigation {

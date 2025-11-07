@@ -8,6 +8,7 @@ function HeroSection() {
         src={heroImage} 
         alt="Immagine di Sgamy, l'assistente virtuale di SGAMAPP, con aspetto accogliente e rassicurante" 
         className="hero-image" 
+        loading="lazy"
       />
       <div className="hero-content">
         <h1>Benvenuto in SGAMAPP</h1>

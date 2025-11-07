@@ -1,7 +1,7 @@
 // Usa il proxy configurato in vite.config.ts per evitare problemi CORS
 // In sviluppo: /api viene reindirizzato a http://localhost:5147
 // In produzione: cambiare questo valore con l'URL del backend
-const API_BASE_URL = 'http://localhost:5147/api';
+const API_BASE_URL = 'https://sgamapp.onrender.com/api';
 
 export interface GlossaryModel {
   id?: number;
@@ -58,10 +58,18 @@ export const glossaryApi = {
       }
       
       // Mappa i campi del backend al formato del frontend
-      const mappedData: GlossaryTerm[] = backendData.map((item: any) => ({
-        id: item.id,
+      const mappedData: GlossaryTerm[] = backendData.map((item: Partial<GlossaryTerm> & { 
+        Term?: string; 
+        description?: string;
+        Description?: string; 
+        Definition?: string; 
+        Category?: string;
+        CreatedAt?: string;
+        UpdatedAt?: string;
+      }) => ({
+        id: item.id || 0,
         term: item.term || item.Term || '',
-        definition: item.description || item.Description || item.definition || item.Definition || '',
+        definition: item.definition || item.description || item.Description || item.Definition || '',
         category: item.category || item.Category || 'Generale',
         createdAt: item.createdAt || item.CreatedAt,
         updatedAt: item.updatedAt || item.UpdatedAt
@@ -140,7 +148,7 @@ export const glossaryApi = {
       console.log('📦 Numero di termini trovati:', terms.length);
       
       // Mappa i dati come nel componente Glossario per gestire formati diversi
-      const mappedTerms = terms.map((item: any) => ({
+      const mappedTerms = terms.map((item: Partial<GlossaryTerm> & { boomerWord?: string; name?: string }) => ({
         term: item.term || item.boomerWord || item.name || '',
       }));
       
@@ -710,7 +718,7 @@ export const searchApi = {
       return Array.isArray(data) ? data : [];
     } catch (error) {
       // Se il backend non è disponibile, usa la ricerca locale
-      console.log('Backend non disponibile, uso ricerca locale');
+      console.log('Backend non disponibile, uso ricerca locale:', error);
       return searchApi.searchLocal(query);
     }
   },
@@ -725,7 +733,7 @@ export const searchApi = {
       return Array.isArray(data) ? data : [];
     } catch (error) {
       // Fallback locale
-      console.log('Backend non disponibile, restituisco pagine locali');
+      console.log('Backend non disponibile, restituisco pagine locali:', error);
       return localSearchPages;
     }
   }

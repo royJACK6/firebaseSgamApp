@@ -16,13 +16,15 @@ interface Message {
 const ChatbotModal: React.FC = () => {
   const { isOpen, closeChatbot } = useChatbot();
   const [messages, setMessages] = useState<Message[]>([
-    { type: 'bot', text: 'Ciao! Sono Sgamy, il tuo assistente digitale. Come posso aiutarti oggi?' }
+    { type: 'bot', text: 'Ciao! Sono Sgamy, il chatbot di SGAMAPP. Come posso aiutarti oggi? Puoi inviare immagini, testi e messaggi per ricevere una valutazione della sicurezza.' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [serverStatus, setServerStatus] = useState<'checking' | 'online' | 'offline'>('checking');
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -36,6 +38,62 @@ const ChatbotModal: React.FC = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Funzione per leggere un messaggio specifico
+  const speakMessage = (text: string, messageIndex: number) => {
+    if (!text) return;
+
+    // Se questo messaggio sta già parlando, fermalo
+    if (speakingMessageIndex === messageIndex) {
+      window.speechSynthesis.cancel();
+      setSpeakingMessageIndex(null);
+      return;
+    }
+
+    // Ferma qualsiasi altro parlato in corso
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'it-IT';
+    utterance.rate = 0.95; // Velocità naturale e rilassata
+    utterance.pitch = 0.9; // Pitch leggermente basso per voce maschile naturale
+    utterance.volume = 1;
+
+    // Usa la voce selezionata dall'utente
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+
+    utterance.onstart = () => setSpeakingMessageIndex(messageIndex);
+    utterance.onend = () => setSpeakingMessageIndex(null);
+    utterance.onerror = () => setSpeakingMessageIndex(null);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Ferma il parlato quando si chiude il modal
+  useEffect(() => {
+    if (!isOpen) {
+      window.speechSynthesis.cancel();
+      setSpeakingMessageIndex(null);
+    }
+  }, [isOpen]);
+
+  // Carica le voci quando il componente si monta
+  useEffect(() => {
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const italianVoices = voices.filter(voice => voice.lang.startsWith('it'));
+      
+      // Seleziona automaticamente la prima voce italiana se non ne è stata scelta una
+      if (italianVoices.length > 0 && !selectedVoice) {
+        setSelectedVoice(italianVoices[0]);
+      }
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }, [selectedVoice]);
 
   // Controlla lo stato del server quando il chatbot si apre
   useEffect(() => {
@@ -188,21 +246,31 @@ const ChatbotModal: React.FC = () => {
       >
         <div className="chatbot-modal-header">
           <div className="chatbot-header-content">
-            <img src={sgamyLogo} alt="Logo di Sgamy" className="chatbot-logo" />
+            <img src={sgamyLogo} alt="Logo di Sgamy" className="chatbot-logo" loading="lazy" />
             <div>
               <h2 id="chatbot-title" className="chatbot-title">Sgamy</h2>
               <p className="chatbot-subtitle">Il tuo assistente digitale</p>
             </div>
           </div>
           <div className="chatbot-header-actions">
-            <div className={`server-status server-status-${serverStatus}`}>
-              <span className="status-indicator"></span>
-              <span className="status-text">
-                {serverStatus === 'checking' && 'Controllo...'}
-                {serverStatus === 'online' && 'Sgamy è operativo!'}
-                {serverStatus === 'offline' && 'Sgamy sta dormendo... zzz...'}
-              </span>
-            </div>
+            {serverStatus === 'checking' && (
+              <div className="server-status server-status-checking">
+                <span className="status-indicator"></span>
+                <span className="status-text">Verifica connessione...</span>
+              </div>
+            )}
+            {serverStatus === 'online' && (
+              <div className="server-status server-status-online">
+                <span className="status-indicator"></span>
+                <span className="status-text">Sgamy è operativo!</span>
+              </div>
+            )}
+            {serverStatus === 'offline' && (
+              <div className="server-status server-status-offline">
+                <span className="status-indicator"></span>
+                <span className="status-text">Sgamy sta dormendo... zzz...</span>
+              </div>
+            )}
             <button
               type="button"
               className="chatbot-close-btn"
@@ -217,11 +285,11 @@ const ChatbotModal: React.FC = () => {
         <div className="chatbot-messages" role="log" aria-live="polite">
           {messages.map((m, i) => (
             <div key={i} className={`chatbot-message ${m.type === 'user' ? 'user-message' : 'bot-message'}`}>
-              {m.type === 'bot' && <img src={sgamyLogo} alt="Avatar di Sgamy" className="message-avatar" />}
+              {m.type === 'bot' && <img src={sgamyLogo} alt="Avatar di Sgamy" className="message-avatar" loading="lazy" />}
               <div className="message-content">
                 {m.imageUrl && (
                   <div className="message-image-container">
-                    <img src={m.imageUrl} alt="Immagine inviata" className="message-image" />
+                    <img src={m.imageUrl} alt="Immagine inviata" className="message-image" loading="lazy" />
                   </div>
                 )}
                 {m.type === 'bot' && m.score && (
@@ -230,12 +298,23 @@ const ChatbotModal: React.FC = () => {
                   </div>
                 )}
                 <p>{m.text}</p>
+                {m.type === 'bot' && (
+                  <button
+                    type="button"
+                    className={`message-speak-btn ${speakingMessageIndex === i ? 'speaking' : ''}`}
+                    onClick={() => speakMessage(m.text, i)}
+                    aria-label={speakingMessageIndex === i ? 'Ferma lettura' : 'Ascolta questo messaggio'}
+                    title={speakingMessageIndex === i ? 'Ferma lettura' : 'Ascolta messaggio'}
+                  >
+                    <i className={`fas ${speakingMessageIndex === i ? 'fa-stop' : 'fa-volume-up'}`} aria-hidden="true"></i>
+                  </button>
+                )}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="chatbot-message bot-message">
-              <img src={sgamyLogo} alt="Avatar di Sgamy" className="message-avatar" />
+              <img src={sgamyLogo} alt="Avatar di Sgamy" className="message-avatar" loading="lazy" />
               <div className="message-content">
                 <p className="typing-indicator">Sgamy sta scrivendo...</p>
               </div>
@@ -247,7 +326,7 @@ const ChatbotModal: React.FC = () => {
         {imagePreview && (
           <div className="image-preview-container">
             <div className="image-preview">
-              <img src={imagePreview} alt="Anteprima" />
+              <img src={imagePreview} alt="Anteprima" loading="lazy" />
               <button
                 type="button"
                 className="remove-image-btn"

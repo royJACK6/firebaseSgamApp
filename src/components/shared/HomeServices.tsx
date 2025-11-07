@@ -26,6 +26,7 @@ const ServiceCard: React.FC<Service> = ({ title, description, icon, link }) => {
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120"><rect width="100%25" height="100%25" fill="%23cfe8ff"/><text x="50%25" y="55%25" font-family="Arial" font-size="14" text-anchor="middle" fill="%23224466">no image</text></svg>'; }}
           alt={`Immagine illustrativa del servizio ${title}`}
           className="sg-guide-card__img"
+          loading="lazy"
         />
       </div>
       <div className="sg-guide-card__body">
@@ -48,6 +49,7 @@ const SgamyAssistantCard: React.FC<{ onOpenChatbot: () => void }> = ({ onOpenCha
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120"><rect width="100%25" height="100%25" fill="%23cfe8ff"/><text x="50%25" y="55%25" font-family="Arial" font-size="14" text-anchor="middle" fill="%23224466">no image</text></svg>'; }}
           alt="Immagine di Sgamy, l'assistente virtuale digitale di SGAMAPP, sempre disponibile per aiutarti"
           className="sg-guide-card__img"
+          loading="lazy"
         />
       </div>
       <div className="sg-guide-card__body">

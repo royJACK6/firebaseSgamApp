@@ -30,7 +30,7 @@ const BottomNav: React.FC = () => {
           className="nav-item"
           aria-label={`Vai alla guida su ${item.label}`}
         >
-          <img src={item.icon} alt={`Icona ${item.label}`} className="nav-icon" aria-hidden="true" />
+          <img src={item.icon} alt={`Icona ${item.label}`} className="nav-icon" aria-hidden="true" loading="lazy" />
           <span className="nav-label">{item.label}</span>
         </a>
       ))}

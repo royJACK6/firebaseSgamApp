@@ -16,8 +16,8 @@ const Glossario: React.FC = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const suggestionsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchTimeoutRef = useRef<number | null>(null);
+  const suggestionsTimeoutRef = useRef<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
@@ -50,9 +50,14 @@ const Glossario: React.FC = () => {
           });
           
           // Mappa i dati dal backend al formato corretto
-          const mappedTerms = terms.map((item: any) => {
+          const mappedTerms = terms.map((item: Partial<GlossaryTerm> & { 
+            boomerWord?: string; 
+            name?: string; 
+            description?: string; 
+            slangWord?: string;
+          }) => {
             return {
-              id: item.id,
+              id: item.id || 0,
               term: item.term || item.boomerWord || item.name || '',
               definition: item.definition || item.description || item.slangWord || '',
               category: item.category || 'Generale',

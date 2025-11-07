@@ -21,6 +21,7 @@ const Footer: React.FC = () => {
               <Link to="/servizio-antifrode" className="footer-link" onClick={scrollToTop}>Servizio Antifrode</Link>
               <Link to="/guide" className="footer-link" onClick={scrollToTop}>Guide</Link>
               <Link to="/glossario" className="footer-link" onClick={scrollToTop}>Glossario</Link>
+              <Link to="/traduttore-generazionale" className="footer-link" onClick={scrollToTop}>Traduttore Generazionale</Link>
               <Link to="/info" className="footer-link" onClick={scrollToTop}>Info</Link>
             </nav>
           </div>
@@ -35,9 +36,8 @@ const Footer: React.FC = () => {
 
           <div className="footer-column">
             <h3>INFO</h3>
-            <nav aria-label="Informazioni legali e accessibilità">
+            <nav aria-label="Informazioni legali">
               <Link to="/privacy" className="footer-link" onClick={scrollToTop}>Privacy e Policy</Link>
-              <Link to="/accessibilita" className="footer-link" onClick={scrollToTop}>Accessibilità</Link>
             </nav>
           </div>
         </div>

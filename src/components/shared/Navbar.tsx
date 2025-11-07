@@ -31,8 +31,8 @@ function Navbar() {
             onClick={handleLogoClick}
             title="Torna alla home"
           >
-            <img src="src/assets/logo.svg" alt="Logo SGAMAPP - Sicurezza digitale e identità digitale" className="logo-img me-2" />
-            <img src={logosImage} alt="Loghi istituzionali e partner di SGAMAPP" className="logos-img me-2" />
+            <img src="src/assets/logo.svg" alt="Logo SGAMAPP - Sicurezza digitale e identità digitale" className="logo-img me-2" loading="lazy" />
+            <img src={logosImage} alt="Loghi istituzionali e partner di SGAMAPP" className="logos-img me-2" loading="lazy" />
           </button>
 
           <div className="navbar-center">
@@ -47,7 +47,7 @@ function Navbar() {
               onClick={openChatbot}
               title="Parla con Sgamy"
             >
-              <img src={sgamyLogo} alt="Icona di Sgamy, assistente virtuale per la sicurezza digitale" className="sgamy-nav-icon" />
+              <img src={sgamyLogo} alt="Icona di Sgamy, assistente virtuale per la sicurezza digitale" className="sgamy-nav-icon" loading="lazy" />
             </button>
           </div>
         </nav>
