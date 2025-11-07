@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -11,7 +12,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Password admin (in produzione, questo dovrebbe essere gestito dal backend)
 const ADMIN_PASSWORD = 'SgamAdmin2024!';
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Verifica se l'utente è già autenticato al caricamento
@@ -46,8 +47,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth deve essere usato all\'interno di AuthProvider');
+    throw new Error("useAuth deve essere usato all'interno di AuthProvider");
   }
   return context;
 };
-

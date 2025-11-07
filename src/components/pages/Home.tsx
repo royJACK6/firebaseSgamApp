@@ -1,4 +1,3 @@
-import React from 'react';
 import HeroSection from '../shared/HeroSection';
 import HomeServices from '../shared/HomeServices';
 import Tabs from '../shared/Tabs';
