@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import logosImage from '../../assets/logos.png'
 import sgamyLogo from '../../assets/sgamy-logo.png'
+import mainLogo from '../../assets/logo.svg'
 import { useChatbot } from '../../contexts/ChatbotContext'
 import { AccessibilityButton } from './AccessibilityModal'
 import AccessibilityModal from './AccessibilityModal'
@@ -31,7 +32,7 @@ function Navbar() {
             onClick={handleLogoClick}
             title="Torna alla home"
           >
-            <img src="src/assets/logo.svg" alt="Logo SGAMAPP - Sicurezza digitale e identità digitale" className="logo-img me-2" loading="lazy" />
+            <img src={mainLogo} alt="Logo SGAMAPP - Sicurezza digitale e identità digitale" className="logo-img me-2" loading="lazy" />
             <img src={logosImage} alt="Loghi istituzionali e partner di SGAMAPP" className="logos-img me-2" loading="lazy" />
           </button>
 
