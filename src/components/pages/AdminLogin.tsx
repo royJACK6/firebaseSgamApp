@@ -28,7 +28,7 @@ const AdminLogin: React.FC = () => {
       setError('Password non corretta');
       setPassword('');
     }
-  };
+  }; //commento per verificare il funzionamento di git
 
   return (
     <div className="admin-login">
