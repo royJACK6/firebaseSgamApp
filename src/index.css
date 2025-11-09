@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+/* Importa la palette di colori e il design system */
+@import './Palette.css';
+@import './PaletteExtended.css';
+
 :root {
   --accessibility-font-size: 100%;
   --accessibility-link-underline: none;
@@ -62,6 +66,27 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label,
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Skip to main content link - accessibile solo quando ha focus */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--colore-primario);
+  color: var(--testo-bianco);
+  padding: var(--spaziatura-sm) var(--spaziatura-md);
+  text-decoration: none;
+  font-weight: 600;
+  z-index: var(--z-index-focus-enhanced, 9999);
+  border-radius: 0 0 var(--border-radius-medio, 8px) 0;
+  transition: top 0.3s ease;
+}
+
+.skip-to-main:focus {
+  top: 0;
+  outline: 3px solid var(--testo-bianco);
+  outline-offset: 2px;
 }
 
 /* Stili globali per focus visibile e accessibile */

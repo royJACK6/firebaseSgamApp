@@ -44,7 +44,7 @@ function Navbar() {
             <AccessibilityButton onClick={handleAccessibilityClick} />
             <button
               type="button"
-              className="chatbot-btn"
+              className="btn-icon btn-icon--shadow chatbot-btn"
               onClick={openChatbot}
               title="Parla con Sgamy"
             >

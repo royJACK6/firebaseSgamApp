@@ -1,4 +1,6 @@
 import './HeroSection.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import heroImage from '../../assets/SGAMY_NONNINA.png'
 
 function HeroSection() {
@@ -11,7 +13,10 @@ function HeroSection() {
         loading="lazy"
       />
       <div className="hero-content">
-        <h1>Benvenuto in SGAMAPP</h1>
+        <h1>
+          <FontAwesomeIcon icon={faShieldAlt} className="hero-title-icon" aria-hidden="true" />
+          Benvenuto in SGAMAPP
+        </h1>
         <p>La tua soluzione completa per la sicurezza digitale</p>
       </div>
     </section>

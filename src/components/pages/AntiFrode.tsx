@@ -10,12 +10,20 @@ interface CollapsibleProps {
 
 const Collapsible: React.FC<CollapsibleProps> = ({ title, content }) => {
   const [open, setOpen] = useState(false);
+  const id = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`;
   return (
     <article className="collapsible">
-      <button type="button" className="collapsible__header" onClick={() => setOpen(!open)} aria-expanded={open}>
-        {title} <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
+      <button 
+        type="button" 
+        id={`${id}-header`}
+        className="collapsible__header" 
+        onClick={() => setOpen(!open)} 
+        aria-expanded={open}
+        aria-controls={id}
+      >
+        {title} <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} aria-hidden="true" />
       </button>
-      {open && <div className="collapsible__content" role="region">{content}</div>}
+      {open && <div id={id} className="collapsible__content" role="region" aria-labelledby={`${id}-header`}>{content}</div>}
     </article>
   );
 };
@@ -38,11 +46,11 @@ const AntiFrode: React.FC = () => {
       <section className="antifrode__practices">
         <h2>Pratiche di Sicurezza</h2>
         <ul>
-          <li><FontAwesomeIcon icon={faEye} /> <strong>Controlla il mittente:</strong> verifica sempre chi invia messaggi o email.</li>
-          <li><FontAwesomeIcon icon={faExclamationTriangle} /> <strong>Evita link sospetti:</strong> passa il mouse e verifica URL.</li>
-          <li><FontAwesomeIcon icon={faCheckCircle} /> <strong>Password sicure:</strong> lunghe, uniche e aggiornate regolarmente.</li>
-          <li><FontAwesomeIcon icon={faShieldAlt} /> <strong>Protezione dati:</strong> non condividere info personali su siti non sicuri.</li>
-          <li><FontAwesomeIcon icon={faRobot} /> <strong>Chatbot educativo:</strong> guida passo passo nella valutazione dei rischi.</li>
+          <li><FontAwesomeIcon icon={faEye} aria-hidden="true" /> <strong>Controlla il mittente:</strong> verifica sempre chi invia messaggi o email.</li>
+          <li><FontAwesomeIcon icon={faExclamationTriangle} aria-hidden="true" /> <strong>Evita link sospetti:</strong> passa il mouse e verifica URL.</li>
+          <li><FontAwesomeIcon icon={faCheckCircle} aria-hidden="true" /> <strong>Password sicure:</strong> lunghe, uniche e aggiornate regolarmente.</li>
+          <li><FontAwesomeIcon icon={faShieldAlt} aria-hidden="true" /> <strong>Protezione dati:</strong> non condividere info personali su siti non sicuri.</li>
+          <li><FontAwesomeIcon icon={faRobot} aria-hidden="true" /> <strong>Chatbot educativo:</strong> guida passo passo nella valutazione dei rischi.</li>
         </ul>
       </section>
 
@@ -51,26 +59,26 @@ const AntiFrode: React.FC = () => {
         <p>Simula la valutazione di un link sospetto con il nostro semaforo:</p>
         <div className="semaforo-container">
           <div className="semaforo-visual">
-            <div className={`semaforo-light verde ${semaforoColor === 'verde' ? 'active' : ''}`}></div>
-            <div className={`semaforo-light giallo ${semaforoColor === 'giallo' ? 'active' : ''}`}></div>
             <div className={`semaforo-light rosso ${semaforoColor === 'rosso' ? 'active' : ''}`}></div>
+            <div className={`semaforo-light giallo ${semaforoColor === 'giallo' ? 'active' : ''}`}></div>
+            <div className={`semaforo-light verde ${semaforoColor === 'verde' ? 'active' : ''}`}></div>
           </div>
           <div className="semaforo-status">
             {semaforoColor === 'verde' && (
-              <div className="status-message verde">
-                <FontAwesomeIcon icon={faCheckCircle} />
+              <div className="status-message verde" role="status" aria-live="polite">
+                <FontAwesomeIcon icon={faCheckCircle} aria-hidden="true" />
                 <span>Sicuro - Nessun rischio rilevato</span>
               </div>
             )}
             {semaforoColor === 'giallo' && (
-              <div className="status-message giallo">
-                <FontAwesomeIcon icon={faExclamationTriangle} />
+              <div className="status-message giallo" role="status" aria-live="polite">
+                <FontAwesomeIcon icon={faExclamationTriangle} aria-hidden="true" />
                 <span>Attenzione - Rischio Moderato</span>
               </div>
             )}
             {semaforoColor === 'rosso' && (
-              <div className="status-message rosso">
-                <FontAwesomeIcon icon={faShieldAlt} />
+              <div className="status-message rosso" role="status" aria-live="polite">
+                <FontAwesomeIcon icon={faShieldAlt} aria-hidden="true" />
                 <span>Pericolo - Possibile Rischio</span>
               </div>
             )}

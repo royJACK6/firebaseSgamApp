@@ -39,7 +39,6 @@ const GuidaSicurezza: React.FC = () => {
       image={scudoImage}
       steps={steps}
       info={info}
-      helpText="Il nostro assistente Sgamy è sempre disponibile per aiutarti con qualsiasi dubbio!"
       previousLink="/guide/cie"
       previousTitle="Guida precedente: CIE"
       nextLink="/guide/primo-accesso"

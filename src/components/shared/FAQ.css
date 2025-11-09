@@ -1,21 +1,21 @@
 .faq-section {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
-  background: #F4F4FA;
+  padding: 40px var(--spaziatura-md);
+  background: var(--sfondo-principale);
 }
 
 .faq-container {
-  background: #fff;
-  border-radius: 24px;
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
   padding: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--ombra-pronunciata);
 }
 
 .faq-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1565D6;
+  color: var(--colore-primario);
   margin: 0 0 32px 0;
   text-align: center;
   position: relative;
@@ -26,8 +26,8 @@
   display: block;
   width: 60px;
   height: 4px;
-  background: #1565D6;
-  margin: 12px auto 0;
+  background: var(--colore-primario);
+  margin: var(--spaziatura-sm) auto 0;
   border-radius: 2px;
 }
 

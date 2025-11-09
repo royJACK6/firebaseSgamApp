@@ -12,24 +12,34 @@
 .sg-section-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 16px 0 24px 0;
+  color: var(--testo-grigio-scuro);
+  margin: var(--spaziatura-md) 0 var(--spaziatura-lg) 0;
   text-align: center;
   letter-spacing: 0.5px;
   position: relative;
   opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInUp 0.8s forwards 0.2s;
+  transform: translateY(-30px);
+  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
 }
 
 .sg-section-title::after {
   content: '';
   display: block;
-  width: 60px;
+  width: 0;
   height: 3px;
-  background-color: #1e88e5;
-  margin: 8px auto 0 auto;
-  border-radius: 2px;
+  background-color: var(--colore-primario);
+  margin: var(--spaziatura-sm) auto 0 auto;
+  border-radius: var(--border-radius-piccolo);
+  animation: expandWidth 0.8s ease-out forwards 1.5s;
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
 }
 
 .sg-card-grid-wrapper {
@@ -53,26 +63,30 @@
 .sg-card {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.07);
+  background-color: var(--sfondo-bianco);
+  border-radius: var(--border-radius-grande);
+  box-shadow: var(--ombra-media);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   height: 420px;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s forwards;
+  transform: translateY(30px) scale(0.95);
+  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .sg-card:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: var(--ombra-pronunciata);
 }
 
-.sg-card:nth-child(1) { animation-delay: 0.2s; }
-.sg-card:nth-child(2) { animation-delay: 0.4s; }
-.sg-card:nth-child(3) { animation-delay: 0.6s; }
+.sg-card:hover .sg-guide-card__img {
+  transform: scale(1.35);
+}
+
+.sg-card:nth-child(1) { animation-delay: 0.4s; }
+.sg-card:nth-child(2) { animation-delay: 0.6s; }
+.sg-card:nth-child(3) { animation-delay: 0.8s; }
 
 /* Zoom immagini per tutte le card */
 .sg-card-grid .sg-card:nth-child(1) .sg-guide-card__img,
@@ -80,10 +94,7 @@
 .sg-card-grid .sg-card:nth-child(3) .sg-guide-card__img {
   transform: scale(1.3);
   object-fit: cover;
-}
-
-.sg-card:hover .sg-guide-card__img {
-  transform: scale(1.02);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sg-card-grid .sg-card:nth-child(1):hover .sg-guide-card__img,
@@ -184,6 +195,8 @@
     padding-right: 20px;
     scrollbar-width: thin;
     scrollbar-color: #1e88e5 #f1f1f1;
+    /* Centra la card iniziale (Sgamy) */
+    scroll-padding-inline: calc((100vw - 340px) / 2);
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar {
@@ -191,17 +204,17 @@
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+    background: var(--sfondo-grigio-chiaro);
+    border-radius: var(--border-radius-medio);
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar-thumb {
-    background: #1e88e5;
-    border-radius: 10px;
+    background: var(--colore-primario);
+    border-radius: var(--border-radius-medio);
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #1565c0;
+    background: var(--colore-intermedio);
   }
   
   .sg-card-grid {
@@ -217,7 +230,7 @@
     min-width: calc(100vw - 60px);
     max-width: calc(100vw - 60px);
     height: 380px !important;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
   
   .sg-card-grid .sg-assistant-card {
@@ -225,7 +238,7 @@
     min-width: calc(100vw - 60px);
     max-width: calc(100vw - 60px);
     height: 380px !important;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
   
   .sg-card {
@@ -263,14 +276,14 @@
     min-width: calc(100vw - 48px);
     max-width: calc(100vw - 48px);
     height: 360px !important;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
   
   .sg-card-grid .sg-assistant-card {
     min-width: calc(100vw - 48px);
     max-width: calc(100vw - 48px);
     height: 360px !important;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
   
   .sg-card {
@@ -291,16 +304,3 @@
     transform: scale(1.55);
   }
 }
-
-/* Animazione fade-in dal basso */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-

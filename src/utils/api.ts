@@ -641,34 +641,41 @@ const localSearchPages: SearchPage[] = [
   },
   {
     id: 13,
+    title: 'Guida Prenotazioni ASL Puglia',
+    keywords: ['prenotazioni', 'asl puglia', 'visite mediche', 'cup', 'prenotare visita', 'sanità puglia', 'appuntamento medico', 'numero verde', 'farmacie'],
+    route: '/guide/prenotazioni-asl-puglia',
+    category: 'Guide'
+  },
+  {
+    id: 14,
     title: 'Glossario',
     keywords: ['glossario', 'termini', 'definizioni', 'dizionario', 'significato', 'parole'],
     route: '/glossario',
     category: 'Strumenti'
   },
   {
-    id: 14,
+    id: 15,
     title: 'Traduttore Generazionale',
     keywords: ['traduttore', 'generazionale', 'slang', 'linguaggio', 'giovani', 'boomer', 'traduzione'],
     route: '/traduttore-generazionale',
     category: 'Strumenti'
   },
   {
-    id: 15,
+    id: 16,
     title: 'Info',
     keywords: ['info', 'informazioni', 'contatti', 'chi siamo', 'about'],
     route: '/info',
     category: 'Informazioni'
   },
   {
-    id: 16,
+    id: 17,
     title: 'Mission',
     keywords: ['mission', 'missione', 'obiettivi', 'scopo', 'valori', 'chi siamo'],
     route: '/mission',
     category: 'Informazioni'
   },
   {
-    id: 17,
+    id: 18,
     title: 'Privacy Policy',
     keywords: ['privacy', 'policy', 'gdpr', 'dati personali', 'trattamento dati', 'cookie'],
     route: '/privacy',

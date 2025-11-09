@@ -27,7 +27,6 @@ const GuidaSpid: React.FC = () => {
       image={spidImage}
       steps={steps}
       info={info}
-      helpText="Il nostro assistente Sgamy è sempre disponibile per aiutarti con qualsiasi dubbio!"
       nextLink="/guide/pec"
       nextTitle="Prossima guida: PEC"
       // Rimuoviamo prevLink e prevTitle se non esistono

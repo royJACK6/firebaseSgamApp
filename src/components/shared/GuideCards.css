@@ -1,7 +1,10 @@
 .guide-carousel-wrapper {
-  padding: 60px 20px;
-  background: #f8fafc;
+  padding: 60px var(--spaziatura-md);
+  background: var(--sfondo-grigio-chiaro);
   min-height: 100vh;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .guide-carousel-container {
@@ -9,55 +12,93 @@
   max-width: 1400px;
   margin: 0 auto;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
 }
 
+
 .guide-carousel {
-  overflow: hidden;
-  margin: 0 60px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+  padding-left: 60px;
+  padding-right: 60px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-padding-inline: calc((100vw - 340px) / 2);
+}
+
+.guide-carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .guide-carousel-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
+  flex-direction: row;
+  gap: var(--spaziatura-md);
+  width: max-content;
+  padding: 0 var(--spaziatura-md);
 }
 
 .guide-carousel-slide {
-  flex: 0 0 25%;
-  padding: 0 12px;
-  box-sizing: border-box;
-  min-width: 0;
+  flex: 0 0 auto;
+  width: 320px;
+  scroll-snap-align: center;
 }
 
 .carousel-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: white;
+  background: var(--sfondo-bianco);
   border: none;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: var(--border-radius-rotondo);
+  box-shadow: var(--ombra-pronunciata);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: all 0.3s ease;
-  color: #1565D6;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--colore-primario);
   font-size: 1.2rem;
 }
 
+.carousel-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-rotondo);
+  background: var(--colore-primario);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.carousel-button:hover::before {
+  opacity: 1;
+}
+
 .carousel-button:hover {
-  background: #1565D6;
-  color: white;
-  box-shadow: 0 6px 20px rgba(21, 101, 214, 0.3);
-  transform: translateY(-50%) scale(1.1);
+  color: var(--testo-bianco);
+  box-shadow: var(--ombra-chatbot);
+  transform: translateY(-50%) scale(1.15);
 }
 
 .carousel-button:active {
-  transform: translateY(-50%) scale(0.95);
+  transform: translateY(-50%) scale(1);
+}
+
+.carousel-button svg,
+.carousel-button .icon,
+.carousel-button i {
+  position: relative;
+  z-index: 1;
 }
 
 .carousel-button.prev {
@@ -78,11 +119,11 @@
 .carousel-dot {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: var(--border-radius-rotondo);
   border: none;
-  background: #cbd5e1;
+  background: var(--sfondo-grigio-medio);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transizione-all);
   padding: 0;
 }
 
@@ -92,57 +133,50 @@
 }
 
 .carousel-dot.active {
-  background: #1565D6;
+  background: var(--colore-primario);
   width: 32px;
-  border-radius: 6px;
+  border-radius: var(--border-radius-medio);
 }
 
-/* Responsive - flex containing selected via JS */
+.guide-carousel-slide .sg-card {
+  height: 400px;
+}
+
+/* Responsive Design */
 @media (max-width: 1200px) {
-  .guide-carousel-slide {
-    flex: 0 0 33.333%;
-  }
-  
   .guide-carousel-wrapper {
-    padding: 50px 15px;
+    padding: 50px var(--spaziatura-md);
   }
-}
 
-@media (max-width: 1024px) {
   .guide-carousel-slide {
-    flex: 0 0 33.333%;
-  }
-  
-  .carousel-button {
-    width: 44px;
-    height: 44px;
+    width: 320px;
   }
 }
 
 @media (max-width: 768px) {
   .guide-carousel-wrapper {
-    padding: 40px 20px;
+    padding: 40px var(--spaziatura-sm);
   }
-  
+
   .sg-section-title {
     font-size: 2rem;
     margin-bottom: 30px;
   }
-  
+
   /* Nascondi pulsanti e dots su mobile/tablet */
   .carousel-button {
     display: none;
   }
-  
+
   .carousel-dots {
     display: none;
   }
-  
+
   /* Abilita scroll orizzontale nativo con snap */
   .guide-carousel-container {
     overflow: visible;
   }
-  
+
   .guide-carousel {
     overflow-x: auto;
     overflow-y: hidden;
@@ -154,27 +188,29 @@
     padding-left: 20px;
     padding-right: 20px;
     scrollbar-width: thin;
-    scrollbar-color: #1565D6 #f1f1f1;
+    scrollbar-color: var(--colore-primario) var(--sfondo-grigio-chiaro);
+    /* Centra la card iniziale */
+    scroll-padding-inline: calc((100vw - 340px) / 2);
   }
-  
+
   .guide-carousel::-webkit-scrollbar {
     height: 6px;
   }
-  
+
   .guide-carousel::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+    background: var(--sfondo-grigio-chiaro);
+    border-radius: var(--border-radius-medio);
   }
-  
+
   .guide-carousel::-webkit-scrollbar-thumb {
-    background: #1565D6;
-    border-radius: 10px;
+    background: var(--colore-primario);
+    border-radius: var(--border-radius-medio);
   }
-  
+
   .guide-carousel::-webkit-scrollbar-thumb:hover {
-    background: #0d47a1;
+    background: var(--colore-intermedio);
   }
-  
+
   .guide-carousel-track {
     display: flex;
     flex-direction: row;
@@ -184,82 +220,62 @@
     transform: none !important;
     transition: none;
   }
-  
+
   .guide-carousel-slide {
     flex: 0 0 calc(100% - 20px);
     min-width: calc(100vw - 60px);
     max-width: calc(100vw - 60px);
     padding: 0;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
-  
+
   .guide-carousel-slide .sg-card {
     height: 380px;
   }
-  
-  /* Zoom immagini per occupare tutta la card su tablet */
+
   .guide-carousel-slide .sg-guide-card__img {
-    transform: scale(1.4);
+    transform: scale(1);
     object-fit: cover;
   }
-  
+
   .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
-    transform: scale(1.45);
-  }
-  
-  /* Override specifico per card Recupero Password */
-  .guide-carousel-slide .sg-guide-card--recupero-password .sg-guide-card__img {
-    transform: scale(1.5);
-  }
-  
-  .guide-carousel-slide .sg-guide-card--recupero-password:hover .sg-guide-card__img {
-    transform: scale(1.55);
+    transform: scale(1.05);
   }
 }
 
 @media (max-width: 480px) {
   .guide-carousel-wrapper {
-    padding: 30px 12px;
+    padding: 30px var(--spaziatura-xs);
   }
-  
+
+  .guide-carousel {
+    margin: 0 calc(-1 * var(--spaziatura-xs));
+    padding-left: var(--spaziatura-xs);
+    padding-right: var(--spaziatura-xs);
+  }
+
+  .guide-carousel-slide {
+    min-width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    width: calc(100vw - 48px);
+  }
+
+  .guide-carousel-slide .sg-card {
+    height: 360px;
+  }
+
   .sg-section-title {
     font-size: 1.6rem;
     margin-bottom: 25px;
     padding: 0 10px;
   }
-  
-  .guide-carousel {
-    margin: 0 -12px;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  
-  .guide-carousel-slide {
-    min-width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
-  }
-  
-  .guide-carousel-slide .sg-card {
-    height: 360px;
-  }
-  
-  /* Zoom immagini per occupare tutta la card su mobile */
+
   .guide-carousel-slide .sg-guide-card__img {
-    transform: scale(1.5);
+    transform: scale(1);
     object-fit: cover;
   }
-  
+
   .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
-    transform: scale(1.55);
-  }
-  
-  /* Override specifico per card Recupero Password */
-  .guide-carousel-slide .sg-guide-card--recupero-password .sg-guide-card__img {
-    transform: scale(1.6);
-  }
-  
-  .guide-carousel-slide .sg-guide-card--recupero-password:hover .sg-guide-card__img {
-    transform: scale(1.65);
+    transform: scale(1.05);
   }
 }
-

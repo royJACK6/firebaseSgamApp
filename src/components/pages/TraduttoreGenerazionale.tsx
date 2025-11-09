@@ -7,11 +7,8 @@ import type { TranslationResult } from "../../utils/api";
 
 const TraduttoreGenerazionale: React.FC = () => {
   const [searchWord, setSearchWord] = useState("");
-  const [translations, setTranslations] = useState<TranslationResult[]>([]);
   const [allTranslations, setAllTranslations] = useState<TranslationResult[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
@@ -36,30 +33,7 @@ const TraduttoreGenerazionale: React.FC = () => {
     loadAllTranslations();
   }, []);
 
-  // Cerca traduzione
-  useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (!searchWord.trim()) {
-        setTranslations([]);
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const result = await translatorApi.getByWord(searchWord.trim());
-        setTranslations(result ? [result] : []);
-      } catch {
-        setError("Errore nella ricerca");
-        setTranslations([]);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [searchWord]);
+  // Non serve più la ricerca separata, usiamo il filtro diretto su allTranslations
 
   // Suggerimenti
   useEffect(() => {
@@ -147,23 +121,17 @@ const TraduttoreGenerazionale: React.FC = () => {
     }
   };
 
-  const handleToggleView = () => {
-    setShowAll(!showAll);
-  };
-
   const getDisplayTranslations = () => {
-    if (showAll) {
-      if (searchWord.trim()) {
-        const q = searchWord.toLowerCase().trim();
-        return allTranslations.filter(
-          (t) =>
-            t.boomerWord.toLowerCase().includes(q) ||
-            t.slangWord.toLowerCase().includes(q)
-        );
-      }
-      return allTranslations;
+    // Mostra sempre tutti i dati, filtrati se c'è una ricerca
+    if (searchWord.trim()) {
+      const q = searchWord.toLowerCase().trim();
+      return allTranslations.filter(
+        (t) =>
+          t.boomerWord.toLowerCase().includes(q) ||
+          t.slangWord.toLowerCase().includes(q)
+      );
     }
-    return translations;
+    return allTranslations;
   };
 
   const displayTranslations = getDisplayTranslations();
@@ -172,7 +140,7 @@ const TraduttoreGenerazionale: React.FC = () => {
     <section className="traduttore">
       <header className="traduttore__intro">
         <h1>
-          <FontAwesomeIcon icon={faLanguage} /> Traduttore Generazionale
+          <FontAwesomeIcon icon={faLanguage} aria-hidden="true" /> Traduttore Generazionale
         </h1>
         <p>
           Traduci parole tra linguaggio boomer e slang moderno. Inserisci una parola e scopri la sua
@@ -185,7 +153,7 @@ const TraduttoreGenerazionale: React.FC = () => {
           <label htmlFor="traduttore-search-input" className="sr-only">
             Inserisci una parola da tradurre
           </label>
-          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+          <FontAwesomeIcon icon={faSearch} className="search-icon" aria-hidden="true" />
           <input
             ref={searchInputRef}
             id="traduttore-search-input"
@@ -200,7 +168,9 @@ const TraduttoreGenerazionale: React.FC = () => {
               if (suggestions.length > 0) setShowSuggestions(true);
             }}
             onKeyDown={handleKeyDown}
+            className="traduttore__search-input"
             autoComplete="off"
+            aria-autocomplete="list"
             aria-expanded={showSuggestions}
             aria-controls="traduttore-suggestions"
           />
@@ -213,8 +183,9 @@ const TraduttoreGenerazionale: React.FC = () => {
               role="listbox"
             >
               {suggestions.map((suggestion, index) => (
-                <div
+                <button
                   key={suggestion}
+                  type="button"
                   className={`traduttore__suggestion ${
                     index === selectedSuggestionIndex
                       ? "traduttore__suggestion--selected"
@@ -223,25 +194,18 @@ const TraduttoreGenerazionale: React.FC = () => {
                   onClick={() => handleSuggestionClick(suggestion)}
                   onMouseEnter={() => setSelectedSuggestionIndex(index)}
                   role="option"
+                  aria-selected={index === selectedSuggestionIndex}
                 >
-                  <FontAwesomeIcon icon={faSearch} className="suggestion-icon" />
+                  <FontAwesomeIcon icon={faSearch} className="suggestion-icon" aria-hidden="true" />
                   <span>{suggestion}</span>
-                </div>
+                </button>
               ))}
             </div>
           )}
         </div>
-
-        <button className="traduttore__toggle-btn" onClick={handleToggleView}>
-          {showAll ? "Mostra solo ricerca" : "Mostra tutto"}
-        </button>
       </div>
 
-      {isLoading ? (
-        <div className="traduttore__loading">
-          <p>Ricerca in corso per "{searchWord}"…</p>
-        </div>
-      ) : error ? (
+      {error ? (
         <div className="traduttore__error">
           <p>{error}</p>
         </div>
@@ -257,8 +221,8 @@ const TraduttoreGenerazionale: React.FC = () => {
               className="traduttore-card card card--hover card--medium"
             >
               <div className="traduttore-card__header">
-                <div className="traduttore-card__icon-circle">
-                  <FontAwesomeIcon icon={faLanguage} />
+                <div className="traduttore-card__icon-circle" aria-hidden="true">
+                  <FontAwesomeIcon icon={faLanguage} aria-hidden="true" />
                 </div>
                 <div className="traduttore-card__content">
                   <div className="traduttore-card__from">
@@ -266,8 +230,8 @@ const TraduttoreGenerazionale: React.FC = () => {
                     <h2 className="traduttore-card__word">{translation.boomerWord}</h2>
                   </div>
 
-                  <div className="traduttore-card__arrow">
-                    <FontAwesomeIcon icon={faArrowRight} />
+                  <div className="traduttore-card__arrow" aria-hidden="true">
+                    <FontAwesomeIcon icon={faArrowRight} aria-hidden="true" />
                   </div>
 
                   <div className="traduttore-card__to">

@@ -265,7 +265,7 @@ const Glossario: React.FC = () => {
     <section className="glossario">
       <header className="glossario__intro">
         <h1>
-          <FontAwesomeIcon icon={faShieldAlt} /> Glossario Antifrode
+          <FontAwesomeIcon icon={faShieldAlt} aria-hidden="true" /> Glossario Antifrode
         </h1>
         <p>
           Scopri i termini più importanti per difenderti dalle truffe online. 
@@ -309,8 +309,9 @@ const Glossario: React.FC = () => {
               role="listbox"
             >
               {suggestions.map((suggestion, index) => (
-                <div
+                <button
                   key={suggestion}
+                  type="button"
                   className={`glossario__suggestion ${
                     index === selectedSuggestionIndex ? 'glossario__suggestion--selected' : ''
                   }`}
@@ -321,7 +322,7 @@ const Glossario: React.FC = () => {
                 >
                   <FontAwesomeIcon icon={faSearch} className="suggestion-icon" aria-hidden="true" />
                   <span>{suggestion}</span>
-                </div>
+                </button>
               ))}
             </div>
           )}
@@ -366,9 +367,9 @@ const Glossario: React.FC = () => {
           </div>
           <div className="glossario__lista">
             {filteredTerms.map((term) => (
-              <article key={term.id} className="glossario-card card card--hover card--medium" tabIndex={0}>
+              <article key={term.id} className="glossario-card card card--hover card--medium">
                 <div className="glossario-card__header">
-                  <div className="glossario-card__icon-circle">
+                  <div className="glossario-card__icon-circle" aria-hidden="true">
                     <FontAwesomeIcon icon={getCategoryIcon()} aria-hidden="true" />
                   </div>
                   <div className="glossario-card__title-section">

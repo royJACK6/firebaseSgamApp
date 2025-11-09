@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './SearchBar.css';
 import { searchApi, type SearchPage } from '../../utils/api';
 
@@ -11,7 +13,9 @@ const SearchBar: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const SearchBar: React.FC = () => {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isMobile]);
+  }, []);
 
   useEffect(() => {
     const performSearch = async () => {
@@ -43,6 +47,7 @@ const SearchBar: React.FC = () => {
         try {
           setLoading(true);
           setError(null);
+          setSelectedIndex(-1);
           console.log('🔍 Cercando:', searchQuery);
           const searchResults = await searchApi.search(searchQuery);
           console.log('📊 Risultati ricevuti:', searchResults.length);
@@ -60,12 +65,25 @@ const SearchBar: React.FC = () => {
         setResults([]);
         setShowResults(false);
         setError(null);
+        setSelectedIndex(-1);
       }
     };
 
     const timeoutId = setTimeout(performSearch, 300);
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  // Scroll al risultato selezionato quando cambia selectedIndex
+  useEffect(() => {
+    if (selectedIndex >= 0 && resultsRef.current) {
+      const selectedElement = resultsRef.current.querySelector(
+        `[data-index="${selectedIndex}"]`
+      ) as HTMLElement;
+      if (selectedElement) {
+        selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+  }, [selectedIndex]);
 
   const toggleSearch = () => {
     if (isMobile) {
@@ -78,14 +96,30 @@ const SearchBar: React.FC = () => {
     setSearchQuery('');
     setShowResults(false);
     setIsOpen(false);
+    setSelectedIndex(-1);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && results.length > 0) {
-      handleResultClick(results[0].route);
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (results.length > 0) {
+        setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : prev));
+        setShowResults(true);
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIndex >= 0 && selectedIndex < results.length) {
+        handleResultClick(results[selectedIndex].route);
+      } else if (results.length > 0) {
+        handleResultClick(results[0].route);
+      }
     } else if (e.key === 'Escape') {
       setShowResults(false);
       setSearchQuery('');
+      setSelectedIndex(-1);
     }
   };
 
@@ -107,12 +141,25 @@ const SearchBar: React.FC = () => {
             autoComplete="off"
             spellCheck="false"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => searchQuery.trim().length > 2 && setShowResults(true)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSelectedIndex(-1);
+            }}
+            onFocus={() => {
+              if (searchQuery.trim().length > 2) {
+                setShowResults(true);
+              }
+            }}
             onKeyDown={handleKeyDown}
           />
           {showResults && (
-            <div className="search-results" role="region" aria-live="polite" aria-atomic="false">
+            <div 
+              ref={resultsRef}
+              className="search-results" 
+              role="listbox" 
+              aria-live="polite" 
+              aria-atomic="false"
+            >
               {loading ? (
                 <div className="search-loading" role="status" aria-live="polite" aria-atomic="true">
                   <span className="sr-only">Ricerca in corso, attendere prego</span>
@@ -129,11 +176,13 @@ const SearchBar: React.FC = () => {
                   <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
                     Trovati {results.length} risultati per "{searchQuery}"
                   </div>
-                  {results.slice(0, 5).map((result) => (
+                  {results.slice(0, 5).map((result, index) => (
                     <div
                       key={result.id}
-                      className="search-result-item"
+                      data-index={index}
+                      className={`search-result-item ${selectedIndex === index ? 'selected' : ''}`}
                       onClick={() => handleResultClick(result.route)}
+                      onMouseEnter={() => setSelectedIndex(index)}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
@@ -141,7 +190,8 @@ const SearchBar: React.FC = () => {
                         }
                       }}
                       tabIndex={0}
-                      role="button"
+                      role="option"
+                      aria-selected={selectedIndex === index}
                     >
                       <div className="search-result-title">{result.title}</div>
                       <div className="search-result-category">{result.category}</div>
@@ -166,7 +216,7 @@ const SearchBar: React.FC = () => {
         type="button"
         title="Apri ricerca"
       >
-        <i className="fas fa-search"></i>
+        <FontAwesomeIcon icon={faSearch} aria-hidden="true" />
       </button>
     </div>
   );

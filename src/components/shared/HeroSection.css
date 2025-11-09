@@ -9,19 +9,37 @@
   margin: 0;
   padding: 0;
 
-  /* Gradiente con effetto MASSIMO spostato a destra */
-  background: linear-gradient(to right, 
-    rgba(21, 101, 214, 0.1) 0%, 
-    rgba(21, 101, 214, 0.3) 25%, 
-    rgba(21, 101, 214, 0.6) 45%, 
-    rgba(21, 101, 214, 0.8) 65%, 
-    rgba(21, 101, 214, 1) 85%
-  );
-  background-repeat: no-repeat;
-
-  color: white;
+  color: var(--testo-bianco);
   text-align: left;
   overflow: hidden;
+  position: relative;
+}
+
+/* Background con taglio diagonale */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-index-overlay, 2);
+  
+  /* Background con gradiente lungo la diagonale per sfumatura sottile */
+  background: linear-gradient(
+    115deg,
+    transparent 52.5%,
+    rgba(var(--colore-primario-rgb), 0.6) 54%,
+    var(--colore-primario) 55.5%
+  );
+  
+  /* Taglio diagonale invertito - inclinata in senso antiorario */
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 38% 100%);
+  
+  /* Animazione: entra da destra - definita in PaletteExtended.css */
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slideInFromRight var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
 }
 
 /* ===== HERO IMAGE ===== */
@@ -29,31 +47,76 @@
   flex: 1;
   position: relative;
   height: 100%;
+  z-index: var(--z-index-base, 1);
 }
 
 .hero-image {
-  width:70%;
+  width: 70%;
   height: 100%;
   object-fit: cover;
+  
+  /* Animazione: zoom in sincronizzato con background - definita in PaletteExtended.css */
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeInScale var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
+}
 
+/* ===== HERO CONTENT ===== */
+.hero-content {
+  position: relative;
+  z-index: var(--z-index-content, 3);
+  opacity: 0;
+  transform: translateY(var(--transform-translate-normale, 30px));
+  /* Animazione fadeInUp definita in PaletteExtended.css */
+  animation: fadeInUp var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards 0.4s;
+}
 
-  /* Maschera spostata più a sinistra */
-  -webkit-mask-image: linear-gradient(to right, black 25%, transparent 80%);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: cover;
+.hero-content h1 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-  mask-image: linear-gradient(to right, black 25%, transparent 80%);
-  mask-repeat: no-repeat;
-  mask-size: cover;
+.hero-title-icon {
+  font-size: 2.5rem;
+  color: var(--colore-primario);
+  filter: drop-shadow(0 2px 8px rgba(var(--colore-primario-rgb), 0.3));
+  animation: pulseGlow 2s ease-in-out infinite;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
   .hero-section {
     height: 46vh;
+    /* Animazione: scende dall'alto come la navbar - definita in PaletteExtended.css */
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--transform-translate-normale, 30px)));
+    animation: fadeInDown var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
   }
   .hero-image {
     width: 65%;
+    /* Disabilita animazione laterale su tablet */
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* Tablet: rimuove taglio diagonale e mette background dietro */
+  .hero-section::before {
+    z-index: var(--z-index-behind, 0); /* Dietro l'immagine */
+    clip-path: none; /* Nessun taglio */
+    background: var(--colore-primario); /* Background solido */
+    /* Disabilita animazione laterale su tablet */
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* Disabilita animazione contenuto su tablet */
+  .hero-content {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -66,8 +129,20 @@
     height: auto;
     padding: 0;
     margin: 0;
-    /* Tinta unita senza sfumature in modalità responsive */
-    background: rgb(21, 101, 214);
+    /* Animazione: scende dall'alto come la navbar - definita in PaletteExtended.css */
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--transform-translate-normale, 30px)));
+    animation: fadeInDown var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
+  }
+  
+  /* Mobile: background dietro l'immagine senza taglio - disabilita animazione */
+  .hero-section::before {
+    z-index: var(--z-index-behind, 0); /* Dietro l'immagine */
+    clip-path: none; /* Nessun taglio */
+    background: var(--colore-primario); /* Background solido */
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
   }
   .hero-image-container {
     width: 100%;
@@ -81,11 +156,17 @@
     margin: 0;
     padding: 0;
     display: block;
-    -webkit-mask-image: none;
-    mask-image: none;
+    /* Disabilita animazione laterale su mobile */
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
   }
   .hero-content {
     padding: 24px 16px;
+    /* Disabilita animazione su mobile */
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
   }
   .hero-content h1 {
     font-size: 1.8rem;

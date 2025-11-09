@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Info.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRobot, faBookOpen, faClipboardCheck, faUserShield, faUniversalAccess, faLightbulb } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,7 @@ const servizi: Service[] = [
     icon: faUserShield,
     title: "UX/UI Inclusiva",
     description:
-      "Design pensato per utenti anziani: font grandi, contrasto elevato, colori chiari ma sicuri, pulsanti grandi e leggibili. Riduce errori e stress visivo durante l’uso dell’app."
+      "Design pensato per utenti anziani: font grandi, contrasto elevato, colori chiari, pulsanti grandi e leggibili. Riduce errori e stress visivo durante l’uso dell’app."
   },
   {
     icon: faUniversalAccess,
@@ -49,6 +49,28 @@ const servizi: Service[] = [
 ];
 
 const Info: React.FC = () => {
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll automatico alla card centrale su mobile/tablet
+  useEffect(() => {
+    const scrollToCenterCard = () => {
+      if (cardsContainerRef.current && window.innerWidth <= 768) {
+        const container = cardsContainerRef.current;
+        const cards = container.querySelectorAll('.info-card');
+        if (cards.length > 0) {
+          const centerIndex = Math.floor(servizi.length / 2); // Card centrale (per 6 cards = index 2-3)
+          const centerCard = cards[centerIndex] as HTMLElement;
+          const scrollPosition = centerCard.offsetLeft - (container.offsetWidth / 2) + (centerCard.offsetWidth / 2);
+          container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+        }
+      }
+    };
+
+    // Attendi un piccolo delay per il rendering
+    const timer = setTimeout(scrollToCenterCard, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="info">
       <header className="info__intro">
@@ -58,16 +80,14 @@ const Info: React.FC = () => {
         </p>
       </header>
 
-      <div className="info__cards">
+      <div className="info__cards" ref={cardsContainerRef}>
         {servizi.map((item, index) => (
           <article 
             key={index} 
-            className="info-card card card--hover card--medium" 
-            tabIndex={0}
-            aria-label={`Servizio: ${item.title}`}
+            className="info-card card card--hover card--medium"
           >
             <div className="info-card__icon" aria-hidden="true">
-              <FontAwesomeIcon icon={item.icon} />
+              <FontAwesomeIcon icon={item.icon} aria-hidden="true" />
             </div>
             <h2 className="info-card__title">{item.title}</h2>
             <p className="info-card__description">{item.description}</p>
@@ -85,7 +105,7 @@ const Info: React.FC = () => {
           <li><strong>Pratica guidata:</strong> esercizi concreti per riconoscere phishing, link sospetti e truffe telefoniche.</li>
           <li><strong>Accessibilità totale:</strong> testi leggibili, contrasti elevati, compatibilità con lettori di schermo e navigazione da tastiera.</li>
           <li><strong>Supporto continuo:</strong> chatbot sempre disponibile e aggiornato con le ultime minacce digitali.</li>
-          <li><strong>Feedback e miglioramento:</strong> ogni utente può segnalare difficoltà, migliorando l’esperienza complessiva.</li>
+          <li><strong>Feedback e miglioramento:</strong> ogni utente può segnalare difficoltà, migliorando l'esperienza complessiva.</li>
         </ul>
       </section>
 

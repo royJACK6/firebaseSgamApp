@@ -1,77 +1,259 @@
-.error404 {
-    text-align: center;
-    padding: 120px 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #1b263b;
-    background: #ffffff;
-    height: 100vh;
-    display: flex;
+/* ========================================
+ * ERROR 404 PAGE
+ * Usa il Design System (Palette.css e PaletteExtended.css)
+ * ======================================== */
+
+/* Container principale */
+.error404-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spaziatura-xxl) var(--spaziatura-lg);
+  background: var(--sfondo-primario);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Background decorativo con gradiente animato */
+.error404-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradiente-blu-principale);
+  opacity: 0.05;
+  z-index: var(--z-index-behind, 0);
+  animation: gradientFlow 15s var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
+}
+
+/* Contenuto principale */
+.error404-content {
+  position: relative;
+  z-index: var(--z-index-base, 1);
+  max-width: 800px;
+  width: 100%;
+}
+
+/* ===== GRANDE NUMERO 404 ===== */
+.error404-number-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spaziatura-md);
+  margin-bottom: var(--spaziatura-xxl);
+}
+
+.error404-number {
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 900;
+  background: var(--gradiente-blu-principale);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  text-shadow: 0 4px 20px rgba(var(--colore-primario-rgb), 0.3);
+}
+
+/* Tutti i numeri hanno la stessa animazione bounce-in */
+
+/* ===== HEADER E TESTO ===== */
+.error404-header {
+  margin-bottom: var(--spaziatura-xxl);
+  animation-delay: 0.3s;
+}
+
+.error404-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--testo-nero);
+  margin-bottom: var(--spaziatura-md);
+  position: relative;
+}
+
+.error404-title::after {
+  content: '';
+  position: absolute;
+  bottom: calc(-1 * var(--spaziatura-xs));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--spaziatura-xxl) * 1.6); /* 80px circa */
+  height: var(--spaziatura-xs);
+  background: var(--gradiente-blu-principale);
+  border-radius: var(--border-radius-grande);
+  animation: expandWidth var(--durata-animazione-normale, 0.8s) var(--easing-out, cubic-bezier(0, 0, 0.2, 1)) forwards 1s;
+}
+
+.error404-description {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--testo-grigio);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== PULSANTI AZIONE ===== */
+.error404-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spaziatura-md);
+  margin-bottom: var(--spaziatura-xxl);
+  animation-delay: 0.6s;
+}
+
+.error404-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spaziatura-xs);
+  min-width: 200px; /* Dimensione minima per pulsanti */
+  justify-content: center;
+}
+
+.error404-btn i {
+  font-size: 1.2em;
+}
+
+/* ===== SUGGERIMENTI ===== */
+.error404-suggestions {
+  padding: var(--spaziatura-lg);
+  background: var(--sfondo-secondario);
+  border-radius: var(--border-radius-grande);
+  box-shadow: var(--ombra-leggera);
+  animation-delay: 0.9s;
+}
+
+.error404-suggestions-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--testo-nero);
+  margin-bottom: var(--spaziatura-md);
+}
+
+.error404-suggestions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spaziatura-sm);
+}
+
+.error404-suggestions-list li {
+  display: inline-block;
+}
+
+.error404-suggestion-link {
+  display: inline-block;
+  padding: var(--spaziatura-xs) var(--spaziatura-md);
+  background: var(--sfondo-primario);
+  color: var(--colore-primario);
+  text-decoration: none;
+  border-radius: var(--border-radius-medio);
+  border: 2px solid var(--colore-secondario);
+  font-weight: 500;
+  transition: all var(--durata-animazione-rapida, 0.4s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.error404-suggestion-link:hover,
+.error404-suggestion-link:focus {
+  background: var(--colore-primario);
+  color: var(--testo-bianco);
+  border-color: var(--colore-primario);
+  transform: translateY(-2px);
+  box-shadow: var(--ombra-media);
+  outline: none;
+}
+
+/* ========================================
+ * RESPONSIVE
+ * ======================================== */
+
+@media (max-width: 768px) {
+  .error404-page {
+    padding: var(--spaziatura-xl) var(--spaziatura-md);
+  }
+  
+  .error404-number-container {
+    gap: var(--spaziatura-xs);
+    margin-bottom: var(--spaziatura-xl);
+  }
+  
+  .error404-header {
+    margin-bottom: var(--spaziatura-xl);
+  }
+  
+  .error404-actions {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: var(--spaziatura-sm);
+    margin-bottom: var(--spaziatura-xl);
   }
   
-  .error404 h1 {
-    font-size: 4.5rem;
-    color: #d32f2f;
-    margin-bottom: 30px;
+  .error404-btn {
+    width: 100%;
+    max-width: 300px; /* Larghezza massima su mobile */
   }
   
-  .error404 p {
-    font-size: 1.8rem;
-    margin-bottom: 50px;
-    color: #3e5060;
-    max-width: 400px;
+  .error404-suggestions {
+    padding: var(--spaziatura-md);
   }
   
-  .error404-link {
-    font-size: 1.6rem;
-    background-color: #1976d2;
-    color: white;
-    padding: 18px 36px;
-    border-radius: 12px;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(25, 118, 210, 0.4);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  .error404-suggestions-list {
+    flex-direction: column;
+    align-items: stretch;
   }
   
-  .error404-link:hover,
-  .error404-link:focus {
-    background-color: #0d47a1;
-    box-shadow: 0 6px 12px rgba(13, 71, 161, 0.6);
-    outline: none;
+  .error404-suggestion-link {
+    display: block;
+    text-align: center;
   }
+}
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .error404 h1 {
-      font-size: 3.5rem;
-    }
-
-    .error404 p {
-      font-size: 1.4rem;
-      max-width: 90%;
-    }
-
-    .error404-link {
-      font-size: 1.3rem;
-      padding: 14px 28px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .error404 h1 {
-      font-size: 2.5rem;
-    }
-
-    .error404 p {
-      font-size: 1.1rem;
-    }
-
-    .error404-link {
-      font-size: 1.1rem;
-      padding: 12px 24px;
-    }
+@media (max-width: 480px) {
+  .error404-page {
+    padding: var(--spaziatura-lg) var(--spaziatura-sm);
   }
   
+  .error404-number-container {
+    margin-bottom: var(--spaziatura-lg);
+  }
+  
+  .error404-header {
+    margin-bottom: var(--spaziatura-lg);
+  }
+  
+  .error404-actions {
+    margin-bottom: var(--spaziatura-lg);
+  }
+}
+
+/* ========================================
+ * ACCESSIBILITÀ
+ * ======================================== */
+
+/* Focus visibile per navigazione da tastiera */
+.error404-btn:focus-visible,
+.error404-suggestion-link:focus-visible {
+  outline: 3px solid var(--colore-primario); /* 3px per visibilità */
+  outline-offset: 3px;
+}
+
+/* Riduzione movimento per utenti con preferenza */
+@media (prefers-reduced-motion: reduce) {
+  .error404-number,
+  .error404-header,
+  .error404-actions,
+  .error404-suggestions,
+  .error404-background {
+    animation: none !important;
+  }
+  
+  .error404-btn,
+  .error404-suggestion-link {
+    transition: none !important;
+  }
+}

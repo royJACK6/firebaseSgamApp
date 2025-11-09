@@ -1,4 +1,11 @@
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faHouse, faShield, faBook, faChevronDown, faChevronUp, 
+  faIdBadge, faEnvelopeOpenText, faAddressCard, faShieldAlt,
+  faSignInAlt, faUnlockAlt, faFileAlt, faCreditCard, faUsers,
+  faCalendarCheck, faBookReader, faLanguage, faInfoCircle
+} from '@fortawesome/free-solid-svg-icons';
 import "./HeaderLinks.css";
 import { useState, useRef, useEffect } from "react";
 
@@ -78,7 +85,7 @@ function HeaderLinks() {
           aria-hidden={!isMobileMenuOpen}
         >
           <Link to="/" className="mobile-link-item" onClick={toggleMobileMenu}>
-            <i className="fas fa-house"></i>
+            <FontAwesomeIcon icon={faHouse} aria-hidden="true" />
             <span>Home</span>
           </Link>
 
@@ -87,7 +94,7 @@ function HeaderLinks() {
             className="mobile-link-item"
             onClick={toggleMobileMenu}
           >
-            <i className="fas fa-shield"></i>
+            <FontAwesomeIcon icon={faShield} aria-hidden="true" />
             <span>Servizio Anti-Frode</span>
           </Link>
 
@@ -98,13 +105,13 @@ function HeaderLinks() {
               onClick={() => setIsMobileGuideOpen(!isMobileGuideOpen)}
               aria-expanded={isMobileGuideOpen}
             >
-              <i className="fas fa-book"></i>
+              <FontAwesomeIcon icon={faBook} aria-hidden="true" />
               <span>Guide</span>
-              <i
-                className={`fas fa-chevron-${
-                  isMobileGuideOpen ? "up" : "down"
-                } mobile-chevron`}
-              ></i>
+              <FontAwesomeIcon 
+                icon={isMobileGuideOpen ? faChevronUp : faChevronDown} 
+                className="mobile-chevron"
+                aria-hidden="true"
+              />
             </button>
 
             <div
@@ -117,20 +124,20 @@ function HeaderLinks() {
                 className="mobile-guide-item mobile-guide-main"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-book"></i>
+                <FontAwesomeIcon icon={faBook} aria-hidden="true" />
                 <span>Tutte le Guide</span>
               </Link>
 
-              <div className="mobile-guide-section-title">
+              <h2 className="mobile-guide-section-title">
                 Identità Digitale
-              </div>
+              </h2>
 
               <Link
                 to="/guide/spid"
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-id-badge"></i>
+                <FontAwesomeIcon icon={faIdBadge} aria-hidden="true" />
                 <span>SPID</span>
               </Link>
 
@@ -139,7 +146,7 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-envelope-open-text"></i>
+                <FontAwesomeIcon icon={faEnvelopeOpenText} aria-hidden="true" />
                 <span>PEC</span>
               </Link>
 
@@ -148,18 +155,27 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-address-card"></i>
+                <FontAwesomeIcon icon={faAddressCard} aria-hidden="true" />
                 <span>CIE</span>
               </Link>
 
-              <div className="mobile-guide-section-title">Servizi</div>
+              <Link
+                to="/guide/sicurezza"
+                className="mobile-guide-item"
+                onClick={toggleMobileMenu}
+              >
+                <FontAwesomeIcon icon={faShieldAlt} aria-hidden="true" />
+                <span>Sicurezza</span>
+              </Link>
+
+              <h2 className="mobile-guide-section-title">Servizi</h2>
 
               <Link
                 to="/guide/primo-accesso"
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-sign-in-alt"></i>
+                <FontAwesomeIcon icon={faSignInAlt} aria-hidden="true" />
                 <span>Primo Accesso</span>
               </Link>
 
@@ -168,7 +184,7 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-unlock-alt"></i>
+                <FontAwesomeIcon icon={faUnlockAlt} aria-hidden="true" />
                 <span>Recupero Password</span>
               </Link>
 
@@ -177,7 +193,7 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-file-alt"></i>
+                <FontAwesomeIcon icon={faFileAlt} aria-hidden="true" />
                 <span>Certificati Online</span>
               </Link>
 
@@ -186,7 +202,7 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-credit-card"></i>
+                <FontAwesomeIcon icon={faCreditCard} aria-hidden="true" />
                 <span>Pagamenti DM Sanitari</span>
               </Link>
 
@@ -195,14 +211,23 @@ function HeaderLinks() {
                 className="mobile-guide-item"
                 onClick={toggleMobileMenu}
               >
-                <i className="fas fa-users"></i>
+                <FontAwesomeIcon icon={faUsers} aria-hidden="true" />
                 <span>Anagrafe Digitale</span>
+              </Link>
+
+              <Link
+                to="/guide/prenotazioni-asl-puglia"
+                className="mobile-guide-item"
+                onClick={toggleMobileMenu}
+              >
+                <FontAwesomeIcon icon={faCalendarCheck} aria-hidden="true" />
+                <span>Prenotazioni ASL Puglia</span>
               </Link>
             </div>
           </div>
 
           <Link to="/glossario" className="mobile-link-item" onClick={toggleMobileMenu}>
-            <i className="fas fa-book-reader"></i>
+            <FontAwesomeIcon icon={faBookReader} aria-hidden="true" />
             <span>Glossario</span>
           </Link>
 
@@ -211,27 +236,29 @@ function HeaderLinks() {
             className="mobile-link-item"
             onClick={toggleMobileMenu}
           >
-            <i className="fas fa-language"></i>
+            <FontAwesomeIcon icon={faLanguage} aria-hidden="true" />
             <span>Traduttore Generazionale</span>
           </Link>
 
           <Link to="/info" className="mobile-link-item" onClick={toggleMobileMenu}>
-            <i className="fas fa-info-circle"></i>
+            <FontAwesomeIcon icon={faInfoCircle} aria-hidden="true" />
             <span>Info</span>
           </Link>
         </nav>
 
         {/* DESKTOP LINKS */}
-        <Link to="/" className="header-link">
-          <i className="fas fa-house me-1"></i>Home
+        <Link to="/" className="header-link animate-stagger-item animate-stagger-1">
+          <FontAwesomeIcon icon={faHouse} className="me-1" aria-hidden="true" />
+          Home
         </Link>
 
-        <Link to="/servizio-antifrode" className="header-link">
-          <i className="fas fa-shield me-1"></i>Servizio Anti-Frode
+        <Link to="/servizio-antifrode" className="header-link animate-stagger-item animate-stagger-2">
+          <FontAwesomeIcon icon={faShield} className="me-1" aria-hidden="true" />
+          Servizio Anti-Frode
         </Link>
 
         {/* DROPDOWN DESKTOP */}
-        <div className="dropdown" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="dropdown animate-stagger-item animate-stagger-3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <Link
             to="/guide"
             className="header-link dropdown-toggle"
@@ -240,23 +267,24 @@ function HeaderLinks() {
             aria-haspopup="menu"
             aria-controls="guide-dropdown-menu"
           >
-            <i className="fas fa-book me-1"></i>Guide
+            <FontAwesomeIcon icon={faBook} className="me-1" aria-hidden="true" />
+            Guide
           </Link>
 
-          <span
+          <button
+            type="button"
             className="dropdown-arrow"
             onClick={handleDropdownToggle}
-            role="button"
-            tabIndex={0}
             aria-label="Apri o chiudi menu guide"
+            aria-expanded={openDropdown}
           >
-            <i
-              className={`fas fa-chevron-${
-                openDropdown ? "up" : "down"
-              } ms-1`}
+            <FontAwesomeIcon
+              icon={openDropdown ? faChevronUp : faChevronDown}
+              className="ms-1"
               style={{ fontSize: "0.8em" }}
-            ></i>
-          </span>
+              aria-hidden="true"
+            />
+          </button>
 
           {/* MENU DROPDOWN DESKTOP */}
           <div
@@ -265,8 +293,8 @@ function HeaderLinks() {
             id="guide-dropdown-menu"
             role="menu"
           >
-            <div className="dropdown-section">
-              <span className="dropdown-section-title">Identità Digitale</span>
+            <div className="dropdown-section" role="group" aria-labelledby="dropdown-section-identity">
+              <h2 id="dropdown-section-identity" className="dropdown-section-title">Identità Digitale</h2>
             </div>
 
             <Link
@@ -279,7 +307,8 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 0)}
             >
-              <i className="fas fa-id-badge me-1"></i>SPID
+              <FontAwesomeIcon icon={faIdBadge} className="me-1" aria-hidden="true" />
+              SPID
             </Link>
 
             <Link
@@ -292,7 +321,8 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 1)}
             >
-              <i className="fas fa-envelope-open-text me-1"></i>PEC
+              <FontAwesomeIcon icon={faEnvelopeOpenText} className="me-1" aria-hidden="true" />
+              PEC
             </Link>
 
             <Link
@@ -305,15 +335,12 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 2)}
             >
-              <i className="fas fa-address-card me-1"></i>CIE
+              <FontAwesomeIcon icon={faAddressCard} className="me-1" aria-hidden="true" />
+              CIE
             </Link>
 
-            <div className="dropdown-section">
-              <span className="dropdown-section-title">Servizi</span>
-            </div>
-
             <Link
-              to="/guide/primo-accesso"
+              to="/guide/sicurezza"
               className="dropdown-item"
               role="menuitem"
               ref={(el) => {
@@ -322,11 +349,16 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 3)}
             >
-              <i className="fas fa-sign-in-alt me-1"></i>Primo Accesso
+              <FontAwesomeIcon icon={faShieldAlt} className="me-1" aria-hidden="true" />
+              Sicurezza
             </Link>
 
+            <div className="dropdown-section" role="group" aria-labelledby="dropdown-section-services">
+              <h2 id="dropdown-section-services" className="dropdown-section-title">Servizi</h2>
+            </div>
+
             <Link
-              to="/guide/recupero-password"
+              to="/guide/primo-accesso"
               className="dropdown-item"
               role="menuitem"
               ref={(el) => {
@@ -335,11 +367,12 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 4)}
             >
-              <i className="fas fa-unlock-alt me-1"></i>Recupero Password
+              <FontAwesomeIcon icon={faSignInAlt} className="me-1" aria-hidden="true" />
+              Primo Accesso
             </Link>
 
             <Link
-              to="/guide/certificati-online"
+              to="/guide/recupero-password"
               className="dropdown-item"
               role="menuitem"
               ref={(el) => {
@@ -348,11 +381,12 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 5)}
             >
-              <i className="fas fa-file-alt me-1"></i>Certificati Online
+              <FontAwesomeIcon icon={faUnlockAlt} className="me-1" aria-hidden="true" />
+              Recupero Password
             </Link>
 
             <Link
-              to="/guide/pagamenti-dm-sanitari"
+              to="/guide/certificati-online"
               className="dropdown-item"
               role="menuitem"
               ref={(el) => {
@@ -361,11 +395,12 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 6)}
             >
-              <i className="fas fa-credit-card me-1"></i>Pagamenti DM Sanitari
+              <FontAwesomeIcon icon={faFileAlt} className="me-1" aria-hidden="true" />
+              Certificati Online
             </Link>
 
             <Link
-              to="/guide/anagrafe-digitale"
+              to="/guide/pagamenti-dm-sanitari"
               className="dropdown-item"
               role="menuitem"
               ref={(el) => {
@@ -374,21 +409,53 @@ function HeaderLinks() {
               onClick={() => setOpenDropdown(false)}
               onKeyDown={(e) => handleDropdownMenuKeyDown(e, 7)}
             >
-              <i className="fas fa-users me-1"></i>Anagrafe Digitale
+              <FontAwesomeIcon icon={faCreditCard} className="me-1" aria-hidden="true" />
+              Pagamenti DM Sanitari
+            </Link>
+
+            <Link
+              to="/guide/anagrafe-digitale"
+              className="dropdown-item"
+              role="menuitem"
+              ref={(el) => {
+                menuItemsRef.current[8] = el;
+              }}
+              onClick={() => setOpenDropdown(false)}
+              onKeyDown={(e) => handleDropdownMenuKeyDown(e, 8)}
+            >
+              <FontAwesomeIcon icon={faUsers} className="me-1" aria-hidden="true" />
+              Anagrafe Digitale
+            </Link>
+
+            <Link
+              to="/guide/prenotazioni-asl-puglia"
+              className="dropdown-item"
+              role="menuitem"
+              ref={(el) => {
+                menuItemsRef.current[9] = el;
+              }}
+              onClick={() => setOpenDropdown(false)}
+              onKeyDown={(e) => handleDropdownMenuKeyDown(e, 9)}
+            >
+              <FontAwesomeIcon icon={faCalendarCheck} className="me-1" aria-hidden="true" />
+              Prenotazioni ASL Puglia
             </Link>
           </div>
         </div>
 
-        <Link to="/glossario" className="header-link">
-          <i className="fas fa-book-reader me-1"></i>Glossario
+        <Link to="/glossario" className="header-link animate-stagger-item animate-stagger-4">
+          <FontAwesomeIcon icon={faBookReader} className="me-1" aria-hidden="true" />
+          Glossario
         </Link>
 
-        <Link to="/traduttore-generazionale" className="header-link">
-          <i className="fas fa-language me-1"></i>Traduttore Generazionale
+        <Link to="/traduttore-generazionale" className="header-link animate-stagger-item animate-stagger-5">
+          <FontAwesomeIcon icon={faLanguage} className="me-1" aria-hidden="true" />
+          Traduttore Generazionale
         </Link>
 
-        <Link to="/info" className="header-link">
-          <i className="fas fa-info-circle me-1"></i>Info
+        <Link to="/info" className="header-link animate-stagger-item animate-stagger-6">
+          <FontAwesomeIcon icon={faInfoCircle} className="me-1" aria-hidden="true" />
+          Info
         </Link>
       </nav>
     </>

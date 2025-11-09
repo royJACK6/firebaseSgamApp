@@ -1,21 +1,44 @@
+.bottom-nav-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: -8px;
+}
+
 .bottom-nav {
     display: flex;
     justify-content: center;
     align-items: stretch;
     gap: 60px; /* spazio uniforme tra le icone */
     padding: 25px 50px;
-    background: linear-gradient(90deg, #1565D6, #1E88E5, #42A5F5);
-    background-size: 300% 300%;
-    animation: gradientFlow 8s ease infinite;
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: var(--gradiente-blu-alternativo);
+    border-radius: 0 0 var(--border-radius-grande) var(--border-radius-grande);
+    box-shadow: var(--ombra-scura);
     position: relative;
-    width: 100%;
-    margin-top: -8px;
+    flex: 1;
     overflow-x: auto;
     overflow-y: hidden;
     animation: fadeSlideIn 1.2s ease both;
     z-index: 10;
+    /* Smooth scrolling per touch devices */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Gradiente uniforme e fluido solo su desktop */
+  @media (min-width: 769px) {
+    .bottom-nav {
+      background: linear-gradient(90deg, 
+        var(--colore-primario) 0%, 
+        var(--colore-primario) 20%,
+        var(--colore-intermedio) 50%, 
+        var(--colore-primario) 80%,
+        var(--colore-primario) 100%
+      );
+      background-size: 200% 100%;
+      animation: fadeSlideIn 1.2s ease both, gradientFlow 10s ease-in-out infinite;
+    }
   }
   
   /* animazione comparsa iniziale */
@@ -49,32 +72,27 @@
     align-items: center;
     justify-content: flex-start;
     text-decoration: none;
-    color: #fff;
+    color: var(--testo-bianco);
     font-weight: 500;
     font-size: 1rem;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transizione-all);
     position: relative;
     width: 100px;
     min-width: 100px;
     max-width: 100px;
-    padding: 8px 0;
+    padding: var(--spaziatura-sm) 0;
   }
   
 .nav-icon {
-  width: 70px;
-  height: 70px;
+  width: 75px;
+  height: 75px;
   margin-bottom: 10px;
-  transition: transform 0.35s ease, filter 0.35s ease;
-  filter: drop-shadow(0 3px 8px rgba(255, 255, 255, 0.25));
-  border-radius: 12px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-/* Rende l'icona recupero password quadrata */
-.nav-item:nth-child(5) .nav-icon {
+  transition: var(--transizione-transform);
+  filter: drop-shadow(0 3px 8px rgba(var(--testo-bianco-rgb), 0.25));
+  border-radius: var(--border-radius-grande);
   object-fit: cover;
   object-position: center;
+  flex-shrink: 0;
 }
 
   .nav-label {
@@ -94,7 +112,7 @@
   
   .nav-item:hover .nav-icon {
     transform: scale(1.2) rotate(-8deg);
-    filter: drop-shadow(0 6px 10px rgba(255, 255, 255, 0.5));
+    filter: drop-shadow(0 6px 10px rgba(var(--testo-bianco-rgb), 0.5));
   }
   
   .nav-item::after {
@@ -104,10 +122,10 @@
     left: 50%;
     width: 0;
     height: 3px;
-    background: #fff;
+    background: var(--testo-bianco);
     border-radius: 3px;
     transform: translateX(-50%);
-    transition: width 0.3s ease;
+    transition: var(--transizione-normale);
   }
   
   .nav-item:hover::after {
@@ -116,30 +134,153 @@
   
   /* effetto neon pulsante */
   .nav-item:hover {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.75);
+    text-shadow: 0 0 10px rgba(var(--testo-bianco-rgb), 0.75);
   }
+
+  /* Nasconde scrollbar ma mantiene funzionalità */
+  .bottom-nav::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .bottom-nav::-webkit-scrollbar-track {
+    background: rgba(var(--testo-bianco-rgb), 0.1);
+    border-radius: 10px;
+  }
+
+  .bottom-nav::-webkit-scrollbar-thumb {
+    background: rgba(var(--testo-bianco-rgb), 0.3);
+    border-radius: 10px;
+  }
+
+  .bottom-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--testo-bianco-rgb), 0.5);
+  }
+
+  /* Rimosso gradient fade overlay - creava interferenze visive con le icone */
+
+/* Frecce per lo scroll orizzontale - stesso stile del carosello guide */
+.bottom-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--sfondo-bianco);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--border-radius-rotondo);
+  box-shadow: var(--ombra-pronunciata);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--colore-primario);
+  font-size: 1.2rem;
+}
+
+.bottom-nav-arrow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-rotondo);
+  background: var(--colore-primario);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bottom-nav-arrow:hover::before {
+  opacity: 1;
+}
+
+.bottom-nav-arrow:hover {
+  color: var(--testo-bianco);
+  box-shadow: var(--ombra-chatbot);
+  transform: translateY(-50%) scale(1.15);
+}
+
+.bottom-nav-arrow:active {
+  transform: translateY(-50%) scale(1);
+}
+
+.bottom-nav-arrow svg,
+.bottom-nav-arrow .icon,
+.bottom-nav-arrow i {
+  position: relative;
+  z-index: 1;
+}
+
+.bottom-nav-arrow-left {
+  left: 0;
+}
+
+.bottom-nav-arrow-right {
+  right: 0;
+}
   
-  /* Responsività */
+  /* Responsività - Tablet */
   @media (max-width: 768px) {
+    .bottom-nav-container {
+      margin-top: -8px;
+    }
+
     .bottom-nav {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 28px;
-      padding: 20px 16px;
+      justify-content: flex-start;
+      gap: var(--spaziatura-lg);
+      padding: var(--spaziatura-md) 50px;
       border-radius: 0;
+      /* Gradiente verticale molto fluido e uniforme su tablet */
+      background: linear-gradient(180deg, 
+        var(--colore-primario) 0%, 
+        var(--colore-intermedio) 50%,
+        var(--colore-primario) 100%
+      );
+      /* Abilita scroll snap per migliore UX */
+      scroll-snap-type: x mandatory;
+      /* Centra l'icona iniziale */
+      scroll-padding-inline: calc((100vw - 110px) / 2);
+    }
+
+    /* Nascondi frecce su tablet - solo swipe */
+    .bottom-nav-arrow {
+      display: none;
     }
     
     .nav-item {
       font-size: 0.85rem;
-      width: 85px;
-      min-width: 85px;
-      max-width: 85px;
-      padding: 6px 0;
+      width: 90px;
+      min-width: 90px;
+      max-width: 90px;
+      padding: var(--spaziatura-sm) 0;
+      flex-shrink: 0;
+      /* Snap alignment per scroll fluido */
+      scroll-snap-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Effetto dinamico per l'icona al centro della viewport */
+    .nav-item.is-centered {
+      transform: scale(1.15);
+    }
+
+    .nav-item.is-centered .nav-icon {
+      filter: drop-shadow(0 5px 15px rgba(var(--testo-bianco-rgb), 0.6));
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    /* Animazione pulsazione per icona centrale */
+    @keyframes pulseGlow {
+      0%, 100% {
+        filter: drop-shadow(0 5px 15px rgba(var(--testo-bianco-rgb), 0.6));
+      }
+      50% {
+        filter: drop-shadow(0 8px 24px rgba(var(--testo-bianco-rgb), 0.9));
+      }
     }
   
     .nav-icon {
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       margin-bottom: 8px;
     }
 
@@ -147,43 +288,72 @@
       font-size: 0.75rem;
       line-height: 1.2;
     }
-
-    /* Mantieni icona recupero password quadrata anche su mobile */
-    .nav-item:nth-child(5) .nav-icon {
-      object-fit: cover;
-      object-position: center;
-    }
   }
 
+  /* Responsività - Mobile */
   @media (max-width: 480px) {
+    .bottom-nav-container {
+      margin-top: -8px;
+    }
+
     .bottom-nav {
-      gap: 18px;
-      padding: 16px 12px;
+      justify-content: flex-start;
+      gap: var(--spaziatura-md);
+      padding: var(--spaziatura-md) 45px;
+      /* Background solido e uniforme su mobile per migliore performance */
+      background: var(--colore-primario);
+      /* Snap più pronunciato su mobile */
+      scroll-snap-type: x mandatory;
+      /* Padding laterale per centrare prima/ultima icona */
+      scroll-padding-inline: calc((100vw - 80px) / 2);
+    }
+
+    /* Nascondi frecce su mobile - solo swipe */
+    .bottom-nav-arrow {
+      display: none;
     }
 
     .nav-item {
       font-size: 0.8rem;
-      width: 70px;
-      min-width: 70px;
-      max-width: 70px;
-      padding: 5px 0;
+      width: 80px;
+      min-width: 80px;
+      max-width: 80px;
+      padding: var(--spaziatura-sm) 0;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Effetto dinamico per l'icona al centro della viewport */
+    .nav-item.is-centered {
+      transform: scale(1.2);
+    }
+
+    .nav-item.is-centered .nav-icon {
+      filter: drop-shadow(0 6px 18px rgba(var(--testo-bianco-rgb), 0.7));
+      animation: pulseGlow 2s ease-in-out infinite;
     }
 
     .nav-icon {
-      width: 46px;
-      height: 46px;
-      margin-bottom: 6px;
+      width: 52px;
+      height: 52px;
+      margin-bottom: var(--spaziatura-sm);
     }
 
     .nav-label {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       line-height: 1.2;
     }
+  }
 
-    /* Mantieni icona recupero password quadrata anche su mobile piccolo */
-    .nav-item:nth-child(5) .nav-icon {
-      object-fit: cover;
-      object-position: center;
+  /* Stile per touch attivo su mobile */
+  @media (max-width: 768px) {
+    .nav-item:active {
+      transform: scale(0.95);
+    }
+
+    .nav-item:active .nav-icon {
+      transform: scale(0.95);
     }
   }
   

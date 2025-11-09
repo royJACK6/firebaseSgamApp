@@ -8,6 +8,7 @@ import passwordRecoveryImg from '../../assets/SGAMY_PASSWORD.png';
 import certificatiImg from '../../assets/SGAMY_CERTFICATI.png';
 import polliceImg from '../../assets/SGAMY_POLLICE.png';
 import anagrafeImg from '../../assets/SGAMY_ANAGRAFE.png';
+import prenotazioniImg from '../../assets/SGAMY_POLLICE.png'; // Usa l'immagine del pollice per le prenotazioni sanitarie
 
 const GuidePage = () => {
   const guides = [
@@ -20,6 +21,7 @@ const GuidePage = () => {
     { icon: certificatiImg, title: "Certificati Online", description: "Come richiedere certificati online", link: "/guide/certificati-online" },
     { icon: polliceImg, title: "Pagamenti DM", description: "Pagamenti DM Sanitari digitali", link: "/guide/pagamenti-dm-sanitari" },
     { icon: anagrafeImg, title: "Anagrafe Digitale", description: "Servizi di anagrafe digitale", link: "/guide/anagrafe-digitale" },
+    { icon: prenotazioniImg, title: "Prenotazioni ASL Puglia", description: "Come prenotare visite mediche online", link: "/guide/prenotazioni-asl-puglia" },
   ];
 
   return <GuideCards guides={guides} />;

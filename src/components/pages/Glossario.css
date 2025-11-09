@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 100px 20px 80px 20px;
   font-family: 'Inter', system-ui, sans-serif;
-  background: #f8fafc;
+  background: var(--sfondo-grigio-chiaro);
   color: #1e293b;
   flex: 1;
   display: flex;
@@ -17,7 +17,7 @@
 
 .glossario__intro h1 {
   font-size: 2.5rem;
-  color: #1565D6;
+  color: var(--colore-primario);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,7 +72,7 @@
 
 .glossario-card__term {
   font-size: 1.4rem;
-  color: #1565D6;
+  color: var(--colore-primario);
   font-weight: 600;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .example-icon {
-  color: #1565D6;
+  color: var(--colore-primario);
 }
 
 .glossario__footer {
@@ -131,7 +131,7 @@
 .glossario__category-filter .filter-icon {
   position: absolute;
   left: 12px;
-  color: #1565D6;
+  color: var(--colore-primario);
   z-index: 1;
 }
 
@@ -149,7 +149,7 @@
 
 .glossario__search-input:focus,
 .glossario__category-select:focus {
-  border-color: #1565D6;
+  border-color: var(--colore-primario);
   box-shadow: 0 0 0 3px rgba(21, 101, 214, 0.1);
 }
 
@@ -157,7 +157,7 @@
 .glossario__category-select:focus-visible {
   outline: 3px solid #1565D6;
   outline-offset: 2px;
-  border-color: #1565D6;
+  border-color: var(--colore-primario);
   box-shadow: 0 0 0 4px rgba(21, 101, 214, 0.15);
 }
 
@@ -186,12 +186,17 @@
   transition: background-color 0.2s ease;
   color: #1e293b;
   font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
 }
 
 .glossario__suggestion:hover,
 .glossario__suggestion--selected {
   background-color: #e3f2fd;
-  color: #1565D6;
+  color: var(--colore-primario);
 }
 
 .glossario__suggestion .suggestion-icon {
@@ -201,7 +206,7 @@
 
 .glossario__suggestion:hover .suggestion-icon,
 .glossario__suggestion--selected .suggestion-icon {
-  color: #1565D6;
+  color: var(--colore-primario);
 }
 
 .glossario__no-results {
@@ -217,7 +222,7 @@
   padding: 16px;
   color: #64748b;
   font-size: 0.95rem;
-  background: #f8fafc;
+  background: var(--sfondo-grigio-chiaro);
   border-radius: 12px;
 }
 
@@ -228,7 +233,7 @@
   justify-content: center;
   padding: 80px 20px;
   gap: 20px;
-  color: #1565D6;
+  color: var(--colore-primario);
   font-size: 1.2rem;
 }
 

@@ -180,20 +180,72 @@
   text-decoration: underline;
 }
 
+/* Pulsante TTS per gli step */
+.step-speak-btn {
+  background: linear-gradient(135deg, #1565D6 0%, #64B5F6 100%);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(21, 101, 214, 0.3);
+}
+
+.step-speak-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(21, 101, 214, 0.4);
+}
+
+.step-speak-btn:active {
+  transform: scale(0.98);
+}
+
+.step-speak-btn svg {
+  font-size: 1rem;
+}
+
+/* Stile quando sta parlando */
+.step-speak-btn.speaking {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  animation: speakingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes speakingPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.step-speak-btn.speaking:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
 .guida-sidebar {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-.guida-info-card, .guida-help-card {
+.guida-info-card {
   background: white;
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.guida-info-card h3, .guida-help-card h3 {
+.guida-info-card h3 {
   font-size: 1.3rem;
   color: #1e293b;
   margin: 0 0 20px 0;
@@ -210,28 +262,6 @@
   border-bottom: none;
 }
 
-.help-button {
-  width: 100%;
-  padding: 15px 20px;
-  background: linear-gradient(135deg, #1565D6, #1565D6);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.help-button:hover {
-  background: linear-gradient(135deg, #1976D2, #1565D6);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(66, 165, 245, 0.4);
-}
 
 .guida-navigation {
   background: white;
@@ -309,6 +339,7 @@
 
   .step-number {
     align-self: center;
+    border-radius: 50%;
   }
 
   .guida-navigation {
@@ -334,7 +365,7 @@
     padding: 20px;
   }
 
-  .guida-info-card, .guida-help-card {
+  .guida-info-card {
     padding: 20px;
   }
 }

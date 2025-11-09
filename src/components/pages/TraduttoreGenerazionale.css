@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 100px 20px 80px 20px;
   font-family: 'Inter', system-ui, sans-serif;
-  background: #f8fafc;
+  background: var(--sfondo-grigio-chiaro);
   color: #1e293b;
   flex: 1;
   display: flex;
@@ -17,7 +17,7 @@
 
 .traduttore__intro h1 {
   font-size: 2.5rem;
-  color: #1565D6;
+  color: var(--colore-primario);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,17 +37,10 @@
   margin-bottom: 32px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .traduttore__search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex: 2;
-  min-width: 250px;
-}
-
-.traduttore__direction {
   position: relative;
   display: flex;
   align-items: center;
@@ -55,16 +48,14 @@
   min-width: 200px;
 }
 
-.traduttore__search .search-icon,
-.traduttore__direction .direction-icon {
+.traduttore__search .search-icon {
   position: absolute;
   left: 12px;
-  color: #1565D6;
+  color: var(--colore-primario);
   z-index: 1;
 }
 
-.traduttore__search-input,
-.traduttore__direction-select {
+.traduttore__search-input {
   width: 100%;
   padding: 12px 12px 12px 40px;
   border: 2px solid #e3f2fd;
@@ -75,23 +66,21 @@
   transition: all 0.3s ease;
 }
 
-.traduttore__search-input:focus,
-.traduttore__direction-select:focus {
-  border-color: #1565D6;
+.traduttore__search-input:focus {
+  border-color: var(--colore-primario);
   box-shadow: 0 0 0 3px rgba(21, 101, 214, 0.1);
 }
 
-.traduttore__search-input:focus-visible,
-.traduttore__direction-select:focus-visible {
+.traduttore__search-input:focus-visible {
   outline: 3px solid #1565D6;
   outline-offset: 2px;
-  border-color: #1565D6;
+  border-color: var(--colore-primario);
   box-shadow: 0 0 0 4px rgba(21, 101, 214, 0.15);
 }
 
 .traduttore__suggestions {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 2px);
   left: 0;
   right: 0;
   background: white;
@@ -102,7 +91,7 @@
   max-height: 300px;
   overflow-y: auto;
   z-index: 1000;
-  margin-top: -2px;
+  margin-top: 0;
 }
 
 .traduttore__suggestion {
@@ -114,12 +103,17 @@
   transition: background-color 0.2s ease;
   color: #1e293b;
   font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
 }
 
 .traduttore__suggestion:hover,
 .traduttore__suggestion--selected {
   background-color: #e3f2fd;
-  color: #1565D6;
+  color: var(--colore-primario);
 }
 
 .traduttore__suggestion .suggestion-icon {
@@ -129,27 +123,10 @@
 
 .traduttore__suggestion:hover .suggestion-icon,
 .traduttore__suggestion--selected .suggestion-icon {
-  color: #1565D6;
+  color: var(--colore-primario);
 }
 
-.traduttore__toggle-btn {
-  padding: 12px 24px;
-  background: #1565D6;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.traduttore__toggle-btn:hover {
-  background: #0d3a94;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(21, 101, 214, 0.3);
-}
+/* Tasto "mostra tutto" rimosso */
 
 .traduttore__lista {
   display: grid;
@@ -180,7 +157,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1565D6, #1565D6);
+  background: linear-gradient(135deg, var(--colore-primario), var(--colore-primario));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,13 +191,13 @@
 
 .traduttore-card__word {
   font-size: 1.4rem;
-  color: #1565D6;
+  color: var(--colore-primario);
   font-weight: 600;
   margin: 0;
 }
 
 .traduttore-card__arrow {
-  color: #1565D6;
+  color: var(--colore-primario);
   font-size: 1.2rem;
   flex-shrink: 0;
   padding: 0 8px;
@@ -240,7 +217,7 @@
   padding: 16px;
   color: #64748b;
   font-size: 0.95rem;
-  background: #f8fafc;
+  background: var(--sfondo-grigio-chiaro);
   border-radius: 12px;
 }
 
@@ -251,7 +228,7 @@
   justify-content: center;
   padding: 80px 20px;
   gap: 20px;
-  color: #1565D6;
+  color: var(--colore-primario);
   font-size: 1.2rem;
 }
 
@@ -288,13 +265,8 @@
     align-items: stretch;
   }
 
-  .traduttore__search,
-  .traduttore__direction {
+  .traduttore__search {
     min-width: 100%;
-  }
-
-  .traduttore__toggle-btn {
-    width: 100%;
   }
 
   .traduttore__lista {

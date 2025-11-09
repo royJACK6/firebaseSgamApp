@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ChatbotProvider } from './contexts/ChatbotContext';
 import { AuthProvider } from './contexts/AuthContext';
 
+import AccessibilityLoader from './components/shared/AccessibilityLoader';
 import Navbar from './components/shared/Navbar';
 import HeaderLinks from './components/shared/HeaderLinks';
 import Footer from './components/shared/Footer';
@@ -23,6 +24,7 @@ import GuidaRecuperoPassword from './components/pages/GuidaRecuperoPassword';
 import GuidaCertificatiOnline from './components/pages/GuidaCertificatiOnline';
 import GuidaPagamentiDMSanitari from './components/pages/GuidaPagamentiDMSanitari';
 import GuidaAnagrafeDigitale from './components/pages/GuidaAnagrafeDigitale';
+import GuidaPrenotazioniASL from './components/pages/Guida-PrenotazioniASL';
 import PrivacyPolicy from './components/pages/Privacy';
 import Mission from './components/pages/Mission';
 import Error404 from './components/pages/Error404';
@@ -37,6 +39,7 @@ function App() {
   return (
     <AuthProvider>
       <ChatbotProvider>
+        <AccessibilityLoader />
         <Router>
           <Routes>
             {/* Admin Routes - Hidden, no navbar/footer */}
@@ -71,6 +74,9 @@ function App() {
               path="/*"
               element={
                 <>
+                  <a href="#main-content" className="skip-to-main">
+                    Salta al contenuto principale
+                  </a>
                   <Navbar />
                   <HeaderLinks />
                   <main className="main-content" id="main-content">
@@ -91,6 +97,8 @@ function App() {
                       <Route path="/guide/certificati-online" element={<GuidaCertificatiOnline />} />
                       <Route path="/guide/pagamenti-dm-sanitari" element={<GuidaPagamentiDMSanitari />} />
                       <Route path="/guide/anagrafe-digitale" element={<GuidaAnagrafeDigitale />} />
+                      <Route path="/guide/prenotazioni-asl-puglia" element={<GuidaPrenotazioniASL />} />
+                      <Route path="/guide/asl" element={<GuidaPrenotazioniASL />} />
 
                       <Route path="/glossario" element={<Glossario />} />
                       <Route path="/traduttore-generazionale" element={<TraduttoreGenerazionale />} />

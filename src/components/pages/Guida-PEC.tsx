@@ -73,7 +73,6 @@ const GuidaPec: React.FC = () => {
       image={pecImage}
       steps={steps}
       info={info}
-      helpText="Il nostro assistente Sgamy è sempre disponibile per aiutarti con qualsiasi dubbio!"
       previousLink="/guide/spid"
       previousTitle="Guida precedente: SPID"
       nextLink="/guide/cie"

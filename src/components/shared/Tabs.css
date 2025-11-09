@@ -1,21 +1,21 @@
 .tabs-section {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
-  background: #F4F4FA;
+  padding: 40px var(--spaziatura-md);
+  background: var(--sfondo-principale);
 }
 
 .tabs-container {
-  background: #fff;
-  border-radius: 24px;
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
   padding: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--ombra-pronunciata);
 }
 
 .tabs-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1565D6;
+  color: var(--colore-primario);
   margin: 0 0 32px 0;
   text-align: center;
   position: relative;
@@ -26,8 +26,8 @@
   display: block;
   width: 60px;
   height: 4px;
-  background: #1565D6;
-  margin: 12px auto 0;
+  background: var(--colore-primario);
+  margin: var(--spaziatura-sm) auto 0;
   border-radius: 2px;
 }
 
@@ -60,13 +60,13 @@
 }
 
 .tabs-button:hover {
-  color: #1565D6;
-  background: #f0f7ff;
+  color: var(--colore-primario);
+  background: rgba(var(--colore-primario-rgb), 0.05);
 }
 
 .tabs-button.active {
-  color: #1565D6;
-  border-bottom-color: #1565D6;
+  color: var(--colore-primario);
+  border-bottom-color: var(--colore-primario);
   background: transparent;
 }
 
@@ -88,21 +88,12 @@
   display: block;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animazione fadeIn già definita in PaletteExtended.css */
 
 .tabs-panel-content h3 {
   font-size: 1.5rem;
-  color: #1565D6;
-  margin: 0 0 16px 0;
+  color: var(--colore-primario);
+  margin: 0 0 var(--spaziatura-md) 0;
   font-weight: 700;
 }
 
@@ -144,8 +135,8 @@
   content: '✓';
   position: absolute;
   left: 0;
-  top: 12px;
-  color: #1565D6;
+  top: var(--spaziatura-sm);
+  color: var(--colore-primario);
   font-weight: 700;
   font-size: 1.2rem;
 }
@@ -185,13 +176,13 @@
 }
 
 .tabs-faq-collapsible__header:focus {
-  outline: 2px solid #1565D6;
+  outline: var(--border-normale) solid var(--colore-primario);
   outline-offset: 2px;
 }
 
 .tabs-faq-collapsible__icon {
-  color: #1565D6;
-  transition: transform 0.3s ease;
+  color: var(--colore-primario);
+  transition: var(--transizione-transform);
   flex-shrink: 0;
 }
 
@@ -200,11 +191,11 @@
 }
 
 .tabs-faq-collapsible__content {
-  padding: 20px 24px;
+  padding: var(--spaziatura-md) var(--spaziatura-lg);
   font-size: 1rem;
-  background: #f8fafc;
-  border-left: 4px solid #1565D6;
-  border-radius: 0 0 12px 12px;
+  background: var(--sfondo-grigio-chiaro);
+  border-left: 4px solid var(--colore-primario);
+  border-radius: 0 0 var(--border-radius-grande) var(--border-radius-grande);
   margin-top: 4px;
   color: #475569;
   line-height: 1.7;
@@ -254,9 +245,9 @@
   }
 
   .tabs-button.active {
-    border-left-color: #1565D6;
+    border-left-color: var(--colore-primario);
     border-bottom-color: transparent;
-    background: #e3f2fd;
+    background: rgba(var(--colore-primario-rgb), 0.1);
   }
 
   .tabs-panel-content h3 {

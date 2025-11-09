@@ -1,21 +1,45 @@
+/* ========================================
+ * CARD COMPONENTS - REFACTORED
+ * Usa variabili CSS dal design system
+ * ======================================== */
+
+/* Info Card - Card grande per sezione informativa */
 .sg-info-card {
-  background: #fff;
-  border-radius: 24px;
-  padding: 32px;
-  margin-bottom: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s forwards;
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spaziatura-xl);
+  margin-bottom: var(--spaziatura-xxl);
+  box-shadow: var(--ombra-card);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 2px solid transparent;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: var(--border-normale) solid transparent;
+  position: relative;
+  /* Animazione gestita da classe design system (animate-bounce-in) */
+}
+
+.sg-info-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-xl);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--colore-primario-rgb), 0.05) 0%,
+    rgba(var(--colore-secondario-rgb), 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.sg-info-card:hover::after {
+  opacity: 1;
 }
 
 .sg-info-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(21, 101, 214, 0.2);
-  border-color: #1565D6;
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(var(--colore-primario-rgb), 0.25);
+  border-color: var(--colore-primario);
 }
 
 .sg-info-card__content {
@@ -27,115 +51,68 @@
 .sg-info-card__title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #1565D6;
-  margin: 0 0 20px 0;
+  color: var(--colore-primario);
+  margin: 0 0 var(--spaziatura-md) 0;
   letter-spacing: 0.5px;
 }
 
 .sg-info-card__description {
   font-size: 1.1rem;
-  color: #475569;
+  color: var(--testo-grigio-scuro);
   line-height: 1.8;
-  margin: 0 0 24px 0;
+  margin: 0 0 var(--spaziatura-lg) 0;
 }
 
 .sg-info-card__cta {
-  margin-top: 24px;
+  margin-top: var(--spaziatura-lg);
   display: flex;
   justify-content: center;
 }
 
+/* Button Info - Usa variabili design system */
 .sg-btn-info {
-  background-color: #1565D6;
-  color: white;
+  background-color: var(--colore-primario);
+  color: var(--testo-bianco);
   border: none;
   padding: 12px 28px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-medio);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sg-btn-info::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.sg-btn-info:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .sg-btn-info:hover {
-  background-color: #0d3a94;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(21, 101, 214, 0.3);
+  background-color: var(--colore-intermedio);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--ombra-chatbot-hover);
 }
 
-/* Responsive per componenti Info Card */
-@media (max-width: 768px) {
-  .sg-guide-card__body {
-    height: 120px;
-    min-height: 120px;
-    max-height: 120px;
-    padding: 12px;
-  }
-  .sg-guide-card__desc {
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-  .sg-info-card {
-    padding: 24px;
-    margin-bottom: 24px;
-  }
-  .sg-info-card__title {
-    font-size: 1.5rem;
-  }
-  .sg-info-card__description {
-    font-size: 1rem;
-  }
-  .sg-btn-info {
-    padding: 10px 20px;
-    font-size: 0.95rem;
-  }
-  
-  /* Ottimizzazione zoom card Recupero Password per tablet */
-  .sg-guide-card--recupero-password .sg-guide-card__img {
-    transform: scale(1.15);
-  }
-  
-  .sg-guide-card--recupero-password:hover .sg-guide-card__img {
-    transform: scale(1.25);
-  }
+.sg-btn-info:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
-@media (max-width: 480px) {
-  .sg-guide-card__body {
-    height: 110px;
-    min-height: 110px;
-    max-height: 110px;
-    padding: 10px;
-  }
-  .sg-guide-card__title {
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-  .sg-guide-card__desc {
-    font-size: 0.85rem;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    line-height: 1.3;
-  }
-  .sg-btn {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-  }
-  
-  /* Ottimizzazione zoom card Recupero Password per mobile */
-  .sg-guide-card--recupero-password .sg-guide-card__img {
-    transform: scale(1.1);
-  }
-  
-  .sg-guide-card--recupero-password:hover .sg-guide-card__img {
-    transform: scale(1.2);
-  }
-  
-  .sg-guide-card__media {
-    min-height: 180px;
-  }
-}
-
+/* Guide Card - Card per le guide */
 .sg-guide-card {
   display: flex;
   flex-direction: column;
@@ -145,45 +122,46 @@
 .sg-guide-card__media {
   flex: 1;
   overflow: hidden;
+  min-height: 250px;
+  max-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sfondo-grigio-chiaro);
 }
 
 .sg-guide-card__img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-/* Stile speciale per la card Recupero Password - immagine ingrandita */
-.sg-guide-card--recupero-password .sg-guide-card__img {
   object-fit: cover;
-  transform: scale(1.2);
+  display: block;
+  transition: var(--transizione-transform);
+  transform: scale(1);
 }
 
-.sg-guide-card--recupero-password:hover .sg-guide-card__img {
-  transform: scale(1.3);
+.sg-guide-card:hover .sg-guide-card__img {
+  transform: scale(1.05);
 }
 
 .sg-guide-card__body {
-  padding: 10px;
+  padding: var(--spaziatura-md) var(--spaziatura-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  height: 130px;
-  min-height: 130px;
-  max-height: 130px;
+  height: 140px;
+  min-height: 140px;
+  max-height: 140px;
   flex-shrink: 0;
   flex-grow: 0;
 }
 
 .sg-guide-card__title {
   font-size: 1.1rem;
-  margin: 0 0 4px 0;
+  margin: 0 0 var(--spaziatura-xs) 0;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--testo-grigio-scuro);
   flex-shrink: 0;
   line-height: 1.3;
 }
@@ -203,44 +181,155 @@
 }
 
 .sg-guide-card__cta {
-  margin-top: 8px;
+  margin-top: var(--spaziatura-sm);
   display: flex;
   justify-content: center;
   width: 100%;
   flex-shrink: 0;
 }
 
+/* Buttons - Usa variabili design system */
 .sg-btn {
   padding: 5px 12px;
-  background-color: #1e88e5;
-  color: white;
+  background-color: var(--colore-primario);
+  color: var(--testo-bianco);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--border-radius-medio);
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
-  transition: background-color 0.2s;
+  transition: var(--transizione-normale);
+  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
 }
 
 .sg-btn:hover {
-  background-color: #1565c0;
+  background-color: var(--colore-intermedio);
+  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.sg-btn .btn-icon-left,
+.sg-btn .btn-icon-right {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sg-btn .btn-icon-left {
+  margin-right: 0.5rem;
+}
+
+.sg-btn .btn-icon-right {
+  margin-left: 0.5rem;
+}
+
+.sg-btn:hover .btn-icon-right {
+  transform: translateX(4px);
+}
+
+.sg-btn:hover .btn-icon-left {
+  transform: translateX(-2px);
 }
 
 .sg-btn-primary {
-  background-color: #1e88e5;
+  background-color: var(--colore-primario);
   font-weight: 600;
-  padding: 8px 20px;
+  padding: var(--spaziatura-sm) var(--spaziatura-md);
+  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
 }
 
 .sg-btn-primary:hover {
-  background-color: #1565c0;
+  background-color: var(--colore-intermedio);
+  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
+  transform: translateY(-2px);
 }
 
+/* Assistant Card - Card speciale per Sgamy */
 .sg-assistant-card {
   cursor: default;
 }
 
 .sg-assistant-card:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+  box-shadow: var(--ombra-pronunciata);
+}
+
+/* ========================================
+ * RESPONSIVE
+ * ======================================== */
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+  .sg-guide-card__body {
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    padding: 12px;
+  }
+  
+  .sg-guide-card__desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  
+  .sg-info-card {
+    padding: var(--spaziatura-lg);
+    margin-bottom: var(--spaziatura-lg);
+  }
+  
+  .sg-info-card__title {
+    font-size: 1.5rem;
+  }
+  
+  .sg-info-card__description {
+    font-size: 1rem;
+  }
+  
+  .sg-btn-info {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .sg-guide-card__media {
+    min-height: 200px;
+    max-height: 200px;
+  }
+  
+  .sg-guide-card:hover .sg-guide-card__img {
+    transform: scale(1.05);
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .sg-guide-card__body {
+    height: 110px;
+    min-height: 110px;
+    max-height: 110px;
+    padding: var(--spaziatura-sm);
+  }
+  
+  .sg-guide-card__title {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  
+  .sg-guide-card__desc {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.3;
+  }
+  
+  .sg-btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+  
+  .sg-guide-card__media {
+    min-height: 180px;
+    max-height: 180px;
+  }
+  
+  .sg-guide-card:hover .sg-guide-card__img {
+    transform: scale(1.05);
+  }
 }

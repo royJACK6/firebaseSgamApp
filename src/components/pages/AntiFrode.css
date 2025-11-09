@@ -18,8 +18,8 @@
 
 .antifrode__intro h1 {
   font-size: 3rem;
-  color: #1565D6;
-  margin-bottom: 16px;
+  color: var(--colore-primario);
+  margin-bottom: var(--spaziatura-md);
 }
 
 .antifrode__intro p {
@@ -32,12 +32,12 @@
 .antifrode__practices, 
 .antifrode__chatbot, 
 .antifrode__collapsibles {
-  background: #F4F4FA;
+  background: var(--sfondo-principale);
   padding: 40px;
   margin-bottom: 50px;
-  border-radius: 24px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--ombra-scura);
+  transition: var(--transizione-all);
 }
 
 .antifrode__practices:hover, 
@@ -51,8 +51,8 @@
 .antifrode__chatbot h2,
 .antifrode__collapsibles h2 {
   font-size: 2rem;
-  color: #1565D6;
-  margin-bottom: 20px;
+  color: var(--colore-primario);
+  margin-bottom: var(--spaziatura-md);
   text-align: center;
   position: relative;
 }
@@ -64,7 +64,7 @@
   display: block;
   width: 60px;
   height: 4px;
-  background: #1565D6;
+  background: var(--colore-primario);
   margin: 10px auto 0;
   border-radius: 2px;
 }
@@ -275,14 +275,14 @@
 }
 
 .antifrode__buttons button {
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: var(--spaziatura-sm) var(--spaziatura-lg);
+  border-radius: var(--border-radius-medio);
   border: none;
   cursor: pointer;
   font-weight: 600;
-  background: #1565D6;
-  color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--colore-primario);
+  color: var(--testo-bianco);
+  transition: var(--transizione-transform);
 }
 
 .antifrode__buttons button:hover {
@@ -323,11 +323,11 @@
 }
 
 .collapsible__content {
-  padding: 15px 20px;
+  padding: 15px var(--spaziatura-md);
   font-size: 1rem;
-  background: #f8fafc;
-  border-left: 4px solid #1565D6;
-  border-radius: 0 0 12px 12px;
+  background: var(--sfondo-grigio-chiaro);
+  border-left: 4px solid var(--colore-primario);
+  border-radius: 0 0 var(--border-radius-grande) var(--border-radius-grande);
   margin-top: 4px;
 }
 

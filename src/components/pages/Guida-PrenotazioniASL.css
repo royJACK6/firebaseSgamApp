@@ -1,4 +1,4 @@
-/* Stili per la pagina guida Sicurezza */
+/* Stili per la pagina guida Prenotazioni ASL Puglia */
 .guida-hero {
   background: linear-gradient(135deg, #1565D6, #1565D6);
   color: white;
@@ -31,14 +31,19 @@
 
 .guida-hero-image {
   flex: 0 0 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .guida-hero-image img {
-  width: 100%;
-  height: auto;
+  width: 300px;
+  height: 300px;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   transform: scale(1.05);
+  object-fit: cover;
 }
 
 .guida-hero-text h1 {
@@ -76,7 +81,7 @@
   border: 2px solid #4caf50;
 }
 
-.difficulty.medio {
+.difficulty.medio, .difficulty.media {
   background: rgba(255, 152, 0, 0.2);
   color: #ff9800;
   border: 2px solid #ff9800;
@@ -264,30 +269,34 @@
 
 
 .guida-navigation {
-  background: white;
-  padding: 30px 0;
+  background: #f8fafc;
+  padding: 40px 0;
   border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 50px auto 0;
   padding-left: 20px;
   padding-right: 20px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .nav-button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 24px;
-  background: #f8fafc;
+  padding: 14px 28px;
+  background: white;
   color: #64748b;
   text-decoration: none;
   border-radius: 12px;
   font-weight: 600;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 200px;
+  justify-content: center;
 }
 
 .nav-button:hover {
@@ -300,6 +309,7 @@
 .nav-button.next {
   background: linear-gradient(135deg, #1565D6, #1565D6);
   color: white;
+  border: 2px solid #1565D6;
 }
 
 .nav-button.next:hover {
@@ -307,65 +317,248 @@
 }
 
 /* Responsive Design */
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+  .guida-hero {
+    padding: 80px 0 50px 0;
+  }
+  
+  .guida-hero-content {
+    gap: 30px;
+    padding: 0 30px;
+  }
+  
+  .guida-hero-image {
+    flex: 0 0 280px;
+    height: 280px;
+  }
+  
+  .guida-hero-image img {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .guida-container {
+    padding: 0 30px;
+    gap: 35px;
+  }
+  
+  .step {
+    padding: 25px;
+  }
+}
+
+/* Tablet - 768px */
 @media (max-width: 768px) {
+  .guida-hero {
+    padding: 60px 0 40px 0;
+  }
+  
   .guida-hero-content {
     flex-direction: column;
     text-align: center;
-    gap: 30px;
+    gap: 25px;
+    padding: 0 20px;
   }
 
   .guida-hero-image {
     flex: none;
-    max-width: 250px;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+  }
+  
+  .guida-hero-image img {
+    width: 220px;
+    height: 220px;
   }
 
   .guida-hero-text h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
+    margin-bottom: 15px;
   }
 
   .guida-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .guida-meta {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .difficulty, .duration, .steps {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .guida-content {
+    padding: 40px 0;
   }
 
   .guida-container {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 25px;
+    padding: 0 20px;
+  }
+  
+  .guida-steps h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
   }
 
   .step {
     flex-direction: column;
     text-align: center;
+    padding: 20px;
+    gap: 15px;
   }
 
   .step-number {
     align-self: center;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
     border-radius: 50%;
+    flex: 0 0 50px;
+  }
+  
+  .step-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  
+  .step-content p {
+    font-size: 0.95rem;
+  }
+
+  .guida-info-card {
+    padding: 25px;
+  }
+  
+  .guida-info-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
   }
 
   .guida-navigation {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+    margin-top: 35px;
+    padding: 25px 20px;
+  }
+
+  .nav-button {
+    width: 100%;
+    min-width: unset;
+    padding: 12px 24px;
+    font-size: 0.95rem;
   }
 }
 
+/* Mobile - 480px */
 @media (max-width: 480px) {
   .guida-hero {
-    padding: 40px 0;
+    padding: 40px 0 30px 0;
+  }
+  
+  .guida-hero-content {
+    gap: 20px;
+    padding: 0 15px;
+  }
+  
+  .guida-hero-image {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .guida-hero-image img {
+    width: 180px;
+    height: 180px;
+    transform: scale(1.02);
   }
 
   .guida-hero-text h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  
+  .guida-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 18px;
   }
 
   .guida-meta {
     justify-content: center;
+    gap: 10px;
+  }
+  
+  .difficulty, .duration, .steps {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+  
+  .guida-content {
+    padding: 30px 0;
+  }
+  
+  .guida-container {
+    padding: 0 15px;
+    gap: 20px;
+  }
+  
+  .guida-steps h2 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
   }
 
   .step {
-    padding: 20px;
+    padding: 18px;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .step-number {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    flex: 0 0 45px;
+  }
+  
+  .step-content h3 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  
+  .step-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .step-content li {
+    font-size: 0.9rem;
   }
 
   .guida-info-card {
-    padding: 20px;
+    padding: 18px;
+  }
+  
+  .guida-info-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .guida-navigation {
+    margin-top: 30px;
+    padding: 20px 15px;
+    gap: 10px;
+  }
+
+  .nav-button {
+    padding: 11px 18px;
+    font-size: 0.85rem;
   }
 }
+

@@ -1,8 +1,8 @@
 footer.footer {
-  padding: 2rem 1.5rem;
-  background-color: #1565D6;
-  border-top: 1px solid #1565D6;
-  color: #F4F4FA;
+  padding: var(--spaziatura-xl) var(--spaziatura-lg);
+  background-color: var(--colore-primario);
+  border-top: 1px solid var(--colore-primario);
+  color: var(--sfondo-principale);
   margin-top: 6rem;
   flex-shrink: 0;
 }
@@ -19,29 +19,74 @@ footer.footer {
 .footer-column {
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+.footer-column:nth-child(1) { animation-delay: 0.2s; }
+.footer-column:nth-child(2) { animation-delay: 0.4s; }
+.footer-column:nth-child(3) { animation-delay: 0.6s; }
 
 .footer-column h3 {
   margin-bottom: 1rem;
   font-weight: 600;
   font-size: 1.5rem;
-  color: #F4F4FA;
+  color: var(--sfondo-principale);
+  position: relative;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #E3F2FD;
+  animation: expandWidth 0.8s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+.footer-column:nth-child(1) h3::after { animation-delay: 0.8s; }
+.footer-column:nth-child(2) h3::after { animation-delay: 1s; }
+.footer-column:nth-child(3) h3::after { animation-delay: 1.2s; }
+
+@keyframes expandWidth {
+  from { width: 0; }
+  to { width: 40px; }
 }
 
 .footer-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 0.5rem 0;
   text-decoration: none;
-  color: #F4F4FA;
+  color: var(--sfondo-principale);
   font-weight: 500;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 
 .footer-link:hover {
   color: #E3F2FD;
-  text-decoration: underline;
+  transform: translateX(5px);
 }
+
+.footer-link:hover .footer-icon {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
 
 .footer-link:focus-visible {
   color: #E3F2FD;
@@ -52,16 +97,25 @@ footer.footer {
 }
 
 .footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin: 0.3rem 0;
-  color: #F4F4FA;
+  color: var(--sfondo-principale);
   font-weight: 500;
   font-size: 1rem;
+}
+
+.footer-contact .footer-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
 }
 
 footer.footer .content {
   margin-top: 3rem;
   font-size: 0.85rem;
-  color: #F4F4FA;
+  color: var(--sfondo-principale);
   text-align: center;
 }
 

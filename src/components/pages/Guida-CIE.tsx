@@ -7,7 +7,7 @@ const GuidaCie: React.FC = () => {
     { title: "Richiedi la CIE", description: "Recati presso il tuo Comune di residenza con i documenti necessari: documento d'identità scaduto, fototessera recente e codice fiscale." },
     { title: "Attendi la produzione", description: "La CIE viene prodotta in 6 giorni lavorativi. Riceverai un SMS quando sarà pronta per il ritiro." },
     { title: "Ritira la CIE", description: "Recati presso il Comune con un documento d'identità valido per ritirare la tua CIE. Ti verrà chiesto di inserire un PIN." },
-    { title: "Scarica l'app CIE", description: "Installa l'app ufficiale 'Carta d'Identità Elettronica' dal tuo store preferito (App Store o Google Play)." },
+    { title: "Scarica l'app CieID", description: "Installa l'app ufficiale 'CieID' dal tuo store preferito (App Store o Google Play)." },
     { title: "Attiva la CIE nell'app", description: "Apri l'app e segui la procedura di attivazione inserendo il PIN che hai scelto al momento del ritiro." },
     { title: "Configura l'autenticazione", description: "Imposta il metodo di autenticazione preferito: PIN, impronta digitale o riconoscimento facciale." },
     { title: "Testa l'accesso ai servizi", description: "Prova ad accedere a un servizio della Pubblica Amministrazione utilizzando la tua CIE per verificare che tutto funzioni." },
@@ -29,7 +29,6 @@ const GuidaCie: React.FC = () => {
       image={cieImage}
       steps={steps}
       info={info}
-      helpText="Il nostro assistente Sgamy è sempre disponibile per aiutarti con qualsiasi dubbio!"
       previousLink="/guide/pec"
       previousTitle="Guida precedente: PEC"
       nextLink="/guide/sicurezza"
@@ -39,3 +38,4 @@ const GuidaCie: React.FC = () => {
 };
 
 export default GuidaCie;
+

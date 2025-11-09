@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useChatbot } from '../../contexts/ChatbotContext';
 import { analyzeText, checkServerStatus } from '../../apiServices/apiService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faImage, faPaperPlane, faVolumeUp, faStop } from '@fortawesome/free-solid-svg-icons';
 import './ChatbotModal.css';
 import sgamyLogo from '../../assets/sgamy-logo.png';
 
@@ -277,7 +279,7 @@ const ChatbotModal: React.FC = () => {
               onClick={closeChatbot}
               aria-label="Chiudi chatbot"
             >
-              ×
+              <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -306,7 +308,7 @@ const ChatbotModal: React.FC = () => {
                     aria-label={speakingMessageIndex === i ? 'Ferma lettura' : 'Ascolta questo messaggio'}
                     title={speakingMessageIndex === i ? 'Ferma lettura' : 'Ascolta messaggio'}
                   >
-                    <i className={`fas ${speakingMessageIndex === i ? 'fa-stop' : 'fa-volume-up'}`} aria-hidden="true"></i>
+                    <FontAwesomeIcon icon={speakingMessageIndex === i ? faStop : faVolumeUp} aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -333,7 +335,7 @@ const ChatbotModal: React.FC = () => {
                 onClick={handleRemoveImage}
                 aria-label="Rimuovi immagine"
               >
-                ×
+                <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -350,7 +352,7 @@ const ChatbotModal: React.FC = () => {
             aria-label="Carica immagine"
           />
           <label htmlFor="chatbot-file-input" className="chatbot-file-label" title="Carica immagine">
-            <i className="fas fa-image" aria-hidden="true"></i>
+            <FontAwesomeIcon icon={faImage} aria-hidden="true" />
           </label>
           <label htmlFor="chatbot-message-input" className="sr-only">Scrivi un messaggio</label>
           <input
@@ -371,7 +373,7 @@ const ChatbotModal: React.FC = () => {
             title="Invia messaggio"
             disabled={isLoading || (!inputMessage.trim() && !selectedImage)}
           >
-            <i className="fas fa-paper-plane" aria-hidden="true"></i>
+            <FontAwesomeIcon icon={faPaperPlane} aria-hidden="true" />
           </button>
         </form>
       </div>

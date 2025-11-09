@@ -6,17 +6,15 @@ import glossarioImage from '../../assets/SGAMY_NONNINA.png';
 
 type Guide = { title: string; description: string; icon: string; link: string };
 
-const Card: React.FC<React.PropsWithChildren<{ className?: string; onClick?: () => void; 'aria-label'?: string }>> = ({ className = '', onClick, children, 'aria-label': ariaLabel }) => (
-  <article className={`sg-card ${className}`} onClick={onClick} role="button" tabIndex={0} aria-label={ariaLabel}
-    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick?.()}>
+const Card: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ className = '', children }) => (
+  <article className={`sg-card ${className}`}>
     {children}
   </article>
 );
 
 const GuideCard: React.FC<Guide> = ({ title, description, icon, link }) => {
-  const go = () => (window.location.href = link);
   return (
-    <Card className="sg-guide-card" onClick={go} aria-label={title}>
+    <Card className="sg-guide-card">
       <div className="sg-guide-card__media">
         <img
           src={icon}
@@ -30,7 +28,9 @@ const GuideCard: React.FC<Guide> = ({ title, description, icon, link }) => {
         <h3 className="sg-guide-card__title">{title}</h3>
         <p className="sg-guide-card__desc">{description}</p>
         <div className="sg-guide-card__cta">
-          <button type="button" className="sg-btn">Leggi la guida</button>
+          <a href={link} className="sg-btn" aria-label={`Leggi la guida su ${title}`}>
+            Leggi la guida
+          </a>
         </div>
       </div>
     </Card>

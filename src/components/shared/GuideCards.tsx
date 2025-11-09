@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import './Card.css';
 import './GuideCards.css';
 
 type GuideType = { title: string; description: string; icon: string; link: string };
 
-const Card: React.FC<React.PropsWithChildren<{ className?: string; onClick?: () => void }>> = ({ className = '', onClick, children }) => (
-  <article className={`sg-card ${className}`} onClick={onClick} role="button" tabIndex={0}
-    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick?.()}>
+const Card: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ className = '', children }) => (
+  <article className={`sg-card ${className}`}>
     {children}
   </article>
 );
 
 const GuideCard: React.FC<GuideType> = ({ title, description, icon, link }) => {
-  const go = () => (window.location.href = link);
-  const isRecuperoPassword = title === "Recupero Password";
-  
   return (
-    <Card className={`sg-guide-card ${isRecuperoPassword ? 'sg-guide-card--recupero-password' : ''}`} onClick={go}>
+    <Card className="sg-guide-card">
       <div className="sg-guide-card__media">
         <img
           src={icon}
@@ -30,7 +28,9 @@ const GuideCard: React.FC<GuideType> = ({ title, description, icon, link }) => {
         <h3 className="sg-guide-card__title">{title}</h3>
         <p className="sg-guide-card__desc">{description}</p>
         <div className="sg-guide-card__cta">
-          <button type="button" className="sg-btn">Scopri di più</button>
+          <a href={link} className="sg-btn" aria-label={`Scopri di più sulla guida ${title}`}>
+            Scopri di più
+          </a>
         </div>
       </div>
     </Card>
@@ -43,8 +43,11 @@ interface GuideCardsProps {
 
 const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Get responsive cards per page
+  const [isInitialized, setIsInitialized] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Calcola quante cards sono visibili per volta
   const getCardsPerPage = () => {
     if (window.innerWidth <= 480) return 1;
     if (window.innerWidth <= 768) return 2;
@@ -52,55 +55,119 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
     return 4;
   };
 
-  const [cardsPerPage] = useState(getCardsPerPage());
+  const cardsPerPage = getCardsPerPage();
   const totalPages = Math.ceil(guides.length / cardsPerPage);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalPages);
-  };
+  // Aggiorna l'indice corrente in base allo scroll
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
-  };
+    const updateCurrentIndex = () => {
+      const scrollLeft = carousel.scrollLeft;
+      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
+      const gap = 16;
+      const cardWidthWithGap = cardWidth + gap;
+      const newIndex = Math.round(scrollLeft / cardWidthWithGap);
+      const pageIndex = Math.floor(newIndex / cardsPerPage);
+      setCurrentIndex(Math.min(pageIndex, totalPages - 1));
+    };
 
-  const handleCarouselKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      prevSlide();
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      nextSlide();
-    } else if (e.key === 'Home') {
-      e.preventDefault();
-      setCurrentIndex(0);
-    } else if (e.key === 'End') {
-      e.preventDefault();
-      setCurrentIndex(totalPages - 1);
+    carousel.addEventListener('scroll', updateCurrentIndex);
+    updateCurrentIndex(); // Inizializza
+
+    return () => carousel.removeEventListener('scroll', updateCurrentIndex);
+  }, [guides.length, cardsPerPage, totalPages]);
+
+  // Animazione di entrata e scroll automatico alla card centrale
+  useEffect(() => {
+    const scrollToCenterCard = () => {
+      if (carouselRef.current && !isInitialized) {
+        const carousel = carouselRef.current;
+        const cards = carousel.querySelectorAll('.guide-carousel-slide');
+        if (cards.length > 0) {
+          // Calcola l'indice della card centrale
+          const centerIndex = Math.floor(guides.length / 2);
+          const centerCard = cards[centerIndex] as HTMLElement;
+          
+          if (centerCard) {
+            // Calcola la posizione di scroll per centrare la card
+            const cardWidth = centerCard.offsetWidth;
+            const scrollPosition = centerCard.offsetLeft - (carousel.offsetWidth / 2) + (cardWidth / 2);
+            
+            // Scroll iniziale senza animazione per posizionare correttamente
+            carousel.scrollLeft = scrollPosition;
+            
+            // Poi anima con un leggero delay per un effetto più piacevole
+            setTimeout(() => {
+              setIsInitialized(true);
+              // Piccolo aggiustamento con animazione smooth
+              carousel.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+            }, 300);
+          }
+        }
+      }
+    };
+
+    const timer = setTimeout(scrollToCenterCard, 100);
+    return () => clearTimeout(timer);
+  }, [guides.length, isInitialized]);
+
+  const scrollToPage = (pageIndex: number) => {
+    if (carouselRef.current) {
+      const cardWidth = carouselRef.current.querySelector('.guide-carousel-slide')?.clientWidth || 280;
+      const gap = 16;
+      const scrollPosition = pageIndex * cardsPerPage * (cardWidth + gap);
+      carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     }
   };
 
-  const getSlideWidth = () => {
-    if (cardsPerPage === 1) return 100;
-    if (cardsPerPage === 2) return 50;
-    if (cardsPerPage === 3) return 33.333;
-    return 25;
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      const carousel = carouselRef.current;
+      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
+      const gap = 16;
+      const scrollAmount = cardsPerPage * (cardWidth + gap);
+      const currentScroll = carousel.scrollLeft;
+      const threshold = 5; // Soglia per considerare "all'inizio"
+      
+      // Se siamo all'inizio, vai alla fine
+      if (currentScroll <= threshold) {
+        carousel.scrollTo({ left: carousel.scrollWidth - carousel.clientWidth, behavior: 'smooth' });
+      } else {
+        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      const carousel = carouselRef.current;
+      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
+      const gap = 16;
+      const scrollAmount = cardsPerPage * (cardWidth + gap);
+      const currentScroll = carousel.scrollLeft;
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      const threshold = 5; // Soglia per considerare "alla fine"
+      
+      // Se siamo alla fine, vai all'inizio
+      if (currentScroll >= maxScroll - threshold) {
+        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
   };
 
   return (
     <section className="guide-carousel-wrapper">
       <h2 className="sg-section-title">Tutte le Guide</h2>
-      <div 
-        className="guide-carousel-container"
-        onKeyDown={handleCarouselKeyDown}
-        tabIndex={0}
-        role="group"
-        aria-label="Carosello guide"
-      >
-        <button type="button" className="carousel-button prev" onClick={prevSlide} aria-label="Guida precedente">
-          <i className="fas fa-chevron-left"></i>
+      <div className="guide-carousel-container" ref={containerRef}>
+        <button type="button" className="carousel-button prev" onClick={scrollLeft} aria-label="Guida precedente">
+          <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
         </button>
-        <div className="guide-carousel">
-          <div className="guide-carousel-track" style={{ transform: `translateX(-${currentIndex * getSlideWidth()}%)` }}>
+        <div className="guide-carousel" ref={carouselRef}>
+          <div className="guide-carousel-track">
             {guides.map((guide, i) => (
               <div key={i} className="guide-carousel-slide">
                 <GuideCard {...guide} />
@@ -108,8 +175,8 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
             ))}
           </div>
         </div>
-        <button type="button" className="carousel-button next" onClick={nextSlide} aria-label="Guida successiva">
-          <i className="fas fa-chevron-right"></i>
+        <button type="button" className="carousel-button next" onClick={scrollRight} aria-label="Guida successiva">
+          <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
         </button>
       </div>
       {totalPages > 1 && (
@@ -119,8 +186,8 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
               type="button"
               key={index}
               className={`carousel-dot ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Vai alla slide ${index + 1}`}
+              onClick={() => scrollToPage(index)}
+              aria-label={`Vai alla pagina ${index + 1}`}
             />
           ))}
         </div>

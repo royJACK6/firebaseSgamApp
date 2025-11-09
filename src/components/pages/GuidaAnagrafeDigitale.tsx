@@ -24,7 +24,8 @@ const GuidaAnagrafeDigitale: React.FC = () => {
       info={info}
       previousLink="/guide/pagamenti-dm-sanitari"
       previousTitle="Guida precedente: Pagamenti DM Sanitari"
-      helpText="Il nostro assistente Sgamy è sempre disponibile per aiutarti con qualsiasi dubbio!"
+      nextLink="/guide/prenotazioni-asl-puglia"
+      nextTitle="Prossima guida: Prenotazioni ASL Puglia"
     />
   );
 };

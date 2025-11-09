@@ -384,7 +384,7 @@ export const AccessibilityButton: React.FC<{ onClick: () => void }> = ({ onClick
   return (
     <button
       type="button"
-      className="accessibility-btn"
+      className="btn-icon accessibility-btn"
       onClick={onClick}
       aria-label="Visualizza informazioni e opzioni di accessibilità del sito"
       title="Accessibilità"

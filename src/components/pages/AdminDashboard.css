@@ -1,7 +1,7 @@
 .admin-dashboard {
   min-height: 100vh;
-  background: #F4F4FA;
-  padding: 20px;
+  background: var(--sfondo-principale);
+  padding: var(--spaziatura-md);
 }
 
 .admin-dashboard__header {
@@ -10,10 +10,10 @@
   align-items: center;
   max-width: 1200px;
   margin: 0 auto 40px;
-  padding: 24px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: var(--spaziatura-lg);
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--ombra-pronunciata);
 }
 
 .admin-dashboard__header h1 {
@@ -23,24 +23,24 @@
 }
 
 .admin-dashboard__logout {
-  padding: 12px 24px;
-  background: #e53e3e;
-  color: white;
+  padding: var(--spaziatura-sm) var(--spaziatura-lg);
+  background: var(--colore-errore);
+  color: var(--testo-bianco);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius-medio);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transizione-all);
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.2);
+  gap: var(--spaziatura-sm);
+  box-shadow: 0 2px 8px rgba(var(--colore-errore-rgb), 0.2);
 }
 
 .admin-dashboard__logout:hover {
-  background: #c53030;
+  background: var(--colore-errore-scuro);
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(229, 62, 62, 0.35);
+  box-shadow: 0 6px 15px rgba(var(--colore-errore-rgb), 0.35);
 }
 
 .admin-dashboard__logout:active {
@@ -55,25 +55,25 @@
 
 .admin-dashboard__welcome {
   text-align: center;
-  padding: 48px 24px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 48px var(--spaziatura-lg);
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--ombra-pronunciata);
   margin-bottom: 32px;
-  border: 2px solid transparent;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: var(--border-normale) solid transparent;
+  transition: var(--transizione-all);
 }
 
 .admin-dashboard__welcome:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(21, 101, 214, 0.15);
-  border-color: #1565D6;
+  box-shadow: 0 10px 25px rgba(var(--colore-primario-rgb), 0.15);
+  border-color: var(--colore-primario);
 }
 
 .admin-dashboard__welcome-icon {
   font-size: 3rem;
-  color: #1565D6;
-  margin-bottom: 16px;
+  color: var(--colore-primario);
+  margin-bottom: var(--spaziatura-md);
 }
 
 .admin-dashboard__welcome h2 {
@@ -113,7 +113,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #1565D6 0%, #1e88e5 100%);
+  background: linear-gradient(90deg, var(--colore-primario) 0%, #1e88e5 100%);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -125,13 +125,13 @@
 .admin-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(21, 101, 214, 0.2);
-  border-color: #1565D6;
+  border-color: var(--colore-primario);
 }
 
 .admin-card__icon {
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, #1565D6 0%, #1e88e5 100%);
+  background: linear-gradient(135deg, var(--colore-primario) 0%, #1e88e5 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -154,7 +154,7 @@
 }
 
 .admin-card__arrow {
-  color: #1565D6;
+  color: var(--colore-primario);
   font-size: 1.5rem;
   font-weight: bold;
   transition: transform 0.3s ease;
