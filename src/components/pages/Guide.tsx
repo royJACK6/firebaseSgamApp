@@ -6,7 +6,6 @@ import scudoImg from '../../assets/SGAMY_SCUDO.png';
 import passwordImg from '../../assets/SGAMY_PASSWORD_VARIANT.png';
 import passwordRecoveryImg from '../../assets/SGAMY_PASSWORD.png';
 import certificatiImg from '../../assets/SGAMY_CERTFICATI.png';
-import polliceImg from '../../assets/SGAMY_POLLICE.png';
 import anagrafeImg from '../../assets/SGAMY_ANAGRAFE.png';
 import prenotazioniImg from '../../assets/SGAMY_DOTTORE.png';
 import pagamentiImg from '../../assets/SGAMY_PAGAMENTO.png';
