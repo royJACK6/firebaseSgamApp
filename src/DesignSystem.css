@@ -3,16 +3,286 @@
  * SGAMAPP - DESIGN SYSTEM COMPLETO
  * ========================================
  * 
- * Aggiungi questo file dopo palette.css in index.css:
- * @import './palette.css';
- * @import './palette-extended.css';
+ * Questo file contiene TUTTO il design system del sito:
+ * - Variabili CSS (colori, spaziature, ombre, etc.)
+ * - Componenti riutilizzabili (bottoni, cards, form, etc.)
+ * - Utility classes
+ * - Animazioni
+ * - Componenti specifici SGAMAPP
+ * 
+ * IMPORTANTE: Questo è l'UNICO file CSS che devi modificare
+ * per cambiare lo stile di tutto il sito!
+ * 
+ * Per modificare i colori, cerca la sezione "COLORI BRAND PRINCIPALI"
+ * Per modificare le spaziature, cerca "SPAZIATURE"
+ * Per modificare i bottoni, cerca "BUTTON SYSTEM"
+ * Per modificare le cards, cerca "CARD SYSTEM"
+ * 
+ * ========================================
+ * COME USARE QUESTO FILE
+ * ========================================
+ * 
+ * 1. Importa questo file in index.css:
+ *    @import './DesignSystem.css';
+ * 
+ * 2. Nei tuoi componenti, usa le variabili CSS:
+ *    background-color: var(--colore-primario);
+ *    padding: var(--spaziatura-md);
+ * 
+ * 3. Usa le classi utility:
+ *    <div class="card card--hover">
+ *    <button class="btn btn-primary btn-lg">
+ * 
+ * 4. Per componenti specifici SGAMAPP:
+ *    <div class="sg-card sg-guide-card">
+ *    <h2 class="sg-section-title">
  */
 
 /* ========================================
- * TYPOGRAPHY SYSTEM
+ * 1. VARIABILI CSS - FONDAMENTA DEL DESIGN
  * ======================================== */
 
-/* Headings */
+:root {
+  /* ========================================
+   * COLORI BRAND PRINCIPALI
+   * Modifica questi per cambiare i colori del sito
+   * ======================================== */
+  
+  --colore-primario: #1565D6;
+  --colore-primario-rgb: 21, 101, 214;
+  
+  --colore-secondario: #64B5F6;
+  --colore-secondario-rgb: 100, 181, 246;
+  
+  --colore-intermedio: #1976D2;
+  --colore-intermedio-rgb: 25, 118, 210;
+
+  /* ========================================
+   * COLORI DI BACKGROUND
+   * ======================================== */
+  
+  --sfondo-principale: #F4F4FA;
+  --sfondo-principale-rgb: 244, 244, 250;
+  
+  --sfondo-bianco: #FFFFFF;
+  --sfondo-bianco-rgb: 255, 255, 255;
+  
+  --sfondo-grigio-chiaro: #F8F9FA;
+  --sfondo-grigio-chiaro-rgb: 248, 249, 250;
+  
+  --sfondo-grigio-medio: #E2E8F0;
+  --sfondo-grigio-medio-rgb: 226, 232, 240;
+  
+  --sfondo-grigio-scuro: #333333;
+  --sfondo-grigio-scuro-rgb: 51, 51, 51;
+
+  /* ========================================
+   * COLORI DI TESTO
+   * ======================================== */
+  
+  --testo-nero: #000000;
+  --testo-nero-rgb: 0, 0, 0;
+  
+  --testo-grigio-scuro: #224466;
+  --testo-grigio-scuro-rgb: 34, 68, 102;
+  
+  --testo-bianco: #FFFFFF;
+  --testo-bianco-rgb: 255, 255, 255;
+
+  /* ========================================
+   * COLORI DI SUCCESSO
+   * ======================================== */
+  
+  --colore-successo: #10B981;
+  --colore-successo-rgb: 16, 185, 129;
+  
+  --colore-successo-scuro: #059669;
+  --colore-successo-scuro-rgb: 5, 150, 105;
+
+  /* ========================================
+   * COLORI DI AVVERTIMENTO
+   * ======================================== */
+  
+  --colore-warning: #F59E0B;
+  --colore-warning-rgb: 245, 158, 11;
+  
+  --colore-warning-chiaro: #FBBF24;
+  --colore-warning-chiaro-rgb: 251, 191, 36;
+  
+  --colore-warning-scuro: #D97706;
+  --colore-warning-scuro-rgb: 217, 119, 6;
+
+  /* ========================================
+   * COLORI DI ERRORE
+   * ======================================== */
+  
+  --colore-errore: #EF4444;
+  --colore-errore-rgb: 239, 68, 68;
+  
+  --colore-errore-medio: #DC2626;
+  --colore-errore-medio-rgb: 220, 38, 38;
+  
+  --colore-errore-scuro: #B91C1C;
+  --colore-errore-scuro-rgb: 185, 28, 28;
+
+  /* ========================================
+   * COLORI PER ACCESSIBILITA'
+   * ======================================== */
+  
+  --colore-focus-enhanced: #FF0000;
+  --colore-focus-enhanced-rgb: 255, 0, 0;
+  
+  --colore-link-highcontrast: #0000FF;
+  --colore-link-highcontrast-rgb: 0, 0, 255;
+  
+  --colore-visited-highcontrast: #551A8B;
+  --colore-visited-highcontrast-rgb: 85, 26, 139;
+
+  /* ========================================
+   * GRADIENTI
+   * ======================================== */
+  
+  --gradiente-blu-principale: linear-gradient(135deg, #1565D6 0%, #64B5F6 100%);
+  --gradiente-blu-alternativo: linear-gradient(135deg, #1976D2, #1565D6);
+  --gradiente-rosso-errore: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  --gradiente-verde-successo: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradiente-grigio-chiaro: linear-gradient(135deg, #F0F4F8 0%, #E2E8F0 100%);
+  --gradiente-verticale-bianco: linear-gradient(to bottom, #F8F9FA 0%, #FFFFFF 100%);
+
+  /* ========================================
+   * OMBRE (BOX SHADOW)
+   * ======================================== */
+  
+  --ombra-chatbot: 0 4px 12px rgba(21, 101, 214, 0.4);
+  --ombra-chatbot-hover: 0 6px 20px rgba(21, 101, 214, 0.5);
+  --ombra-card: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --ombra-leggera: 0 1px 4px rgba(0, 0, 0, 0.05);
+  --ombra-media: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --ombra-pronunciata: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --ombra-scura: 0 6px 16px rgba(0, 0, 0, 0.2);
+  --ombra-focus-enhanced: 0 0 0 2px #ffffff, 0 0 0 6px #ff0000, 0 0 0 10px rgba(255, 0, 0, 0.5);
+  --ombra-led-giallo: 0 0 10px rgba(251, 191, 36, 0.6);
+  --ombra-led-verde: 0 0 10px rgba(16, 185, 129, 0.6);
+
+  /* ========================================
+   * BORDI E RAGGI
+   * ======================================== */
+  
+  --border-radius-piccolo: 4px;
+  --border-radius-medio: 8px;
+  --border-radius-grande: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-rotondo: 50%;
+  
+  --border-sottile: 1px;
+  --border-normale: 2px;
+  --border-spesso: 3px;
+
+  /* ========================================
+   * SPAZIATURE
+   * Modifica questi per cambiare le spaziature del sito
+   * ======================================== */
+  
+  --spaziatura-xs: 4px;
+  --spaziatura-sm: 8px;
+  --spaziatura-md: 16px;
+  --spaziatura-lg: 24px;
+  --spaziatura-xl: 32px;
+  --spaziatura-xxl: 48px;
+
+  /* ========================================
+   * TRANSIZIONI
+   * ======================================== */
+  
+  --transizione-rapida: 0.15s ease;
+  --transizione-normale: 0.3s ease;
+  --transizione-lenta: 0.5s ease;
+  --transizione-all: all 0.3s ease;
+  --transizione-colore: color 0.3s ease, background-color 0.3s ease;
+  --transizione-transform: transform 0.3s ease;
+
+  /* ========================================
+   * ANIMAZIONI
+   * ======================================== */
+  
+  --durata-animazione-rapida: 0.4s;
+  --durata-animazione-normale: 0.8s;
+  --durata-animazione-lenta: 1.2s;
+  --durata-animazione-molto-lenta: 1.6s;
+  
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+  
+  --transform-translate-piccolo: 15px;
+  --transform-translate-normale: 30px;
+  --transform-translate-grande: 60px;
+
+  /* ========================================
+   * Z-INDEX (LIVELLI)
+   * ======================================== */
+  
+  --z-index-behind: 0;
+  --z-index-base: 1;
+  --z-index-overlay: 2;
+  --z-index-content: 3;
+  --z-index-dropdown: 100;
+  --z-index-navbar: 500;
+  --z-index-modal-backdrop: 999;
+  --z-index-modal: 1000;
+  --z-index-tooltip: 1500;
+  --z-index-focus-enhanced: 9999;
+}
+
+/* ========================================
+ * 2. HELPER CLASSES - CLASSI UTILITY RAPIDE
+ * ======================================== */
+
+/* Colori di testo */
+.testo-primario { color: var(--colore-primario) !important; }
+.testo-secondario { color: var(--colore-secondario) !important; }
+.testo-successo { color: var(--colore-successo) !important; }
+.testo-errore { color: var(--colore-errore) !important; }
+.testo-warning { color: var(--colore-warning) !important; }
+.testo-nero { color: var(--testo-nero) !important; }
+.testo-bianco { color: var(--testo-bianco) !important; }
+.testo-grigio-scuro { color: var(--testo-grigio-scuro) !important; }
+
+/* Colori di background */
+.sfondo-primario { background-color: var(--colore-primario) !important; }
+.sfondo-secondario { background-color: var(--colore-secondario) !important; }
+.sfondo-successo { background-color: var(--colore-successo) !important; }
+.sfondo-errore { background-color: var(--colore-errore) !important; }
+.sfondo-warning { background-color: var(--colore-warning) !important; }
+.sfondo-bianco { background-color: var(--sfondo-bianco) !important; }
+.sfondo-grigio-chiaro { background-color: var(--sfondo-grigio-chiaro) !important; }
+.sfondo-principale { background-color: var(--sfondo-principale) !important; }
+
+/* Gradienti */
+.gradiente-blu { background: var(--gradiente-blu-principale) !important; }
+.gradiente-verde { background: var(--gradiente-verde-successo) !important; }
+.gradiente-rosso { background: var(--gradiente-rosso-errore) !important; }
+
+/* Ombre */
+.ombra-card { box-shadow: var(--ombra-card); }
+.ombra-leggera { box-shadow: var(--ombra-leggera); }
+.ombra-media { box-shadow: var(--ombra-media); }
+.ombra-pronunciata { box-shadow: var(--ombra-pronunciata); }
+.ombra-scura { box-shadow: var(--ombra-scura); }
+
+/* Bordi arrotondati */
+.bordo-piccolo { border-radius: var(--border-radius-piccolo); }
+.bordo-medio { border-radius: var(--border-radius-medio); }
+.bordo-grande { border-radius: var(--border-radius-grande); }
+.bordo-xl { border-radius: var(--border-radius-xl); }
+.bordo-rotondo { border-radius: var(--border-radius-rotondo); }
+
+/* ========================================
+ * 3. TYPOGRAPHY SYSTEM
+ * ======================================== */
+
 .heading-1 { 
   font-size: 3rem; 
   font-weight: 700; 
@@ -45,13 +315,11 @@
   margin-bottom: var(--spaziatura-sm);
 }
 
-/* Paragraphs */
 .text-large { font-size: 1.25rem; line-height: 1.8; }
 .text-normal { font-size: 1rem; line-height: 1.6; }
 .text-small { font-size: 0.875rem; line-height: 1.5; }
 .text-tiny { font-size: 0.75rem; line-height: 1.4; }
 
-/* Text utilities */
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
@@ -63,7 +331,7 @@
 .text-capitalize { text-transform: capitalize; }
 
 /* ========================================
- * BUTTON SYSTEM
+ * 4. BUTTON SYSTEM
  * ======================================== */
 
 /* Base button */
@@ -223,7 +491,7 @@
   pointer-events: none;
 }
 
-/* Icon buttons - per icone navbar (Sgamy, Accessibilità, etc.) */
+/* Icon buttons */
 .btn-icon {
   background: none;
   border: none;
@@ -256,7 +524,6 @@
   transform: scale(1.1);
 }
 
-/* Icon button with shadow - per icone che necessitano maggiore contrasto */
 .btn-icon--shadow img,
 .btn-icon--shadow svg {
   filter: drop-shadow(0 4px 8px rgba(var(--testo-nero-rgb), 0.15));
@@ -267,8 +534,27 @@
   filter: drop-shadow(0 6px 12px rgba(var(--testo-nero-rgb), 0.2));
 }
 
+/* Icon utilities per bottoni */
+.btn-icon-left {
+  margin-right: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-icon-right {
+  margin-left: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover .btn-icon-right {
+  transform: translateX(4px);
+}
+
+.btn:hover .btn-icon-left {
+  transform: translateX(-2px);
+}
+
 /* ========================================
- * CARD SYSTEM
+ * 5. CARD SYSTEM
  * ======================================== */
 
 /* Base card */
@@ -309,7 +595,6 @@
   border: var(--border-normale) solid var(--sfondo-grigio-medio);
 }
 
-/* Card sizes */
 .card--small {
   padding: var(--spaziatura-md);
 }
@@ -322,7 +607,6 @@
   padding: var(--spaziatura-xl);
 }
 
-/* Card with header */
 .card-header {
   padding: var(--spaziatura-md) var(--spaziatura-lg);
   border-bottom: var(--border-sottile) solid var(--sfondo-grigio-medio);
@@ -342,7 +626,6 @@
   border-radius: 0 0 var(--border-radius-grande) var(--border-radius-grande);
 }
 
-/* Special cards */
 .card-primary {
   border-top: 4px solid var(--colore-primario);
 }
@@ -360,10 +643,9 @@
 }
 
 /* ========================================
- * FORM ELEMENTS
+ * 6. FORM ELEMENTS
  * ======================================== */
 
-/* Input base */
 .input,
 .textarea,
 .select {
@@ -394,7 +676,6 @@
   opacity: 0.6;
 }
 
-/* Input sizes */
 .input-sm {
   padding: 8px 12px;
   font-size: 0.875rem;
@@ -405,13 +686,11 @@
   font-size: 1.125rem;
 }
 
-/* Textarea */
 .textarea {
   resize: vertical;
   min-height: 100px;
 }
 
-/* Form group */
 .form-group {
   margin-bottom: var(--spaziatura-lg);
 }
@@ -438,7 +717,6 @@
   color: var(--colore-errore);
 }
 
-/* Checkbox & Radio */
 .checkbox,
 .radio {
   display: inline-flex;
@@ -456,10 +734,9 @@
 }
 
 /* ========================================
- * LAYOUT UTILITIES
+ * 7. LAYOUT UTILITIES
  * ======================================== */
 
-/* Flexbox */
 .flex { display: flex; }
 .inline-flex { display: inline-flex; }
 .flex-row { flex-direction: row; }
@@ -467,57 +744,48 @@
 .flex-wrap { flex-wrap: wrap; }
 .flex-nowrap { flex-wrap: nowrap; }
 
-/* Justify content */
 .justify-start { justify-content: flex-start; }
 .justify-center { justify-content: center; }
 .justify-end { justify-content: flex-end; }
 .justify-between { justify-content: space-between; }
 .justify-around { justify-content: space-around; }
 
-/* Align items */
 .items-start { align-items: flex-start; }
 .items-center { align-items: center; }
 .items-end { align-items: flex-end; }
 .items-stretch { align-items: stretch; }
 
-/* Gap */
 .gap-xs { gap: var(--spaziatura-xs); }
 .gap-sm { gap: var(--spaziatura-sm); }
 .gap-md { gap: var(--spaziatura-md); }
 .gap-lg { gap: var(--spaziatura-lg); }
 .gap-xl { gap: var(--spaziatura-xl); }
 
-/* Grid */
 .grid { display: grid; }
 .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
 .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-/* Display */
 .block { display: block; }
 .inline-block { display: inline-block; }
 .hidden { display: none; }
 
-/* Position */
 .relative { position: relative; }
 .absolute { position: absolute; }
 .fixed { position: fixed; }
 .sticky { position: sticky; }
 
-/* Width & Height */
 .w-full { width: 100%; }
 .h-full { height: 100%; }
 .w-auto { width: auto; }
 .h-auto { height: auto; }
 
-/* Max width */
 .max-w-sm { max-width: 640px; }
 .max-w-md { max-width: 768px; }
 .max-w-lg { max-width: 1024px; }
 .max-w-xl { max-width: 1280px; }
 
-/* Margins */
 .m-0 { margin: 0; }
 .m-auto { margin: auto; }
 .mt-xs { margin-top: var(--spaziatura-xs); }
@@ -533,7 +801,6 @@
 .ml-auto { margin-left: auto; }
 .mr-auto { margin-right: auto; }
 
-/* Paddings */
 .p-0 { padding: 0; }
 .p-xs { padding: var(--spaziatura-xs); }
 .p-sm { padding: var(--spaziatura-sm); }
@@ -548,10 +815,9 @@
 .py-lg { padding-top: var(--spaziatura-lg); padding-bottom: var(--spaziatura-lg); }
 
 /* ========================================
- * NAVIGATION COMPONENTS
+ * 8. NAVIGATION COMPONENTS
  * ======================================== */
 
-/* Tabs */
 .tabs {
   display: flex;
   gap: var(--spaziatura-sm);
@@ -580,7 +846,6 @@
   font-weight: 600;
 }
 
-/* Breadcrumb */
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -613,7 +878,7 @@
 }
 
 /* ========================================
- * MODAL & OVERLAY
+ * 9. MODAL & OVERLAY
  * ======================================== */
 
 .modal-overlay {
@@ -690,17 +955,12 @@
 }
 
 /* ========================================
- * ANIMATIONS - Migliorate per Fluidità
+ * 10. ANIMATIONS
  * ======================================== */
 
-/* Animazioni Base - Rallentate e più fluide */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeInUp {
@@ -747,7 +1007,6 @@
   }
 }
 
-/* Full slide animations - per elementi hero che occupano tutto lo schermo */
 @keyframes slideInFromLeft {
   from {
     opacity: 0;
@@ -782,49 +1041,28 @@
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-/* Nuove Animazioni Dinamiche */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes breathe {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 }
 
 @keyframes bounceIn {
@@ -877,21 +1115,18 @@
 }
 
 @keyframes heartbeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  10%, 30% {
-    transform: scale(0.9);
-  }
-  20%, 40%, 60%, 80% {
-    transform: scale(1.1);
-  }
-  50%, 70% {
-    transform: scale(1.05);
-  }
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(0.9); }
+  20%, 40%, 60%, 80% { transform: scale(1.1); }
+  50%, 70% { transform: scale(1.05); }
 }
 
-/* Animation utility classes - Rallentate */
+@keyframes expandWidth {
+  from { width: 0; }
+  to { width: 60px; }
+}
+
+/* Animation utility classes */
 .animate-fade-in {
   animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -914,7 +1149,6 @@
   animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Full slide utilities - per hero sections */
 .animate-slide-from-left {
   animation: slideInFromLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -931,7 +1165,6 @@
   animation: pulse 2.5s ease-in-out infinite;
 }
 
-/* Nuove utility classes */
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -946,7 +1179,6 @@
   animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
-/* Varianti con delay */
 .animate-bounce-in-delay {
   opacity: 0;
   transform: scale(0.3) translateY(30px);
@@ -969,7 +1201,6 @@
   animation: heartbeat 1.5s ease-in-out infinite;
 }
 
-/* Staggered animation utilities - per elementi che appaiono in sequenza */
 .animate-stagger-item {
   opacity: 0;
   transform: translateY(-15px);
@@ -986,7 +1217,7 @@
 .animate-stagger-8 { animation-delay: 1.0s; }
 
 /* ========================================
- * ALERTS & NOTIFICATIONS
+ * 11. ALERTS & NOTIFICATIONS
  * ======================================== */
 
 .alert {
@@ -1021,7 +1252,7 @@
 }
 
 /* ========================================
- * BADGE & PILLS
+ * 12. BADGE & PILLS
  * ======================================== */
 
 .badge {
@@ -1060,7 +1291,7 @@
 }
 
 /* ========================================
- * LOADING SPINNER
+ * 13. LOADING SPINNER
  * ======================================== */
 
 .spinner {
@@ -1085,7 +1316,7 @@
 }
 
 /* ========================================
- * DIVIDER
+ * 14. DIVIDER
  * ======================================== */
 
 .divider {
@@ -1103,34 +1334,422 @@
 }
 
 /* ========================================
- * RESPONSIVE UTILITIES
+ * 15. RESPONSIVE UTILITIES
  * ======================================== */
 
-/* Hide on mobile */
 @media (max-width: 768px) {
   .hide-mobile {
     display: none !important;
   }
 }
 
-/* Hide on tablet */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hide-tablet {
     display: none !important;
   }
 }
 
-/* Hide on desktop */
 @media (min-width: 1025px) {
   .hide-desktop {
     display: none !important;
   }
 }
 
-/* Show only on mobile */
 @media (min-width: 769px) {
   .show-mobile-only {
     display: none !important;
+  }
+}
+
+/* ========================================
+ * 16. SGAMAPP SPECIFIC COMPONENTS
+ * Componenti specifici per il sito SGAMAPP
+ * ======================================== */
+
+/* Section Title - Titolo delle sezioni con animazione */
+.sg-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--testo-grigio-scuro);
+  margin: var(--spaziatura-md) 0 var(--spaziatura-lg) 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
+}
+
+.sg-section-title::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background-color: var(--colore-primario);
+  margin: var(--spaziatura-sm) auto 0 auto;
+  border-radius: var(--border-radius-piccolo);
+  animation: expandWidth 0.8s ease-out forwards 1.5s;
+}
+
+/* SGAMAPP Cards - Cards specifiche per il sito */
+.sg-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sfondo-bianco);
+  border-radius: var(--border-radius-grande);
+  box-shadow: var(--ombra-media);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 420px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sg-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: var(--ombra-pronunciata);
+}
+
+.sg-card:nth-child(1) { animation-delay: 0.4s; }
+.sg-card:nth-child(2) { animation-delay: 0.6s; }
+.sg-card:nth-child(3) { animation-delay: 0.8s; }
+.sg-card:nth-child(4) { animation-delay: 1s; }
+.sg-card:nth-child(5) { animation-delay: 1.2s; }
+.sg-card:nth-child(6) { animation-delay: 1.4s; }
+.sg-card:nth-child(n+7) { animation-delay: 1.6s; }
+
+/* Info Card - Card grande per sezione informativa */
+.sg-info-card {
+  background: var(--sfondo-bianco);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spaziatura-xl);
+  margin-bottom: var(--spaziatura-xxl);
+  box-shadow: var(--ombra-card);
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: var(--border-normale) solid transparent;
+  position: relative;
+}
+
+.sg-info-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-xl);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--colore-primario-rgb), 0.05) 0%,
+    rgba(var(--colore-secondario-rgb), 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.sg-info-card:hover::after {
+  opacity: 1;
+}
+
+.sg-info-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(var(--colore-primario-rgb), 0.25);
+  border-color: var(--colore-primario);
+}
+
+.sg-info-card__content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sg-info-card__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--colore-primario);
+  margin: 0 0 var(--spaziatura-md) 0;
+  letter-spacing: 0.5px;
+}
+
+.sg-info-card__description {
+  font-size: 1.1rem;
+  color: var(--testo-grigio-scuro);
+  line-height: 1.8;
+  margin: 0 0 var(--spaziatura-lg) 0;
+}
+
+.sg-info-card__cta {
+  margin-top: var(--spaziatura-lg);
+  display: flex;
+  justify-content: center;
+}
+
+/* Guide Card - Card per le guide */
+.sg-guide-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sg-guide-card__media {
+  flex: 1;
+  overflow: hidden;
+  min-height: 250px;
+  max-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sfondo-grigio-chiaro);
+}
+
+.sg-guide-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: var(--transizione-transform);
+  transform: scale(1);
+}
+
+.sg-guide-card:hover .sg-guide-card__img {
+  transform: scale(1.05);
+}
+
+.sg-guide-card__body {
+  padding: var(--spaziatura-md) var(--spaziatura-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 140px;
+  min-height: 140px;
+  max-height: 140px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.sg-guide-card__title {
+  font-size: 1.1rem;
+  margin: 0 0 var(--spaziatura-xs) 0;
+  font-weight: 700;
+  color: var(--testo-grigio-scuro);
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.sg-guide-card__desc {
+  font-size: 0.9rem;
+  color: var(--testo-grigio-scuro);
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.sg-guide-card__cta {
+  margin-top: var(--spaziatura-sm);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* SGAMAPP Buttons - Bottoni specifici per il sito */
+.sg-btn {
+  padding: 5px 12px;
+  background-color: var(--colore-primario);
+  color: var(--testo-bianco);
+  border: none;
+  border-radius: var(--border-radius-medio);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transizione-normale);
+  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.sg-btn:hover {
+  background-color: var(--colore-intermedio);
+  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.sg-btn-primary {
+  background-color: var(--colore-primario);
+  font-weight: 600;
+  padding: var(--spaziatura-sm) var(--spaziatura-md);
+  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
+}
+
+.sg-btn-primary:hover {
+  background-color: var(--colore-intermedio);
+  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.sg-btn-info {
+  background-color: var(--colore-primario);
+  color: var(--testo-bianco);
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--border-radius-medio);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sg-btn-info::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.sg-btn-info:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.sg-btn-info:hover {
+  background-color: var(--colore-intermedio);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--ombra-chatbot-hover);
+}
+
+.sg-btn-info:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Assistant Card - Card speciale per Sgamy */
+.sg-assistant-card {
+  cursor: default;
+}
+
+.sg-assistant-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--ombra-pronunciata);
+}
+
+/* Cards Wrapper e Grid */
+.sg-cards-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+}
+
+.sg-card-grid-wrapper {
+  overflow: visible;
+}
+
+.sg-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.sg-card-grid .sg-card {
+  width: 100%;
+  min-width: 0;
+  height: 420px;
+  box-sizing: border-box;
+}
+
+/* Responsive per SGAMAPP Components */
+@media (max-width: 768px) {
+  .sg-guide-card__body {
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    padding: 12px;
+  }
+  
+  .sg-guide-card__desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  
+  .sg-info-card {
+    padding: var(--spaziatura-lg);
+    margin-bottom: var(--spaziatura-lg);
+  }
+  
+  .sg-info-card__title {
+    font-size: 1.5rem;
+  }
+  
+  .sg-info-card__description {
+    font-size: 1rem;
+  }
+  
+  .sg-btn-info {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .sg-guide-card__media {
+    min-height: 200px;
+    max-height: 200px;
+  }
+  
+  .sg-guide-card:hover .sg-guide-card__img {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 480px) {
+  .sg-guide-card__body {
+    height: 110px;
+    min-height: 110px;
+    max-height: 110px;
+    padding: var(--spaziatura-sm);
+  }
+  
+  .sg-guide-card__title {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  
+  .sg-guide-card__desc {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.3;
+  }
+  
+  .sg-btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+  
+  .sg-guide-card__media {
+    min-height: 180px;
+    max-height: 180px;
+  }
+  
+  .sg-guide-card:hover .sg-guide-card__img {
+    transform: scale(1.05);
   }
 }
 

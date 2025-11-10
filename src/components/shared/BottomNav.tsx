@@ -6,12 +6,12 @@ import spidIcon from "../../assets/SGAMY_SPID.png";
 import pecIcon from "../../assets/SGAMY_PEC.png";
 import cieIcon from "../../assets/SGAMY_CIE.png";
 import scudoIcon from "../../assets/SGAMY_SCUDO.png";
-import pagoPaIcon from "../../assets/SGAMY_POLLICE.png";
+import pagoPaIcon from "../../assets/SGAMY_PAGAMENTO.png";
 import primoAccessoIcon from "../../assets/SGAMY_POLLICE.png";
 import recuperoPwdIcon from "../../assets/SGAMY_PASSWORD.png";
 import certificatiIcon from "../../assets/SGAMY_CERTFICATI.png";
 import anagrafeIcon from "../../assets/SGAMY_PASSWORD_VARIANT.png";
-import prenotazioniIcon from "../../assets/SGAMY_POLLICE.png";
+import prenotazioniIcon from "../../assets/SGAMY_DOTTORE.png";
 
 const BottomNav: React.FC = () => {
   const navRef = useRef<HTMLElement>(null);

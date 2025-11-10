@@ -5,42 +5,11 @@
 .sg-cards-wrap {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spaziatura-md);
   width: 100%;
 }
 
-.sg-section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--testo-grigio-scuro);
-  margin: var(--spaziatura-md) 0 var(--spaziatura-lg) 0;
-  text-align: center;
-  letter-spacing: 0.5px;
-  position: relative;
-  opacity: 0;
-  transform: translateY(-30px);
-  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
-}
-
-.sg-section-title::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 3px;
-  background-color: var(--colore-primario);
-  margin: var(--spaziatura-sm) auto 0 auto;
-  border-radius: var(--border-radius-piccolo);
-  animation: expandWidth 0.8s ease-out forwards 1.5s;
-}
-
-@keyframes expandWidth {
-  from {
-    width: 0;
-  }
-  to {
-    width: 60px;
-  }
-}
+/* .sg-section-title - Definito nel DesignSystem.css */
 
 .sg-card-grid-wrapper {
   overflow: visible;
@@ -49,7 +18,7 @@
 .sg-card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: var(--spaziatura-md);
   width: 100%;
 }
 
@@ -68,15 +37,15 @@
   box-shadow: var(--ombra-media);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transizione-lenta) var(--easing-smooth);
   height: 420px;
   opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform: translateY(var(--transform-translate-normale)) scale(0.95);
+  animation: fadeInUp var(--durata-animazione-lenta) var(--easing-smooth) forwards;
 }
 
 .sg-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(calc(-1 * var(--spaziatura-xs))) scale(1.02);
   box-shadow: var(--ombra-pronunciata);
 }
 
@@ -94,7 +63,7 @@
 .sg-card-grid .sg-card:nth-child(3) .sg-guide-card__img {
   transform: scale(1.3);
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--durata-animazione-rapida) var(--easing-smooth);
 }
 
 .sg-card-grid .sg-card:nth-child(1):hover .sg-guide-card__img,
@@ -151,7 +120,7 @@
   
   .sg-card-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    gap: var(--spaziatura-sm);
   }
   
   .sg-card-grid .sg-card {
@@ -189,18 +158,18 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
-    margin: 0 -20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-bottom: var(--spaziatura-sm);
+    margin: 0 calc(-1 * var(--spaziatura-md));
+    padding-left: var(--spaziatura-md);
+    padding-right: var(--spaziatura-md);
     scrollbar-width: thin;
-    scrollbar-color: #1e88e5 #f1f1f1;
+    scrollbar-color: var(--colore-primario) var(--sfondo-grigio-chiaro);
     /* Centra la card iniziale (Sgamy) */
-    scroll-padding-inline: calc((100vw - 340px) / 2);
+    scroll-padding-inline: calc((100vw - calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)))) / 2);
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar {
-    height: 6px;
+    height: var(--spaziatura-sm);
   }
   
   .sg-card-grid-wrapper::-webkit-scrollbar-track {
@@ -220,23 +189,23 @@
   .sg-card-grid {
     display: flex;
     flex-direction: row;
-    gap: 14px;
+    gap: var(--spaziatura-sm);
     width: max-content;
     min-width: 100%;
   }
   
   .sg-card-grid .sg-card {
-    flex: 0 0 calc(100% - 20px);
-    min-width: calc(100vw - 60px);
-    max-width: calc(100vw - 60px);
+    flex: 0 0 calc(100% - var(--spaziatura-md));
+    min-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
+    max-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
     height: 380px !important;
     scroll-snap-align: center;
   }
   
   .sg-card-grid .sg-assistant-card {
-    flex: 0 0 calc(100% - 20px);
-    min-width: calc(100vw - 60px);
-    max-width: calc(100vw - 60px);
+    flex: 0 0 calc(100% - var(--spaziatura-md));
+    min-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
+    max-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
     height: 380px !important;
     scroll-snap-align: center;
   }
@@ -263,25 +232,25 @@
 /* Mobile - 480px */
 @media (max-width: 480px) {
   .sg-cards-wrap {
-    padding: 12px;
+    padding: var(--spaziatura-xs);
   }
   
   .sg-card-grid-wrapper {
-    margin: 0 -12px;
-    padding-left: 12px;
-    padding-right: 12px;
+    margin: 0 calc(-1 * var(--spaziatura-xs));
+    padding-left: var(--spaziatura-xs);
+    padding-right: var(--spaziatura-xs);
   }
   
   .sg-card-grid .sg-card {
-    min-width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
+    min-width: calc(100vw - var(--spaziatura-xxl));
+    max-width: calc(100vw - var(--spaziatura-xxl));
     height: 360px !important;
     scroll-snap-align: center;
   }
   
   .sg-card-grid .sg-assistant-card {
-    min-width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
+    min-width: calc(100vw - var(--spaziatura-xxl));
+    max-width: calc(100vw - var(--spaziatura-xxl));
     height: 360px !important;
     scroll-snap-align: center;
   }

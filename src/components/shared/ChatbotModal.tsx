@@ -208,6 +208,9 @@ const ChatbotModal: React.FC = () => {
       const botResponse = await analyzeText(userText || 'Analizza questa immagine', imageToSend);
       console.log('📨 Risposta chatbot:', botResponse);
 
+      // Controlla se il componente è ancora montato prima di aggiornare lo stato
+      if (!isOpen) return;
+
       if (botResponse && botResponse.text && botResponse.text.trim().length > 0) {
         // Server ha risposto correttamente
         setServerStatus('online');
@@ -224,6 +227,10 @@ const ChatbotModal: React.FC = () => {
       }
     } catch (error) {
       console.error('❌ Errore nella chiamata API:', error);
+      
+      // Controlla se il componente è ancora montato prima di aggiornare lo stato
+      if (!isOpen) return;
+      
       // Solo ora segna il server come offline
       setServerStatus('offline');
       setMessages(prev => [...prev, {
@@ -231,7 +238,10 @@ const ChatbotModal: React.FC = () => {
         text: 'Si è verificato un errore durante la comunicazione con il server. Riprova più tardi.'
       }]);
     } finally {
-      setIsLoading(false);
+      // Controlla se il componente è ancora montato prima di aggiornare lo stato
+      if (isOpen) {
+        setIsLoading(false);
+      }
     }
   };
 

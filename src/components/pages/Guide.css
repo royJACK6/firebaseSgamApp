@@ -4,7 +4,7 @@
  * ======================================== */
 
 .guide-page {
-  padding: 80px var(--spaziatura-md) 60px;
+  padding: var(--spaziatura-xxl) var(--spaziatura-md) var(--spaziatura-xl);
   background: var(--sfondo-grigio-chiaro);
 }
 
@@ -18,8 +18,8 @@
 .guide-page-subtitle {
   text-align: center;
   font-size: 1.2rem;
-  color: #64748b;
-  margin-bottom: 50px;
+  color: var(--testo-grigio-scuro);
+  margin-bottom: var(--spaziatura-xxl);
 }
 
 .guide-page .guide-cards {
@@ -33,7 +33,7 @@
 .guide-page .card {
   background: var(--sfondo-bianco);
   border-radius: var(--border-radius-xl);
-  padding: 30px;
+  padding: var(--spaziatura-xl);
   color: var(--testo-grigio-scuro);
   text-decoration: none;
   box-shadow: var(--ombra-pronunciata);
@@ -54,8 +54,8 @@
 }
 
 .guide-page .card-icon {
-  width: 120px;
-  height: 120px;
+  width: calc(var(--spaziatura-xxl) * 2.5);
+  height: calc(var(--spaziatura-xxl) * 2.5);
   object-fit: contain;
   margin-bottom: var(--spaziatura-md);
   border-radius: var(--border-radius-grande);
@@ -71,7 +71,7 @@
 .guide-page .card p {
   margin: 0 0 var(--spaziatura-md) 0;
   font-size: 1rem;
-  color: #64748b;
+  color: var(--testo-grigio-scuro);
   text-align: center;
   line-height: 1.5;
 }
@@ -79,7 +79,7 @@
 .guide-page .card-points {
   list-style-type: disc;
   padding-left: var(--spaziatura-md);
-  margin: var(--spaziatura-md) 0 25px 0;
+  margin: var(--spaziatura-md) 0 var(--spaziatura-xl) 0;
   color: var(--colore-primario);
   font-size: 1.1rem;
   line-height: 1.4;
@@ -95,7 +95,7 @@
   background-color: var(--colore-primario);
   color: var(--testo-bianco);
   border: none;
-  padding: 10px var(--spaziatura-lg);
+  padding: var(--spaziatura-sm) var(--spaziatura-lg);
   border-radius: var(--border-radius-medio);
   font-size: 0.95rem;
   font-weight: 600;
@@ -120,30 +120,30 @@
 /* Tablet - 1024px */
 @media (max-width: 1024px) {
   .guide-page {
-    padding: 70px 15px 50px;
+    padding: var(--spaziatura-xl) var(--spaziatura-sm) var(--spaziatura-xxl);
   }
   
   .guide-page .guide-cards {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 28px;
+    gap: var(--spaziatura-xl);
   }
 }
 
 /* Mobile - 768px */
 @media (max-width: 768px) {
   .guide-page {
-    padding: 60px 12px 40px;
+    padding: var(--spaziatura-xl) var(--spaziatura-xs) var(--spaziatura-lg);
   }
   
   .guide-page-title {
     font-size: 2.2rem;
-    margin-bottom: 12px;
+    margin-bottom: var(--spaziatura-xs);
   }
 
   .guide-page-subtitle {
     font-size: 1rem;
-    margin-bottom: 35px;
-    padding: 0 10px;
+    margin-bottom: var(--spaziatura-xl);
+    padding: 0 var(--spaziatura-sm);
   }
 
   .guide-page .guide-cards {
@@ -157,14 +157,14 @@
   }
   
   .guide-page .card-icon {
-    width: 100px;
-    height: 100px;
+    width: calc(var(--spaziatura-xxl) * 2);
+    height: calc(var(--spaziatura-xxl) * 2);
     margin-bottom: var(--spaziatura-md);
   }
   
   .guide-page .card h3 {
     font-size: 1.3rem;
-    margin-bottom: 10px;
+    margin-bottom: var(--spaziatura-sm);
   }
   
   .guide-page .card p {
@@ -178,7 +178,7 @@
   }
   
   .guide-page .card-button {
-    padding: 10px var(--spaziatura-md);
+    padding: var(--spaziatura-sm) var(--spaziatura-md);
     font-size: 0.9rem;
   }
 }
@@ -186,18 +186,18 @@
 /* Mobile Small - 480px */
 @media (max-width: 480px) {
   .guide-page {
-    padding: 50px 10px 30px;
+    padding: var(--spaziatura-xxl) var(--spaziatura-sm) var(--spaziatura-xl);
   }
   
   .guide-page-title {
     font-size: 1.8rem;
-    margin-bottom: 10px;
+    margin-bottom: var(--spaziatura-sm);
   }
   
   .guide-page-subtitle {
     font-size: 0.9rem;
-    margin-bottom: 30px;
-    padding: 0 5px;
+    margin-bottom: var(--spaziatura-xl);
+    padding: 0 var(--spaziatura-xs);
   }
   
   .guide-page .guide-cards {
@@ -210,9 +210,9 @@
   }
   
   .guide-page .card-icon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 14px;
+    width: calc(var(--spaziatura-xl) * 2.5);
+    height: calc(var(--spaziatura-xl) * 2.5);
+    margin-bottom: var(--spaziatura-sm);
   }
   
   .guide-page .card h3 {
@@ -222,22 +222,22 @@
   
   .guide-page .card p {
     font-size: 0.9rem;
-    margin-bottom: 14px;
+    margin-bottom: var(--spaziatura-sm);
     line-height: 1.4;
   }
   
   .guide-page .card-points {
     font-size: 0.9rem;
-    margin: 14px 0 18px 0;
-    padding-left: 18px;
+    margin: var(--spaziatura-sm) 0 var(--spaziatura-md) 0;
+    padding-left: var(--spaziatura-md);
   }
   
   .guide-page .card-points li {
-    margin-bottom: 6px;
+    margin-bottom: var(--spaziatura-xs);
   }
   
   .guide-page .card-button {
-    padding: 9px 18px;
+    padding: var(--spaziatura-xs) var(--spaziatura-md);
     font-size: 0.85rem;
   }
   

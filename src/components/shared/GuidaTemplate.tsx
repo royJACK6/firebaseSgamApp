@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faVolumeUp, faStop } from '@fortawesome/free-solid-svg-icons';
-import '../pages/Guida-Spid.css';
+import './GuidaTemplate.css';
 
 interface Step {
   title: string;
@@ -42,15 +42,18 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
   const location = useLocation();
   const [speakingStepIndex, setSpeakingStepIndex] = useState<number | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const isMountedRef = useRef(true);
 
   // Scroll to top when route changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
-  // Ferma il parlato quando si cambia pagina
+  // Ferma il parlato quando si cambia pagina o il componente si smonta
   useEffect(() => {
+    isMountedRef.current = true;
     return () => {
+      isMountedRef.current = false;
       window.speechSynthesis.cancel();
       setSpeakingStepIndex(null);
     };
@@ -70,14 +73,21 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
 
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
-  }, [selectedVoice]);
+    
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Esegue solo al mount, selectedVoice viene gestito internamente
 
   // Funzione per leggere uno step
   const speakStep = (step: Step, stepIndex: number) => {
     // Se questo step sta già parlando, fermalo
     if (speakingStepIndex === stepIndex) {
       window.speechSynthesis.cancel();
-      setSpeakingStepIndex(null);
+      if (isMountedRef.current) {
+        setSpeakingStepIndex(null);
+      }
       return;
     }
 
@@ -103,9 +113,22 @@ const GuidaTemplate: React.FC<GuidaTemplateProps> = ({
       utterance.voice = selectedVoice;
     }
 
-    utterance.onstart = () => setSpeakingStepIndex(stepIndex);
-    utterance.onend = () => setSpeakingStepIndex(null);
-    utterance.onerror = () => setSpeakingStepIndex(null);
+    // Verifica se il componente è ancora montato prima di aggiornare lo stato
+    utterance.onstart = () => {
+      if (isMountedRef.current) {
+        setSpeakingStepIndex(stepIndex);
+      }
+    };
+    utterance.onend = () => {
+      if (isMountedRef.current) {
+        setSpeakingStepIndex(null);
+      }
+    };
+    utterance.onerror = () => {
+      if (isMountedRef.current) {
+        setSpeakingStepIndex(null);
+      }
+    };
 
     window.speechSynthesis.speak(utterance);
   };

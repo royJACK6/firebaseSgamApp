@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import './Card.css';
 import './GuideCards.css';
 
@@ -12,13 +12,18 @@ const Card: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ class
   </article>
 );
 
-const GuideCard: React.FC<GuideType> = ({ title, description, icon, link }) => {
+// Memoizza GuideCard per evitare re-render inutili quando le props non cambiano
+const GuideCard: React.FC<GuideType> = memo(({ title, description, icon, link }) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120"><rect width="100%25" height="100%25" fill="%23cfe8ff"/><text x="50%25" y="55%25" font-family="Arial" font-size="14" text-anchor="middle" fill="%23224466">no image</text></svg>';
+  };
+
   return (
     <Card className="sg-guide-card">
       <div className="sg-guide-card__media">
         <img
           src={icon}
-          onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120"><rect width="100%25" height="100%25" fill="%23cfe8ff"/><text x="50%25" y="55%25" font-family="Arial" font-size="14" text-anchor="middle" fill="%23224466">no image</text></svg>'; }}
+          onError={handleImageError}
           alt={`Immagine illustrativa della guida ${title}`}
           className="sg-guide-card__img"
           loading="lazy"
@@ -30,12 +35,14 @@ const GuideCard: React.FC<GuideType> = ({ title, description, icon, link }) => {
         <div className="sg-guide-card__cta">
           <a href={link} className="sg-btn" aria-label={`Scopri di più sulla guida ${title}`}>
             Scopri di più
+            <FontAwesomeIcon icon={faArrowRight} className="btn-icon-right" aria-hidden="true" />
           </a>
         </div>
       </div>
     </Card>
   );
-};
+});
+GuideCard.displayName = 'GuideCard';
 
 interface GuideCardsProps {
   guides: GuideType[];
@@ -47,16 +54,16 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Calcola quante cards sono visibili per volta
-  const getCardsPerPage = () => {
+  // Memoizza il calcolo delle cards per pagina (calcolato solo al mount, aggiornato tramite resize listener)
+  const cardsPerPage = useMemo(() => {
     if (window.innerWidth <= 480) return 1;
     if (window.innerWidth <= 768) return 2;
     if (window.innerWidth <= 1200) return 3;
     return 4;
-  };
+  }, []);
 
-  const cardsPerPage = getCardsPerPage();
-  const totalPages = Math.ceil(guides.length / cardsPerPage);
+  // Memoizza il calcolo del totale delle pagine
+  const totalPages = useMemo(() => Math.ceil(guides.length / cardsPerPage), [guides.length, cardsPerPage]);
 
   // Aggiorna l'indice corrente in base allo scroll
   useEffect(() => {
@@ -65,8 +72,12 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
 
     const updateCurrentIndex = () => {
       const scrollLeft = carousel.scrollLeft;
-      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
-      const gap = 16;
+      const firstCard = carousel.querySelector('.guide-carousel-slide') as HTMLElement;
+      if (!firstCard) return;
+      
+      const track = carousel.querySelector('.guide-carousel-track') as HTMLElement;
+      const cardWidth = firstCard.offsetWidth;
+      const gap = track ? parseInt(getComputedStyle(track).gap) || 16 : 16;
       const cardWidthWithGap = cardWidth + gap;
       const newIndex = Math.round(scrollLeft / cardWidthWithGap);
       const pageIndex = Math.floor(newIndex / cardsPerPage);
@@ -81,52 +92,91 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
 
   // Animazione di entrata e scroll automatico alla card centrale
   useEffect(() => {
+    let isMounted = true;
+    let rafId1: number | null = null;
+    let rafId2: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    
     const scrollToCenterCard = () => {
-      if (carouselRef.current && !isInitialized) {
-        const carousel = carouselRef.current;
-        const cards = carousel.querySelectorAll('.guide-carousel-slide');
-        if (cards.length > 0) {
-          // Calcola l'indice della card centrale
-          const centerIndex = Math.floor(guides.length / 2);
-          const centerCard = cards[centerIndex] as HTMLElement;
-          
-          if (centerCard) {
-            // Calcola la posizione di scroll per centrare la card
-            const cardWidth = centerCard.offsetWidth;
-            const scrollPosition = centerCard.offsetLeft - (carousel.offsetWidth / 2) + (cardWidth / 2);
-            
-            // Scroll iniziale senza animazione per posizionare correttamente
-            carousel.scrollLeft = scrollPosition;
-            
-            // Poi anima con un leggero delay per un effetto più piacevole
-            setTimeout(() => {
-              setIsInitialized(true);
-              // Piccolo aggiustamento con animazione smooth
-              carousel.scrollTo({ left: scrollPosition, behavior: 'smooth' });
-            }, 300);
-          }
+      if (!isMounted || !carouselRef.current || isInitialized) return;
+      
+      const carousel = carouselRef.current;
+      const cards = carousel.querySelectorAll('.guide-carousel-slide');
+      if (cards.length > 0) {
+        // Calcola l'indice della card centrale
+        const centerIndex = Math.floor(guides.length / 2);
+        const centerCard = cards[centerIndex] as HTMLElement;
+        
+        if (centerCard) {
+          // Attendi che il layout sia completamente renderizzato (importante su mobile/tablet)
+          rafId1 = requestAnimationFrame(() => {
+            rafId2 = requestAnimationFrame(() => {
+              if (!isMounted || !carouselRef.current) return;
+              
+              // Ricalcola le dimensioni dopo il rendering completo
+              const cardWidth = centerCard.offsetWidth;
+              const carouselWidth = carousel.offsetWidth;
+              const cardLeft = centerCard.offsetLeft;
+              
+              // Calcola la posizione per centrare perfettamente la card
+              const scrollPosition = cardLeft - (carouselWidth / 2) + (cardWidth / 2);
+              
+              // Scroll iniziale senza animazione per posizionare correttamente
+              carousel.scrollLeft = scrollPosition;
+              
+              // Poi anima con un leggero delay per un effetto più piacevole
+              timeoutId = setTimeout(() => {
+                if (!isMounted || !carouselRef.current) return;
+                
+                setIsInitialized(true);
+                // Ricalcola per perfezionare il centraggio dopo eventuali resize
+                const finalCardWidth = centerCard.offsetWidth;
+                const finalCarouselWidth = carousel.offsetWidth;
+                const finalCardLeft = centerCard.offsetLeft;
+                const finalScrollPosition = finalCardLeft - (finalCarouselWidth / 2) + (finalCardWidth / 2);
+                carousel.scrollTo({ left: finalScrollPosition, behavior: 'smooth' });
+              }, 300);
+            });
+          });
         }
       }
     };
 
-    const timer = setTimeout(scrollToCenterCard, 100);
-    return () => clearTimeout(timer);
+    // Aumentato il delay per dare tempo al layout di stabilizzarsi, specialmente su mobile
+    const timer = setTimeout(scrollToCenterCard, 200);
+    
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+      if (timeoutId) clearTimeout(timeoutId);
+      if (rafId1) cancelAnimationFrame(rafId1);
+      if (rafId2) cancelAnimationFrame(rafId2);
+    };
   }, [guides.length, isInitialized]);
 
   const scrollToPage = (pageIndex: number) => {
     if (carouselRef.current) {
-      const cardWidth = carouselRef.current.querySelector('.guide-carousel-slide')?.clientWidth || 280;
-      const gap = 16;
+      const carousel = carouselRef.current;
+      const firstCard = carousel.querySelector('.guide-carousel-slide') as HTMLElement;
+      if (!firstCard) return;
+      
+      const track = carousel.querySelector('.guide-carousel-track') as HTMLElement;
+      const cardWidth = firstCard.offsetWidth;
+      const gap = track ? parseInt(getComputedStyle(track).gap) || 16 : 16;
       const scrollPosition = pageIndex * cardsPerPage * (cardWidth + gap);
-      carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+      carousel.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     }
   };
 
   const scrollLeft = () => {
     if (carouselRef.current) {
       const carousel = carouselRef.current;
-      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
-      const gap = 16;
+      const firstCard = carousel.querySelector('.guide-carousel-slide') as HTMLElement;
+      if (!firstCard) return;
+      
+      const track = carousel.querySelector('.guide-carousel-track') as HTMLElement;
+      const cardWidth = firstCard.offsetWidth;
+      const gap = track ? parseInt(getComputedStyle(track).gap) || 16 : 16;
       const scrollAmount = cardsPerPage * (cardWidth + gap);
       const currentScroll = carousel.scrollLeft;
       const threshold = 5; // Soglia per considerare "all'inizio"
@@ -143,8 +193,12 @@ const GuideCards: React.FC<GuideCardsProps> = ({ guides }) => {
   const scrollRight = () => {
     if (carouselRef.current) {
       const carousel = carouselRef.current;
-      const cardWidth = carousel.querySelector('.guide-carousel-slide')?.clientWidth || 320;
-      const gap = 16;
+      const firstCard = carousel.querySelector('.guide-carousel-slide') as HTMLElement;
+      if (!firstCard) return;
+      
+      const track = carousel.querySelector('.guide-carousel-track') as HTMLElement;
+      const cardWidth = firstCard.offsetWidth;
+      const gap = track ? parseInt(getComputedStyle(track).gap) || 16 : 16;
       const scrollAmount = cardsPerPage * (cardWidth + gap);
       const currentScroll = carousel.scrollLeft;
       const maxScroll = carousel.scrollWidth - carousel.clientWidth;

@@ -1,6 +1,6 @@
 import React from "react";
 import GuidaTemplate from "../shared/GuidaTemplate";
-import pagamentiDMSanitariImg from "../../assets/SGAMY_CERTFICATI.png";
+import pagamentiDMSanitariImg from "../../assets/SGAMY_PAGAMENTO.png";
 
 const GuidaPagamentiDMSanitari: React.FC = () => {
   const steps = [

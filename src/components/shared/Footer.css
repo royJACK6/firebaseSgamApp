@@ -51,10 +51,7 @@ footer.footer {
 .footer-column:nth-child(2) h3::after { animation-delay: 1s; }
 .footer-column:nth-child(3) h3::after { animation-delay: 1.2s; }
 
-@keyframes expandWidth {
-  from { width: 0; }
-  to { width: 40px; }
-}
+/* @keyframes expandWidth - Definito nel DesignSystem.css */
 
 .footer-link {
   display: flex;

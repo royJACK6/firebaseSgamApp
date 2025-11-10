@@ -11,7 +11,7 @@
   margin-bottom: var(--spaziatura-xxl);
   box-shadow: var(--ombra-card);
   cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transizione-lenta) var(--easing-smooth);
   border: var(--border-normale) solid transparent;
   position: relative;
   /* Animazione gestita da classe design system (animate-bounce-in) */
@@ -23,7 +23,7 @@
   inset: 0;
   border-radius: var(--border-radius-xl);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--transizione-lenta);
   background: linear-gradient(
     135deg,
     rgba(var(--colore-primario-rgb), 0.05) 0%,
@@ -69,48 +69,7 @@
   justify-content: center;
 }
 
-/* Button Info - Usa variabili design system */
-.sg-btn-info {
-  background-color: var(--colore-primario);
-  color: var(--testo-bianco);
-  border: none;
-  padding: 12px 28px;
-  border-radius: var(--border-radius-medio);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.sg-btn-info::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.sg-btn-info:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.sg-btn-info:hover {
-  background-color: var(--colore-intermedio);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: var(--ombra-chatbot-hover);
-}
-
-.sg-btn-info:active {
-  transform: translateY(-1px) scale(0.98);
-}
+/* Button Info - Definito nel DesignSystem.css */
 
 /* Guide Card - Card per le guide */
 .sg-guide-card {
@@ -168,7 +127,7 @@
 
 .sg-guide-card__desc {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--testo-grigio-scuro);
   flex-grow: 1;
   flex-shrink: 1;
   overflow: hidden;
@@ -188,59 +147,7 @@
   flex-shrink: 0;
 }
 
-/* Buttons - Usa variabili design system */
-.sg-btn {
-  padding: 5px 12px;
-  background-color: var(--colore-primario);
-  color: var(--testo-bianco);
-  border: none;
-  border-radius: var(--border-radius-medio);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: var(--transizione-normale);
-  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
-}
-
-.sg-btn:hover {
-  background-color: var(--colore-intermedio);
-  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
-  transform: translateY(-2px);
-}
-
-.sg-btn .btn-icon-left,
-.sg-btn .btn-icon-right {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sg-btn .btn-icon-left {
-  margin-right: 0.5rem;
-}
-
-.sg-btn .btn-icon-right {
-  margin-left: 0.5rem;
-}
-
-.sg-btn:hover .btn-icon-right {
-  transform: translateX(4px);
-}
-
-.sg-btn:hover .btn-icon-left {
-  transform: translateX(-2px);
-}
-
-.sg-btn-primary {
-  background-color: var(--colore-primario);
-  font-weight: 600;
-  padding: var(--spaziatura-sm) var(--spaziatura-md);
-  box-shadow: 0 2px 8px rgba(var(--colore-primario-rgb), 0.3);
-}
-
-.sg-btn-primary:hover {
-  background-color: var(--colore-intermedio);
-  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.4);
-  transform: translateY(-2px);
-}
+/* Buttons - Definiti nel DesignSystem.css (.sg-btn, .sg-btn-primary, .sg-btn-info) */
 
 /* Assistant Card - Card speciale per Sgamy */
 .sg-assistant-card {
@@ -262,7 +169,7 @@
     height: 120px;
     min-height: 120px;
     max-height: 120px;
-    padding: 12px;
+    padding: var(--spaziatura-xs);
   }
   
   .sg-guide-card__desc {
@@ -283,10 +190,7 @@
     font-size: 1rem;
   }
   
-  .sg-btn-info {
-    padding: 10px 20px;
-    font-size: 0.95rem;
-  }
+  /* .sg-btn-info responsive - Definito nel DesignSystem.css */
   
   .sg-guide-card__media {
     min-height: 200px;
@@ -319,10 +223,7 @@
     line-height: 1.3;
   }
   
-  .sg-btn {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-  }
+  /* .sg-btn responsive - Definito nel DesignSystem.css */
   
   .sg-guide-card__media {
     min-height: 180px;

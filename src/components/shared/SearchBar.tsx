@@ -11,6 +11,7 @@ const SearchBar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchPage[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -69,9 +70,31 @@ const SearchBar: React.FC = () => {
       }
     };
 
-    const timeoutId = setTimeout(performSearch, 300);
+    const timeoutId = setTimeout(performSearch, 150);
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  // Gestione animazione dropdown
+  useEffect(() => {
+    let rafId1: number | null = null;
+    let rafId2: number | null = null;
+    
+    if (showResults) {
+      // Piccolo delay per permettere al browser di renderizzare prima dell'animazione
+      rafId1 = requestAnimationFrame(() => {
+        rafId2 = requestAnimationFrame(() => {
+          setIsResultsVisible(true);
+        });
+      });
+    } else {
+      setIsResultsVisible(false);
+    }
+    
+    return () => {
+      if (rafId1) cancelAnimationFrame(rafId1);
+      if (rafId2) cancelAnimationFrame(rafId2);
+    };
+  }, [showResults]);
 
   // Scroll al risultato selezionato quando cambia selectedIndex
   useEffect(() => {
@@ -155,7 +178,7 @@ const SearchBar: React.FC = () => {
           {showResults && (
             <div 
               ref={resultsRef}
-              className="search-results" 
+              className={`search-results ${isResultsVisible ? 'show' : ''}`}
               role="listbox" 
               aria-live="polite" 
               aria-atomic="false"

@@ -11,7 +11,7 @@
   position: relative;
   overflow: visible;
   z-index: var(--z-index-navbar);
-  /* Animazione d'entrata dall'alto - definita in PaletteExtended.css */
+  /* Animazione d'entrata dall'alto - definita in DesignSystem.css */
   opacity: 0;
   transform: translateY(-30px);
   animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -52,7 +52,7 @@
 .logo-img {
   width: 75px;
   height: 75px;
-  bottom: 6px;
+  top: 0px;
   left: 5px;
   position: relative;
   object-fit: contain;
@@ -64,7 +64,7 @@
 .logos-img {
   width: 100px;
   height: 100px;
-  bottom: 6px;
+  top: 0px;
   left: 5px;
   position: relative;
   object-fit: contain;
@@ -154,9 +154,15 @@
   }
 }
 
-/* Chatbot button - estende .btn-icon da PaletteExtended.css */
+/* Chatbot button - estende .btn-icon da DesignSystem.css */
+.chatbot-button-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+}
+
 .chatbot-btn {
-  /* Stili base ereditati da .btn-icon in PaletteExtended.css */
+  /* Stili base ereditati da .btn-icon in DesignSystem.css */
   border-radius: 0;
 }
 
@@ -170,6 +176,219 @@
 .chatbot-btn:hover img {
   color: var(--colore-primario);
 }
+
+/* Animazione pulsazione per il chatbot button */
+.chatbot-btn-pulse {
+  animation: chatbotPulse 2s var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
+}
+
+@keyframes chatbotPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--colore-primario-rgb), 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(var(--colore-primario-rgb), 0);
+  }
+}
+
+/* ===== MODALE RESPONSIVE PER CHATBOT ===== */
+/* Modale che appare solo in modalità responsive (mobile/tablet) */
+.chatbot-responsive-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-index-modal, 2000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards,
+             modalFadeOut var(--durata-animazione-rapida, 0.4s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards 8s;
+  pointer-events: auto;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.chatbot-responsive-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--testo-nero-rgb), 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.chatbot-responsive-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spaziatura-lg);
+  z-index: 1;
+  animation: modalContentSlideIn var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards,
+             modalContentSlideOut var(--durata-animazione-rapida, 0.4s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards 8s;
+}
+
+@keyframes modalContentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalContentSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+}
+
+.chatbot-responsive-modal-image {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: imagePulse 2s var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
+}
+
+@keyframes imagePulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(var(--colore-primario-rgb), 0.7));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(var(--colore-primario-rgb), 0.5));
+  }
+}
+
+.chatbot-responsive-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.chatbot-responsive-modal-tooltip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--spaziatura-md);
+}
+
+.chatbot-responsive-modal-tooltip-content {
+  background: var(--gradiente-blu-principale);
+  border: var(--border-normale) solid var(--colore-primario);
+  border-radius: var(--border-radius-grande);
+  padding: var(--spaziatura-md) var(--spaziatura-lg);
+  box-shadow: var(--ombra-pronunciata);
+  max-width: 320px;
+  min-width: 260px;
+  width: max-content;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spaziatura-sm);
+}
+
+.chatbot-responsive-modal-tooltip-content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--testo-bianco);
+  flex: 1;
+  font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.chatbot-responsive-modal-close {
+  background: rgba(var(--testo-bianco-rgb), 0.2);
+  border: var(--border-sottile) solid rgba(var(--testo-bianco-rgb), 0.3);
+  color: var(--testo-bianco);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-piccolo);
+  transition: var(--transizione-all);
+  flex-shrink: 0;
+}
+
+.chatbot-responsive-modal-close:hover {
+  background: rgba(var(--testo-bianco-rgb), 0.3);
+  border-color: rgba(var(--testo-bianco-rgb), 0.5);
+  transform: scale(1.1);
+}
+
+.chatbot-responsive-modal-close:active {
+  transform: scale(0.95);
+}
+
+.chatbot-responsive-modal-tooltip-arrow {
+  position: absolute;
+  top: -8px;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--colore-primario);
+  border-top: none;
+}
+
+.chatbot-responsive-modal-tooltip-arrow::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  bottom: auto;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid var(--colore-primario);
+  border-top: none;
+}
+
 
 /* accessibility-btn ha stili completi in AccessibilityModal.css */
 

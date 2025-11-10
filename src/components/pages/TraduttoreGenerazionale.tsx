@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import "./TraduttoreGenerazionale.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLanguage, faSearch, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -121,7 +121,8 @@ const TraduttoreGenerazionale: React.FC = () => {
     }
   };
 
-  const getDisplayTranslations = () => {
+  // Memoizza il filtro delle traduzioni per evitare ricalcoli inutili ad ogni render
+  const displayTranslations = useMemo(() => {
     // Mostra sempre tutti i dati, filtrati se c'è una ricerca
     if (searchWord.trim()) {
       const q = searchWord.toLowerCase().trim();
@@ -132,9 +133,7 @@ const TraduttoreGenerazionale: React.FC = () => {
       );
     }
     return allTranslations;
-  };
-
-  const displayTranslations = getDisplayTranslations();
+  }, [allTranslations, searchWord]);
 
   return (
     <section className="traduttore">

@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* Importa la palette di colori e il design system */
-@import './Palette.css';
-@import './PaletteExtended.css';
+/* Importa il Design System completo - UNICO FILE CSS DA MODIFICARE */
+@import './DesignSystem.css';
 
 :root {
   --accessibility-font-size: 100%;

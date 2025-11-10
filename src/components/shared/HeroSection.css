@@ -36,7 +36,7 @@
   /* Taglio diagonale invertito - inclinata in senso antiorario */
   clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 38% 100%);
   
-  /* Animazione: entra da destra - definita in PaletteExtended.css */
+  /* Animazione: entra da destra - definita in DesignSystem.css */
   opacity: 0;
   transform: translateX(100%);
   animation: slideInFromRight var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
@@ -55,7 +55,7 @@
   height: 100%;
   object-fit: cover;
   
-  /* Animazione: zoom in sincronizzato con background - definita in PaletteExtended.css */
+  /* Animazione: zoom in sincronizzato con background - definita in DesignSystem.css */
   opacity: 0;
   transform: scale(0.8);
   animation: fadeInScale var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
@@ -67,7 +67,7 @@
   z-index: var(--z-index-content, 3);
   opacity: 0;
   transform: translateY(var(--transform-translate-normale, 30px));
-  /* Animazione fadeInUp definita in PaletteExtended.css */
+  /* Animazione fadeInUp definita in DesignSystem.css */
   animation: fadeInUp var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards 0.4s;
 }
 
@@ -86,9 +86,19 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
+  /* Nascondi icona su tablet e mobile */
+  .hero-title-icon {
+    display: none;
+  }
+  
+  .hero-content h1 {
+    gap: 0;
+    justify-content: center;
+  }
+  
   .hero-section {
     height: 46vh;
-    /* Animazione: scende dall'alto come la navbar - definita in PaletteExtended.css */
+    /* Animazione: scende dall'alto come la navbar - definita in DesignSystem.css */
     opacity: 0;
     transform: translateY(calc(-1 * var(--transform-translate-normale, 30px)));
     animation: fadeInDown var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
@@ -129,7 +139,7 @@
     height: auto;
     padding: 0;
     margin: 0;
-    /* Animazione: scende dall'alto come la navbar - definita in PaletteExtended.css */
+    /* Animazione: scende dall'alto come la navbar - definita in DesignSystem.css */
     opacity: 0;
     transform: translateY(calc(-1 * var(--transform-translate-normale, 30px)));
     animation: fadeInDown var(--durata-animazione-normale, 0.8s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
@@ -162,7 +172,7 @@
     transform: translateX(0);
   }
   .hero-content {
-    padding: 24px 16px;
+    padding: calc(var(--spaziatura-lg) + var(--spaziatura-sm)) var(--spaziatura-md);
     /* Disabilita animazione su mobile */
     animation: none;
     opacity: 1;
@@ -170,6 +180,7 @@
   }
   .hero-content h1 {
     font-size: 1.8rem;
+    justify-content: center;
   }
   .hero-content p {
     font-size: 1rem;

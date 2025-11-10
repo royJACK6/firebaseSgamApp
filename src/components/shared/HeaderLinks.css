@@ -7,7 +7,7 @@
   position: relative;
   z-index: 100;
   /* Font Montserrat applicato globalmente */
-  /* Animazione d'entrata dall'alto - definita in PaletteExtended.css */
+  /* Animazione d'entrata dall'alto - definita in DesignSystem.css */
   opacity: 0;
   transform: translateY(-20px);
   animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;

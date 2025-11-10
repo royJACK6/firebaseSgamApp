@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBook } from '@fortawesome/free-solid-svg-icons';
 import './Error404.css';
+import sgamyTristeImage from '../../assets/SGAMY_TRISTE4.png';
 
 function Error404() {
   return (
@@ -15,6 +16,16 @@ function Error404() {
           <span className="error404-number animate-bounce-in">4</span>
           <span className="error404-number animate-bounce-in">0</span>
           <span className="error404-number animate-bounce-in">4</span>
+        </div>
+        
+        {/* Immagine Sgamy triste */}
+        <div className="error404-image-container animate-fade-in">
+          <img 
+            src={sgamyTristeImage} 
+            alt="Sgamy triste per la pagina non trovata" 
+            className="error404-image"
+            loading="eager"
+          />
         </div>
         
         {/* Contenuto testuale */}
@@ -45,7 +56,7 @@ function Error404() {
           <ul className="error404-suggestions-list">
             <li><Link to="/servizio-antifrode" className="error404-suggestion-link">Servizio Anti-Frode</Link></li>
             <li><Link to="/glossario" className="error404-suggestion-link">Glossario</Link></li>
-            <li><Link to="/info" className="error404-suggestion-link">Info e Contatti</Link></li>
+            <li><Link to="/info" className="error404-suggestion-link">Info</Link></li>
           </ul>
         </div>
       </div>

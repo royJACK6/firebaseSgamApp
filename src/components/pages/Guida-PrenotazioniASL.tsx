@@ -1,7 +1,7 @@
 import React from 'react';
 import GuidaTemplate from '../shared/GuidaTemplate';
-import spidImage from '../../assets/SGAMY_SPID.png'; // Usa un'immagine esistente, puoi cambiarla dopo
-import './Guida-PrenotazioniASL.css';
+import prenotazioniImage from '../../assets/SGAMY_DOTTORE.png';
+/* NOTA: GuidaTemplate.css gestisce già tutti gli stili necessari */
 
 const GuidaPrenotazioniASL: React.FC = () => {
   const steps = [
@@ -117,7 +117,7 @@ const GuidaPrenotazioniASL: React.FC = () => {
     <GuidaTemplate
       title="Prenotazioni Visite Mediche Sanità Puglia"
       subtitle="Guida completa per prenotare visite mediche e esami tramite il portale ASL Puglia"
-      image={spidImage}
+      image={prenotazioniImage}
       steps={steps}
       info={info}
       previousLink="/guide/anagrafe-digitale"

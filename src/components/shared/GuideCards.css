@@ -1,10 +1,10 @@
 .guide-carousel-wrapper {
-  padding: 60px var(--spaziatura-md);
+  padding: var(--spaziatura-xxl) var(--spaziatura-md);
   background: var(--sfondo-grigio-chiaro);
   min-height: 100vh;
   opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform: translateY(var(--transform-translate-normale));
+  animation: fadeInUp var(--durata-animazione-normale) var(--easing-smooth) forwards;
 }
 
 .guide-carousel-container {
@@ -13,8 +13,8 @@
   margin: 0 auto;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+  transform: translateY(calc(var(--transform-translate-normale) - var(--spaziatura-sm)));
+  animation: fadeInUp var(--durata-animazione-normale) var(--easing-smooth) forwards 0.2s;
 }
 
 
@@ -24,12 +24,12 @@
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-bottom: var(--spaziatura-sm);
+  padding-left: calc(var(--spaziatura-xxl) + var(--spaziatura-xs));
+  padding-right: calc(var(--spaziatura-xxl) + var(--spaziatura-xs));
   scrollbar-width: none;
   -ms-overflow-style: none;
-  scroll-padding-inline: calc((100vw - 340px) / 2);
+  scroll-padding-inline: calc((100vw - 320px) / 2);
 }
 
 .guide-carousel::-webkit-scrollbar {
@@ -65,7 +65,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--durata-animazione-rapida) var(--easing-smooth);
   color: var(--colore-primario);
   font-size: 1.2rem;
 }
@@ -77,7 +77,7 @@
   border-radius: var(--border-radius-rotondo);
   background: var(--colore-primario);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--durata-animazione-rapida);
 }
 
 .carousel-button:hover::before {
@@ -112,13 +112,13 @@
 .carousel-dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
+  gap: var(--spaziatura-sm);
+  margin-top: var(--spaziatura-xl);
 }
 
 .carousel-dot {
-  width: 12px;
-  height: 12px;
+  width: calc(var(--spaziatura-sm) + var(--spaziatura-xs));
+  height: calc(var(--spaziatura-sm) + var(--spaziatura-xs));
   border-radius: var(--border-radius-rotondo);
   border: none;
   background: var(--sfondo-grigio-medio);
@@ -128,24 +128,56 @@
 }
 
 .carousel-dot:hover {
-  background: #94a3b8;
+  background: var(--sfondo-grigio-medio);
   transform: scale(1.2);
 }
 
 .carousel-dot.active {
   background: var(--colore-primario);
-  width: 32px;
+  width: calc(var(--spaziatura-xxl) - var(--spaziatura-md));
   border-radius: var(--border-radius-medio);
 }
 
+/* .sg-section-title - Definito nel DesignSystem.css */
+
 .guide-carousel-slide .sg-card {
-  height: 400px;
+  height: 420px;
+  opacity: 0;
+  transform: translateY(var(--transform-translate-normale)) scale(0.95);
+  animation: fadeInUp var(--durata-animazione-lenta) var(--easing-smooth) forwards;
+  box-shadow: var(--ombra-media);
+  transition: var(--transizione-lenta) var(--easing-smooth);
+}
+
+/* Animation delays per le cards come nella home */
+.guide-carousel-slide:nth-child(1) .sg-card { animation-delay: 0.4s; }
+.guide-carousel-slide:nth-child(2) .sg-card { animation-delay: 0.6s; }
+.guide-carousel-slide:nth-child(3) .sg-card { animation-delay: 0.8s; }
+.guide-carousel-slide:nth-child(4) .sg-card { animation-delay: 1s; }
+.guide-carousel-slide:nth-child(5) .sg-card { animation-delay: 1.2s; }
+.guide-carousel-slide:nth-child(6) .sg-card { animation-delay: 1.4s; }
+.guide-carousel-slide:nth-child(n+7) .sg-card { animation-delay: 1.6s; }
+
+.guide-carousel-slide .sg-card:hover {
+  transform: translateY(calc(-1 * var(--spaziatura-xs))) scale(1.02);
+  box-shadow: var(--ombra-pronunciata);
+}
+
+/* Zoom immagini per tutte le cards del carosello */
+.guide-carousel-slide .sg-guide-card__img {
+  transform: scale(1.3);
+  object-fit: cover;
+  transition: transform var(--durata-animazione-rapida) var(--easing-smooth);
+}
+
+.guide-carousel-slide .sg-card:hover .sg-guide-card__img {
+  transform: scale(1.35);
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
   .guide-carousel-wrapper {
-    padding: 50px var(--spaziatura-md);
+    padding: var(--spaziatura-xxl) var(--spaziatura-md);
   }
 
   .guide-carousel-slide {
@@ -155,12 +187,12 @@
 
 @media (max-width: 768px) {
   .guide-carousel-wrapper {
-    padding: 40px var(--spaziatura-sm);
+    padding: var(--spaziatura-xl) var(--spaziatura-sm);
   }
 
   .sg-section-title {
     font-size: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: var(--spaziatura-xl);
   }
 
   /* Nascondi pulsanti e dots su mobile/tablet */
@@ -183,18 +215,18 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
-    margin: 0 -20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-bottom: var(--spaziatura-sm);
+    margin: 0 calc(-1 * var(--spaziatura-md));
+    padding-left: var(--spaziatura-md);
+    padding-right: var(--spaziatura-md);
     scrollbar-width: thin;
     scrollbar-color: var(--colore-primario) var(--sfondo-grigio-chiaro);
-    /* Centra la card iniziale */
-    scroll-padding-inline: calc((100vw - 340px) / 2);
+    /* Centra la card iniziale - usa la larghezza dinamica della card su mobile */
+    scroll-padding-inline: calc((100vw - calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)))) / 2);
   }
 
   .guide-carousel::-webkit-scrollbar {
-    height: 6px;
+    height: var(--spaziatura-sm);
   }
 
   .guide-carousel::-webkit-scrollbar-track {
@@ -214,7 +246,7 @@
   .guide-carousel-track {
     display: flex;
     flex-direction: row;
-    gap: 14px;
+    gap: var(--spaziatura-sm);
     width: max-content;
     min-width: 100%;
     transform: none !important;
@@ -222,9 +254,9 @@
   }
 
   .guide-carousel-slide {
-    flex: 0 0 calc(100% - 20px);
-    min-width: calc(100vw - 60px);
-    max-width: calc(100vw - 60px);
+    flex: 0 0 calc(100% - var(--spaziatura-md));
+    min-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
+    max-width: calc(100vw - (var(--spaziatura-xxl) + var(--spaziatura-sm)));
     padding: 0;
     scroll-snap-align: center;
   }
@@ -233,19 +265,20 @@
     height: 380px;
   }
 
+  /* Zoom immagini per occupare tutta la card su tablet */
   .guide-carousel-slide .sg-guide-card__img {
-    transform: scale(1);
+    transform: scale(1.5);
     object-fit: cover;
   }
 
   .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
-    transform: scale(1.05);
+    transform: scale(1.55);
   }
 }
 
 @media (max-width: 480px) {
   .guide-carousel-wrapper {
-    padding: 30px var(--spaziatura-xs);
+    padding: var(--spaziatura-xl) var(--spaziatura-xs);
   }
 
   .guide-carousel {
@@ -255,9 +288,9 @@
   }
 
   .guide-carousel-slide {
-    min-width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
-    width: calc(100vw - 48px);
+    min-width: calc(100vw - var(--spaziatura-xxl));
+    max-width: calc(100vw - var(--spaziatura-xxl));
+    width: calc(100vw - var(--spaziatura-xxl));
   }
 
   .guide-carousel-slide .sg-card {
@@ -266,16 +299,17 @@
 
   .sg-section-title {
     font-size: 1.6rem;
-    margin-bottom: 25px;
-    padding: 0 10px;
+    margin-bottom: var(--spaziatura-xl);
+    padding: 0 var(--spaziatura-sm);
   }
 
+  /* Zoom immagini per occupare tutta la card su mobile */
   .guide-carousel-slide .sg-guide-card__img {
-    transform: scale(1);
+    transform: scale(1.5);
     object-fit: cover;
   }
 
   .guide-carousel-slide .sg-card:hover .sg-guide-card__img {
-    transform: scale(1.05);
+    transform: scale(1.55);
   }
 }

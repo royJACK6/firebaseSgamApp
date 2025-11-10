@@ -1,0 +1,14 @@
+/* ========================================
+ * HOME PAGE - REFACTORED
+ * Usa variabili CSS dal design system
+ * ======================================== */
+
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--sfondo-principale);
+}
+
+/* Stili specifici per la home page se necessari */
+/* La maggior parte degli stili sono gestiti dai componenti figli */
+

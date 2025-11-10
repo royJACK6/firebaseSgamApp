@@ -1,6 +1,6 @@
 /* ========================================
  * ERROR 404 PAGE
- * Usa il Design System (Palette.css e PaletteExtended.css)
+ * Usa il Design System (DesignSystem.css)
  * ======================================== */
 
 /* Container principale */
@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   padding: var(--spaziatura-xxl) var(--spaziatura-lg);
-  background: var(--sfondo-primario);
+  background: var(--sfondo-principale);
   overflow: hidden;
   text-align: center;
 }
@@ -36,6 +36,23 @@
   z-index: var(--z-index-base, 1);
   max-width: 800px;
   width: 100%;
+}
+
+/* ===== IMMAGINE SGAMY TRISTE ===== */
+.error404-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spaziatura-xl);
+  animation-delay: 0.1s;
+}
+
+.error404-image {
+  max-width: clamp(180px, 22vw, 280px);
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 var(--spaziatura-xs) var(--spaziatura-md) rgba(var(--colore-primario-rgb), 0.2));
 }
 
 /* ===== GRANDE NUMERO 404 ===== */
@@ -100,30 +117,42 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: var(--spaziatura-md);
-  margin-bottom: var(--spaziatura-xxl);
+  margin: 0 auto var(--spaziatura-xxl);
+  width: 100%;
+  max-width: 600px;
   animation-delay: 0.6s;
 }
 
 .error404-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--spaziatura-xs);
-  min-width: 200px; /* Dimensione minima per pulsanti */
   justify-content: center;
+  gap: var(--spaziatura-xs);
+  min-width: 200px;
+  flex: 0 1 auto;
 }
 
-.error404-btn i {
-  font-size: 1.2em;
+.error404-btn .btn-icon-left {
+  font-size: 1.1em;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error404-btn:hover .btn-icon-left {
+  transform: translateX(-2px);
 }
 
 /* ===== SUGGERIMENTI ===== */
 .error404-suggestions {
   padding: var(--spaziatura-lg);
-  background: var(--sfondo-secondario);
+  background: var(--sfondo-bianco);
   border-radius: var(--border-radius-grande);
-  box-shadow: var(--ombra-leggera);
+  box-shadow: var(--ombra-card);
   animation-delay: 0.9s;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .error404-suggestions-title {
@@ -150,13 +179,14 @@
 .error404-suggestion-link {
   display: inline-block;
   padding: var(--spaziatura-xs) var(--spaziatura-md);
-  background: var(--sfondo-primario);
+  background: var(--sfondo-bianco);
   color: var(--colore-primario);
   text-decoration: none;
   border-radius: var(--border-radius-medio);
-  border: 2px solid var(--colore-secondario);
+  border: var(--border-normale) solid var(--colore-primario);
   font-weight: 500;
-  transition: all var(--durata-animazione-rapida, 0.4s) var(--easing-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .error404-suggestion-link:hover,
@@ -165,7 +195,7 @@
   color: var(--testo-bianco);
   border-color: var(--colore-primario);
   transform: translateY(-2px);
-  box-shadow: var(--ombra-media);
+  box-shadow: 0 4px 12px rgba(var(--colore-primario-rgb), 0.3);
   outline: none;
 }
 
@@ -191,11 +221,13 @@
     flex-direction: column;
     gap: var(--spaziatura-sm);
     margin-bottom: var(--spaziatura-xl);
+    align-items: stretch;
   }
   
   .error404-btn {
     width: 100%;
-    max-width: 300px; /* Larghezza massima su mobile */
+    max-width: 100%;
+    min-width: auto;
   }
   
   .error404-suggestions {
@@ -205,11 +237,13 @@
   .error404-suggestions-list {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--spaziatura-xs);
   }
-  
+
   .error404-suggestion-link {
     display: block;
     text-align: center;
+    width: 100%;
   }
 }
 
