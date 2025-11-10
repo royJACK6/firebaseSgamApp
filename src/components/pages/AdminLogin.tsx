@@ -28,7 +28,7 @@ const AdminLogin: React.FC = () => {
       setError('Password non corretta');
       setPassword('');
     }
-  }; //commento per verificare il funzionamento di git
+  }; //Smadonniamo per colpa di Vercel
 
   return (
     <div className="admin-login">
