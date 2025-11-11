@@ -28,7 +28,7 @@ const AdminLogin: React.FC = () => {
       setError('Password non corretta');
       setPassword('');
     }
-  }; //Smadonniamo II per colpa di Vercel
+  }; //Smadonniamo III per colpa di Vercel
 
   return (
     <div className="admin-login">
