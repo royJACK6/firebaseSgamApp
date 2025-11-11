@@ -1,7 +1,32 @@
 // src/apiServices/apiService.ts
 
-const API_URL = '/api/analyze'; // Nota: usa il proxy /api per bypassare CORS
-const API_URL_IMAGE = '/api/analyze-image'; // Endpoint per le immagini
+// In sviluppo usa il proxy, in produzione usa l'URL diretto
+const isDevelopment = import.meta.env.DEV;
+const ANALYZE_API_BASE = import.meta.env.VITE_ANALYZE_API_URL || 'https://cunicular-spotlike-jacinda.ngrok-free.dev';
+
+const API_URL = isDevelopment 
+  ? '/api/analyze' // In sviluppo usa il proxy di Vite
+  : `${ANALYZE_API_BASE}/analyze`; // In produzione usa l'URL diretto
+
+const API_URL_IMAGE = isDevelopment
+  ? '/api/analyze-image' // In sviluppo usa il proxy di Vite
+  : `${ANALYZE_API_BASE}/analyze-image`; // In produzione usa l'URL diretto
+
+// Helper per ottenere gli headers necessari (ngrok richiede header speciale in produzione)
+const getHeaders = (contentType?: string): HeadersInit => {
+  const headers: HeadersInit = {};
+  
+  if (contentType) {
+    headers['Content-Type'] = contentType;
+  }
+  
+  // In produzione, aggiungi header per ngrok
+  if (!isDevelopment && ANALYZE_API_BASE.includes('ngrok')) {
+    headers['ngrok-skip-browser-warning'] = 'true';
+  }
+  
+  return headers;
+};
 
 export interface OllamaResponse {
   response?: string;
@@ -31,9 +56,7 @@ export async function checkServerStatus(): Promise<boolean> {
     // Prova a fare una richiesta di test minima
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getHeaders('application/json'),
       body: JSON.stringify({ message_text: 'ping' }),
       signal: controller.signal
     });
@@ -99,6 +122,7 @@ export async function analyzeText(text: string, image?: File | null): Promise<An
         try {
           const testResponse = await fetch(API_URL_IMAGE, {
             method: 'POST',
+            headers: getHeaders(), // Non impostare Content-Type per FormData, il browser lo fa automaticamente
             body: formData,
           });
 
@@ -152,9 +176,7 @@ export async function analyzeText(text: string, image?: File | null): Promise<An
 
       response = await fetch(API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getHeaders('application/json'),
         body: JSON.stringify(requestBody),
       });
     }
