@@ -39,8 +39,8 @@ function App() {
   return (
     <AuthProvider>
       <ChatbotProvider>
-        <AccessibilityLoader />
-        <Router>
+          <AccessibilityLoader />
+          <Router>
           <Routes>
             {/* Admin Routes - Hidden, no navbar/footer */}
             <Route path="/sgam-admin-login" element={<AdminLogin />} />

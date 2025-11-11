@@ -10,7 +10,7 @@ export default defineConfig({
         target: 'https://cunicular-spotlike-jacinda.ngrok-free.dev',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''), // Rimuovi /api, quindi /api/analyze diventa /analyze
         headers: {
           'ngrok-skip-browser-warning': 'true',
         },
@@ -19,7 +19,7 @@ export default defineConfig({
         target: 'https://cunicular-spotlike-jacinda.ngrok-free.dev',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''), // Rimuovi /api, quindi /api/analyze-image diventa /analyze-image
         headers: {
           'ngrok-skip-browser-warning': 'true',
         },

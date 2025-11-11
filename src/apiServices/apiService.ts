@@ -176,7 +176,15 @@ export async function analyzeText(text: string, image?: File | null): Promise<An
     console.log('📥 Lunghezza risposta:', raw.length, 'caratteri');
 
     if (!response.ok) {
-      console.error('❌ Risposta HTTP non OK:', raw);
+      // Gestione specifica per errore 405 (Method Not Allowed)
+      if (response.status === 405) {
+        console.error('❌ Errore 405: Metodo HTTP non consentito. Verifica che il backend accetti POST su questo endpoint.');
+        console.error('❌ URL chiamato:', response.url || API_URL);
+        console.error('❌ Metodo usato: POST');
+        console.error('❌ Risposta server:', raw);
+      } else {
+        console.error('❌ Risposta HTTP non OK:', raw);
+      }
       return null;
     }
 
