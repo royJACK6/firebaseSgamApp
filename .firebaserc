@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "sgamapp-fe"
-  }
+    "production": "sgamapp-d5556",
+    "default": "sgamapp-d5556"
+  },
+  "targets": {},
+  "etags": {}
 }
